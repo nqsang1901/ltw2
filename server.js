@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/', require('./routes/index'));
 
 app.use('/css',express.static(__dirname +'/css'));
+app.use('/images',express.static(__dirname +'/images'));
 app.use(express.static('public'));
 
 app.listen(port);
