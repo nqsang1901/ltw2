@@ -217,11 +217,11 @@ header
 }
 
 .background-header .main-nav .nav li:last-child a {
-  color: #fff !important;
+  color: black !important;
 }
 
 .background-header .main-nav .nav li:last-child a:hover {
-  color: #fff!important;
+  color: black !important;
 }
 
 .background-header .main-nav .nav li:hover a {
@@ -253,7 +253,7 @@ header
 
 .header-area .main-nav .logo {
   line-height: 80px;
-  color: #fff;
+  color: black;
   font-size: 32px;
   font-weight: 800;
   text-transform: uppercase;
@@ -305,7 +305,7 @@ header
 }
 
 .header-area .main-nav .nav li a {
-  color: #fff;
+  color: black;
 }
 
 .header-area .main-nav .nav li:last-child a {
