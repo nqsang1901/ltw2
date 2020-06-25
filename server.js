@@ -10,7 +10,7 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', require('./routes/index'));
+app.use('/', require('./routes/index'));
 
 app.use('/css',express.static(__dirname +'/css'));
 app.use('/images',express.static(__dirname +'/images'));
