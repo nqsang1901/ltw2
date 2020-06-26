@@ -245,12 +245,10 @@ header
   -o-transition: all .5s ease 0s;
   transition: all .5s ease 0s;
 }
-
 .header-area .main-nav {
   min-height: 80px;
   background: transparent;
 }
-
 .header-area .main-nav .logo {
   line-height: 80px;
   color: black;
