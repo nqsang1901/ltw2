@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', require('./routes/index'));
 
-app.use('/css',express.static(__dirname +'/css'));
+app.use('/public',express.static(__dirname +'/public'));
 app.use('/images',express.static(__dirname +'/images'));
 app.use(express.static('public'));
 
