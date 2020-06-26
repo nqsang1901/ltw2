@@ -1,5 +1,7 @@
 const { Router } = require('express');
 const {getmainFunCol1, getmainFunCol2} = require('../services/mainFun');
+const Account = require('../services/account');
+const Typeaccount = require('../services/typeaccount');
 
 const router = new Router();
 
