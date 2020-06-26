@@ -7,6 +7,9 @@ const app = express();
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
+// Middlewares
+// app.use(require('./middlewares/auth'));
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
