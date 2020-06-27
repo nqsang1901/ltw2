@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const asyncHandler = require('express-async-handler');
-const User = require('../services/user');
+const NguoiDung = require('../services/NguoiDung');
 
 const router = new Router();
 
@@ -9,22 +9,24 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', async function (req, res, next) {
-    const user = await User.findAdminByEmail(req.body.email);
-    if (!admin || !Admin.verifyPassword(req.body.password, admin.password)) { // Khong tim thay user
-        return res.render('Login/login');
+    const nguoidung = await NguoiDung.timNguoiDungBangEmail(req.body.email);
+    if (!nguoidung || !NguoiDung.verifyPassword(req.body.password, nguoidung.MatKhau)) { // Khong tim thay user
+        const message = "Không tìm thấy tài khoản! Vui lòng đăng nhập lại!";
+        console.log(typeof(message));
+        return res.render('login', { message });
     }
-    req.session.adminId = admin.id;
+    req.session.manguoidung = nguoidung.MaNguoiDung;
     res.redirect('/home');
 });
 
-router.get('/:id/:token', asyncHandler(async function (req, res) {
-    const { id, token } = req.params;
-    var user = await User.findByID(id);
-    if (user && user.token === token) {
-        user.save();
-    }
-    req.session.userId = user.id;
-    res.redirect('/articles');
-}));
+// router.get('/:id/:token', asyncHandler(async function (req, res) {
+//     const { id, token } = req.params;
+//     var user = await User.findByID(id);
+//     if (user && user.token === token) {
+//         user.save();
+//     }
+//     req.session.userId = user.id;
+//     res.redirect('/articles');
+// }));
 
 module.exports = router;
