@@ -1,19 +1,19 @@
-const NguoiDung = require('../services/NguoiDung');
+const User = require('../services/user');
 const asyncHandler = require('express-async-handler');
 
 module.exports = asyncHandler(async function auth(req, res, next) {
-    res.locals.nguoidung = req.nguoidung;
+    res.locals.user = req.user;
     
-    const manguoidung = req.session.manguoidung;
-    res.locals.nguoidunghientai = null;
-    if(!manguoidung) {
+    const userId = req.session.userId;
+    res.locals.currentUser = null;
+    if(!userId) {
         return next();
     }
-    const nguoidung = await NguoiDung.timNguoiDungBangId(manguoidung);
-    if(!nguoidung) {
+    const user = await User.findUserById(userId);
+    if(!user) {
         return next();
     }
-    req.nguoidunghientai = nguoidung;
-    res.locals.nguoidunghientai = nguoidung;
+    req.currentUser = user;
+    res.locals.currentUser = user;
     next();
 });

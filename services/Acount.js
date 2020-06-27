@@ -37,12 +37,10 @@ Acount.init({
     BankId: {
         type: Sequelize.INTEGER,
     },
-    
     DueDate:{
         type: Sequelize.DATE,
         allowNull: true,
-    },
-   
+    },   
     AcountStatusTypeId:{
         type:Sequelize.INTEGER,
         allowNull:true,

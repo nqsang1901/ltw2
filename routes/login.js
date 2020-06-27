@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const asyncHandler = require('express-async-handler');
-const NguoiDung = require('../services/NguoiDung');
+const User = require('../services/User');
 
 const router = new Router();
 
@@ -9,13 +9,12 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', async function (req, res, next) {
-    const nguoidung = await NguoiDung.timNguoiDungBangEmail(req.body.email);
-    if (!nguoidung || !NguoiDung.verifyPassword(req.body.password, nguoidung.MatKhau)) { // Khong tim thay user
-        const message = "Không tìm thấy tài khoản! Vui lòng đăng nhập lại!";
-        console.log(typeof(message));
+    const user = await User.findUserByEmail(req.body.email);
+    if (!user || !User.verifyPassword(req.body.password, user.PassWord)) { // Khong tim thay user
+        const message = "Tài khoản không tồn tại! Vui lòng đăng nhập lại!"
         return res.render('login', { message });
     }
-    req.session.manguoidung = nguoidung.MaNguoiDung;
+    req.session.userId = user.UserId;
     res.redirect('/home');
 });
 
