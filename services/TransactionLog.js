@@ -1,37 +1,37 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const TinhTrangGiaoDich = require('./TinhTrangGiaoDich');
-const ChiTietGiaoDich = require('./ChiTietGiaoDich');
-const NguoiDung = require('./NguoiDung');
+const TransactionStatus = require('./TransactionStatus');
+const TransactionDetail = require('./TransactionDetail');
+const User = require('./User');
 
 const Model = Sequelize.Model;
 
-class GiaoDich extends Model {
+class TransactionLog extends Model {
 
     static async add(){
         
     }
 }
-GiaoDich.init({
+TransactionLog.init({
     // attributes
-    MaGiaoDich: {
+    TransactionId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
     },
-    NgayGiaoDich: {
+    TransactionDate: {
         type: Sequelize.DATE,
         allowNull: false,
     },
-    MaTTGiaoDich: {
+    TransactionStatusId: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    MaChiTietGiaoDich: {
+    TransactionDetailId: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    MaKhachHang: {
+    UserId: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
@@ -41,10 +41,10 @@ GiaoDich.init({
     },
 }, {
     sequelize: db,
-    modelName: 'GiaoDich',
+    modelName: 'TransactionLog',
     // options
 });
-TinhTrangGiaoDich.hasMany(GiaoDich, {foreignKey: 'MaTTGD'});
-ChiTietGiaoDich.hasMany(GiaoDich,{foreignKey:'MaChiTietGiaoDich'});
-NguoiDung.hasMany(GiaoDich,{foreignKey:'MaNguoiDung'});
-module.exports = GiaoDich;
+TransactionStatus.hasMany(TransactionLog, {foreignKey: 'TransactionStatusId'});
+TransactionDetail.hasMany(TransactionLog,{foreignKey:'TransactionDetailId'});
+User.hasMany(TransactionLog,{foreignKey:'UserId'});
+module.exports = TransactionLog;

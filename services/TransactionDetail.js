@@ -3,39 +3,39 @@ const db = require('./db');
 
 const Model = Sequelize.Model;
 
-class ChiTietGiaoDich extends Model {
+class TransactionDetail extends Model {
 
     static async add(){
         
     }
 }
-ChiTietGiaoDich.init({
+TransactionDetail.init({
     // attributes
-    MaChiTietGiaoDich: {
+    TransactionDetailId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
     },
-    NgayGiaoDich: {
+    TransactionDate: {
         type: Sequelize.DATE,
         allowNull: false,
     },
-    SoTien: {
+    TransactionAmount: {
         type: Sequelize.DOUBLE,
         allowNull: false,
         
     },
-    NoiDung: {
+    Content: {
         type: Sequelize.STRING,
         allowNull: false,
         
     },
-    NganHangThuHuong: {
+    BeneficiaryBank: {
         type: Sequelize.STRING,
         allowNull: false,
         
     },
-    NguoiThuHuong:{
+    BeneficiaryUser:{
         type:Sequelize.STRING,
         allowNull:false,
     },
@@ -45,8 +45,8 @@ ChiTietGiaoDich.init({
     },
 }, {
     sequelize: db,
-    modelName: 'ChiTietGiaoDich',
+    modelName: 'TransactionDetail',
     // options
 });
 
-module.exports = ChiTietGiaoDich;
+module.exports = TransactionDetail;

@@ -1,77 +1,75 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const NguoiDung = require('./NguoiDung');
-const NganHang = require('./NganHang');
-const GiaoDich = require('./GiaoDich');
-const LoaiTaiKhoan = require('./LoaiTaiKhoan');
-const TinhTrangTaiKhoan = require('./TinhTrangTaiKhoan');
+const User = require('./User');
+const Banking = require('./Banking');
+const TransactionLog = require('./TransactionLog');
+const AcountType = require('./AcountType');
+const AcountStatusType = require('./AcountStatusType');
 
 const Model = Sequelize.Model;
 
-class TaiKhoan extends Model {
-
+class Acount extends Model {
     static async add(){
-        
     }
 }
-TaiKhoan.init({
+Acount.init({
     // attributes
-    MaTaiKhoan: {
+    AcountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
     },
-    TenTaiKhoan: {
-        type: Sequelize.STRING,
+    CurrentBalance: {
+        type: Sequelize.DOUBLE,
         allowNull: false,
     },
-    NgayCap: {
+    ReleaseDate: {
         type: Sequelize.DATE,
         allowNull: true,
     },
-    NgayHetHan: {
+    ExpirationDate: {
         type: Sequelize.DATE,
         allowNull: true,
     },
-    MaKhachHang : {
+    UserId : {
         type: Sequelize.INTEGER,
     },
-    MaNganHang: {
+    BankId: {
         type: Sequelize.INTEGER,
     },
     
-    KiHan:{
+    DueDate:{
         type: Sequelize.DATE,
         allowNull: true,
     },
    
-    MaTinhTrang:{
+    AcountStatusTypeId:{
         type:Sequelize.INTEGER,
         allowNull:true,
     },
-    LaiSuat:{
+    InterestRate:{
         type:Sequelize.FLOAT,
         allowNull:true,
     },
-    LoaiTaiKhoan:{
+    AcountTypeId:{
         type:Sequelize.INTEGER,
         allowNull:true,
     },
-    MaGiaoDich:{
+    TransactionId:{
         type:Sequelize.STRING,
         allowNull:true,
     },
 
 }, {
     sequelize: db,
-    modelName: 'TaiKhoan',
+    modelName: 'Acount',
     // options
 });
-LoaiTaiKhoan.hasMany(TaiKhoan, {foreignKey: 'MaLoaiTaiKhoan'});
-NguoiDung.hasMany(TaiKhoan, {foreignKey: 'MaNguoiDung'});
-NganHang.hasMany(TaiKhoan, {foreignKey: 'MaNganHang'});
-TinhTrangTaiKhoan.hasMany(TaiKhoan, {foreignKey: 'MaTTTK'});
-GiaoDich.hasMany(TaiKhoan, {foreignKey: 'MaGiaoDich'});
+AcountType.hasMany(Acount, {foreignKey: 'AcountTypeId'});
+User.hasMany(Acount, {foreignKey: 'UserId'});
+Banking.hasMany(Acount, {foreignKey: 'BankId'});
+AcountStatusType.hasMany(Acount, {foreignKey: 'AcountStatusTypeId'});
+TransactionLog.hasMany(Acount, {foreignKey: 'TransactionId'});
 // Account.belongsTo(entities.LoaiTaiKhoan, {as: 'MaLoaiTaiKhoan'});
 
-module.exports = TaiKhoan;
+module.exports = Acount;
