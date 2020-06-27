@@ -1,5 +1,10 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
+const NguoiDung = require('./NguoiDung');
+const NganHang = require('./NganHang');
+const GiaoDich = require('./GiaoDich');
+const LoaiTaiKhoan = require('./LoaiTaiKhoan');
+const TinhTrangTaiKhoan = require('./TinhTrangTaiKhoan');
 
 const Model = Sequelize.Model;
 
@@ -63,6 +68,10 @@ TaiKhoan.init({
     // options
 });
 LoaiTaiKhoan.hasMany(TaiKhoan, {foreignKey: 'MaLoaiTaiKhoan'});
+NguoiDung.hasMany(TaiKhoan, {foreignKey: 'MaNguoiDung'});
+NganHang.hasMany(TaiKhoan, {foreignKey: 'MaNganHang'});
+TinhTrangTaiKhoan.hasMany(TaiKhoan, {foreignKey: 'MaTTTK'});
+GiaoDich.hasMany(TaiKhoan, {foreignKey: 'MaGiaoDich'});
 // Account.belongsTo(entities.LoaiTaiKhoan, {as: 'MaLoaiTaiKhoan'});
 
 module.exports = TaiKhoan;
