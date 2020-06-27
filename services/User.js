@@ -1,34 +1,34 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const TinhTrangKhachHang = require('./TinhTrangKhachHang');
-const LoaiNguoiDung = require('./LoaiNguoiDung');
+const UserStatus = require('./UserStatus');
+const UserType = require('./UserType');
 const Model = Sequelize.Model;
 
-class NguoiDung extends Model {
+class User extends Model {
 
     static async add(){
         
     }
 }
-NguoiDung.init({
+User.init({
     // attributes
-    MaNguoiDung: {
+    UserId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
     },
-    avatar: {
+    Avatar: {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    TenNguoiDung: {
+    UserName: {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    email : {
+    EmailAddress : {
         type: Sequelize.STRING,
     },
-    sdt: {
+    CellPhone: {
         type: Sequelize.INTEGER,
         allowNull: true,
     },
@@ -36,11 +36,11 @@ NguoiDung.init({
         type: Sequelize.INTEGER,
         allowNull: true,
     },
-    NgaySinh: {
+    DateOfBirth: {
         type: Sequelize.DATE,
         allowNull: true,
     },
-    DiaChi:{
+    Address:{
         type:Sequelize.STRING,
         allowNull:true,
     },
@@ -48,7 +48,7 @@ NguoiDung.init({
         type:Sequelize.STRING,
         allowNull:true,
     },
-    MatKhau:{
+    PassWord:{
         type:Sequelize.STRING,
         allowNull:true,
     },
@@ -63,10 +63,10 @@ NguoiDung.init({
 
 }, {
     sequelize: db,
-    modelName: 'NguoiDung',
+    modelName: 'User',
     // options
 });
 TinhTrangKhachHang.hasMany(NguoiDung, {foreignKey: 'MaTTKH'});
 LoaiNguoiDung.hasMany(NguoiDung,{foreignKey:'MaLoai'});
 
-module.exports = NguoiDung;
+module.exports = User;

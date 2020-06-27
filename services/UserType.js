@@ -3,27 +3,27 @@ const db = require('./db');
 
 const Model = Sequelize.Model;
 
-class LoaiTaiKhoan extends Model {
+class UserType extends Model {
 
     static async add(){
         
     }
 }
-LoaiTaiKhoan.init({
+UserType.init({
     // attributes
-    MaLoaiTaiKhoan: {
+    UserTypeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
     },
-    TenLoaiTaiKhoan: {
+    UserTypeDescription: {
         type: Sequelize.STRING,
         allowNull: false,
     },
 }, {
     sequelize: db,
-    modelName: 'LoaiTaiKhoan',
+    modelName: 'UserType',
     // options
 });
 
-module.exports = LoaiTaiKhoan;
+module.exports = UserType;

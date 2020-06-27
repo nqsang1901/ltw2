@@ -3,27 +3,27 @@ const db = require('./db');
 
 const Model = Sequelize.Model;
 
-class NganHang extends Model {
+class UserStatus extends Model {
 
     static async add(){
         
     }
 }
-NganHang.init({
+UserStatus.init({
     // attributes
-    MaNganHang: {
+    UserStatusId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
     },
-    TenNganHang: {
+    UserStatusDescription: {
         type: Sequelize.STRING,
         allowNull: false,
     },
 }, {
     sequelize: db,
-    modelName: 'NganHang',
+    modelName: 'UserStatus',
     // options
 });
 
-module.exports = NganHang;
+module.exports = UserStatus;

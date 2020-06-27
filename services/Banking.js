@@ -3,27 +3,27 @@ const db = require('./db');
 
 const Model = Sequelize.Model;
 
-class TinhTrangKhachHang extends Model {
+class Banking extends Model {
 
     static async add(){
         
     }
 }
-TinhTrangKhachHang.init({
+Banking.init({
     // attributes
-    MaTTKH: {
+    BankId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
     },
-    TenTinhTrang: {
+    BankName: {
         type: Sequelize.STRING,
         allowNull: false,
     },
 }, {
     sequelize: db,
-    modelName: 'TinhTrangKhachHang',
+    modelName: 'Banking',
     // options
 });
 
-module.exports = TinhTrangKhachHang;
+module.exports = Banking;
