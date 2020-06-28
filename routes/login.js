@@ -15,7 +15,7 @@ router.post('/', async function (req, res, next) {
         return res.render('login', { message });
     }
     req.session.userId = user.UserId;
-    res.redirect('/home');
+    res.redirect('/');
 });
 
 // router.get('/:id/:token', asyncHandler(async function (req, res) {

@@ -16,6 +16,12 @@ class User extends Model {
             }
         });
     }
+    static async numberOfUsers() {
+        return User.count();
+    }
+    static add(UserId, UserName, EmailAddress, PassWord, soCMND, DateOfBirth, Token) {
+        return User.create({ UserId, UserName, EmailAddress, PassWord, soCMND, DateOfBirth, Token});
+    }
     static hashPassword(password) {
         return bcrypt.hashSync(password, 10);
     }
@@ -32,18 +38,17 @@ User.init({
     },
     Avatar: {
         type: Sequelize.STRING,
-        allowNull: false,
     },
     UserName: {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    EmailAddress : {
+    EmailAddress: {
         type: Sequelize.STRING,
     },
-    PassWord:{
-        type:Sequelize.STRING,
-        allowNull:true,
+    PassWord: {
+        type: Sequelize.STRING,
+        allowNull: true,
     },
     CellPhone: {
         type: Sequelize.INTEGER,
@@ -57,21 +62,21 @@ User.init({
         type: Sequelize.DATE,
         allowNull: true,
     },
-    Address:{
-        type:Sequelize.STRING,
-        allowNull:true,
+    Address: {
+        type: Sequelize.STRING,
+        allowNull: true,
     },
-    Token:{
-        type:Sequelize.STRING,
-        allowNull:true,
+    Token: {
+        type: Sequelize.STRING,
+        allowNull: true,
     },
-    LoaiNguoiDung:{
-        type:Sequelize.INTEGER,
-        allowNull:true,
+    LoaiNguoiDung: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
     },
-    MaTinhTrang:{
-        type:Sequelize.STRING,
-        allowNull:true,
+    MaTinhTrang: {
+        type: Sequelize.STRING,
+        allowNull: true,
     },
 
 }, {

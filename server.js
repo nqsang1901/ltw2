@@ -24,6 +24,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', require('./routes/index'));
 app.use('/login', require('./routes/login'));
+app.use('/register', require('./routes/register'));
+app.get('/logout', require('./routes/logout'));
 
 app.use('/public',express.static(__dirname +'/public'));
 app.use('/images',express.static(__dirname +'/images'));
