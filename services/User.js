@@ -89,6 +89,10 @@ User.init({
     // options
 });
 // UserStatus.hasMany(NguoiDung, {foreignKey: 'MaTTKH'});
+UserStatus.hasMany(User, {foreignKey: 'UserStatusId', sourceKey: 'UserStatusId'});
+User.belongsTo(UserStatus, {foreignKey: 'UserStatusId', targetKey: 'UserStatusId'});
 // UserType.hasMany(NguoiDung,{foreignKey:'MaLoai'});
+UserType.hasMany(User, {foreignKey: 'UserTypeId', sourceKey: 'UserTypeId'});
+User.belongsTo(UserType, {foreignKey: 'UserTypeId', targetKey: 'UserTypeId'});
 
 module.exports = User;
