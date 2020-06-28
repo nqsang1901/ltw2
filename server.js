@@ -4,6 +4,8 @@ const cookieSession = require('cookie-session');
 const db = require('./services/db');
 const port = process.env.PORT || 3000;
 
+const path = require('path');
+
 const app = express();
 
 // Session
@@ -15,12 +17,10 @@ app.use(cookieSession({
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Middlewares
 app.use(require('./middlewares/auth'));
-
-
-app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', require('./routes/index'));
 app.use('/login', require('./routes/login'));

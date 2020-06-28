@@ -19,8 +19,8 @@ class User extends Model {
     static async numberOfUsers() {
         return User.count();
     }
-    static add(UserId, Avatar, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token) {
-        return User.create({ UserId, Avatar, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token});
+    static add(UserId, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token) {
+        return User.create({ UserId, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token});
     }
     static hashPassword(password) {
         return bcrypt.hashSync(password, 10);
