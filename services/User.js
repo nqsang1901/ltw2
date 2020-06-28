@@ -19,8 +19,8 @@ class User extends Model {
     static async numberOfUsers() {
         return User.count();
     }
-    static add(UserId, UserName, EmailAddress, PassWord, soCMND, DateOfBirth, Token) {
-        return User.create({ UserId, UserName, EmailAddress, PassWord, soCMND, DateOfBirth, Token});
+    static add(UserId, Avatar, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token) {
+        return User.create({ UserId, Avatar, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token});
     }
     static hashPassword(password) {
         return bcrypt.hashSync(password, 10);
@@ -54,9 +54,13 @@ User.init({
         type: Sequelize.INTEGER,
         allowNull: true,
     },
-    soCMND: {
+    IdentityImages: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    IdentityNumber: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
     },
     DateOfBirth: {
         type: Sequelize.DATE,
@@ -70,11 +74,11 @@ User.init({
         type: Sequelize.STRING,
         allowNull: true,
     },
-    LoaiNguoiDung: {
+    TypeUser: {
         type: Sequelize.INTEGER,
         allowNull: true,
     },
-    MaTinhTrang: {
+    UserStatusId: {
         type: Sequelize.STRING,
         allowNull: true,
     },

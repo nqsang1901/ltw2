@@ -25,7 +25,7 @@
                     <h3 class="panel-title">Please sign up</h3>
                 </div>
                 <div class="panel-body">
-                    <form method="POST" accept-charset="UTF-8" role="form">
+                    <form method="POST" accept-charset="UTF-8" role="form" enctype="multipart/form-data>
                         <fieldset>
                             <%= typeof(message) != "undefined" ? message : "" %>
                             <div class="form-group">
@@ -38,11 +38,12 @@
                                 <input class="form-control" placeholder="Password" id="password" name="password" type="password" value="">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Identity Card Number" id="IdentityCardNumber" name="IdentityCardNumber" type="text">
+                                <input class="form-control" placeholder="Identity Card Number" id="IdentityNumber" name="IdentityNumber" type="text">
                             </div>
                             <div class="form-group">
                                 <input class="form-control" placeholder="Date Of Birth (dd/MM/yyyy)" id="DateOfBirth" name="DateOfBirth" type="text">
                             </div>
+                            <input type="file" id="myFile" name="avatar" style="margin-bottom: 5px;">
                             <input class="btn btn-lg btn-success btn-block" type="submit" value="Tạo tài khoản mới">
                             <div>
                                 <hr width="90%" align="center">
