@@ -8,11 +8,11 @@ const AcountStatusType = require('./AcountStatusType');
 
 const Model = Sequelize.Model;
 
-class Acount extends Model {
+class Account extends Model {
     static async add(){
     }
 }
-Acount.init({
+Account.init({
     // attributes
     AcountId: {
         type: Sequelize.INTEGER,
@@ -60,14 +60,23 @@ Acount.init({
 
 }, {
     sequelize: db,
-    modelName: 'Acount',
+    modelName: 'Account',
     // options
 });
-AcountType.hasMany(Acount, {foreignKey: 'AcountTypeId'});
-User.hasMany(Acount, {foreignKey: 'UserId'});
-Banking.hasMany(Acount, {foreignKey: 'BankId'});
-AcountStatusType.hasMany(Acount, {foreignKey: 'AcountStatusTypeId'});
-TransactionLog.hasMany(Acount, {foreignKey: 'TransactionId'});
-// Account.belongsTo(entities.LoaiTaiKhoan, {as: 'MaLoaiTaiKhoan'});
+AcountType.hasMany(Account, {foreignKey: 'AcountTypeId', sourceKey: 'AcountTypeId'});
+Account.belongsTo(AcountType, {foreignKey: 'AcountTypeId', targetKey: 'AcountTypeId'});
 
-module.exports = Acount;
+User.hasMany(Account, {foreignKey: 'UserId', sourceKey: 'UserId'});
+Account.belongsTo(User, {foreignKey: 'UserId', targetKey: 'UserId'});
+
+Banking.hasMany(Account, {foreignKey: 'BankId', sourceKey: 'BankId'});
+Account.belongsTo(Banking, {foreignKey: 'BankId', targetKey: 'BankId'});
+
+AcountStatusType.hasMany(Account, {foreignKey: 'AcountStatusTypeId', sourceKey: 'AcountStatusTypeId'});
+Account.belongsTo(AcountStatusType, {foreignKey: 'AcountStatusTypeId', targetKey: 'AcountStatusTypeId'});
+
+TransactionLog.hasMany(Account, {foreignKey: 'TransactionId', sourceKey: 'TransactionId'});
+Account.belongsTo(TransactionLog, {foreignKey: 'TransactionId', targetKey: 'TransactionId'});
+
+
+module.exports = Account;
