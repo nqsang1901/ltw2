@@ -8,8 +8,8 @@ const mainFunCol1 = [
         alt: "First One"
     },
     {
-        name: "Thanh toán",
-        path: "",
+        name: "Đăng ký tài khoản",
+        path: "registeraccount",
         content: "If you wish to support TemplateMo website via PayPal, please feel free to contact us. We appreciate it a lot.",
         link: "Discover More",
         img: "/public/images/thanhtoan.png",

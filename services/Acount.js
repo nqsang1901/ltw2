@@ -4,6 +4,8 @@ const Banking = require('./Banking');
 const TransactionLog = require('./TransactionLog');
 const AcountType = require('./AcountType');
 const AcountStatusType = require('./AcountStatusType');
+const { findAll } = require('./UserStatus');
+const User = require('./User');
 
 const Model = Sequelize.Model;
 
@@ -16,21 +18,24 @@ class Account extends Model {
         });
     }
     static async findAcountByUserId(UserId) {
-        return Account.findOne({
+        return Account.findAll({
             where: {
                 UserId,
             }
         });
     }
-    static async findAcountTypeId() {
+    static async findAcountStatusTypeId(id) {
         return Account.findAll({
-            where: {
-                AcountTypeId: null,
-            }
+            where: {AcountStatusTypeId: 1},
+            include: [{
+                model: User,
+                where: {UserId: id},
+                required: false,
+            }]
         });
     }
-    static add(AcountId, CurrentBalance, ReleaseDate, UserId , BankId, ) {
-        return Account.create({AcountId, CurrentBalance, ReleaseDate, UserId , BankId, });
+    static add(AcountId, CurrentBalance, ReleaseDate, UserId , BankId, AcountStatusTypeId, AcountTypeId) {
+        return Account.create({AcountId, CurrentBalance, ReleaseDate, UserId , BankId, AcountStatusTypeId, AcountTypeId});
     }
 }
 Account.init({

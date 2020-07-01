@@ -30,24 +30,10 @@ router.get('/:id/:token', asyncHandler(async function (req, res) {
 
     var user = await User.findUserById(id);
     if (user && user.Token === token) {
-        user.Token = "";
+        user.Token = null;
         user.save();
     }
-
-    const acountcheck = await Acount.findAcountByUserId(id);
-    if(acountcheck) {
-        req.session.userId = id;
-        return res.redirect('/');
-    }
-    let AcountId;
-    while(true) {
-        AcountId = random.int(100000, 999999);
-        const acountcheck = await Acount.findAcountByAcountId(AcountId);
-        if(!acountcheck){
-            break;
-        }
-    }
-    const acount = await Acount.add(AcountId, 0, GetTime.getTheCurrentTime(), id, 1);
+    
     req.session.userId = id;
     res.redirect('/');
 }));

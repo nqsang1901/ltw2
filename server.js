@@ -29,6 +29,8 @@ app.get('/logout', require('./routes/logout'));
 app.use('/profile', require('./routes/profile'));
 app.use('/transfer', require('./routes/transfer'));
 app.use('/admin', require('./routes/admin'));
+app.use('/registeraccount', require('./routes/registeraccount'));
+
 
 app.use('/public',express.static(__dirname +'/public'));
 // app.use('/images',express.static(__dirname +'/'));
