@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 const TransactionStatus = require('./TransactionStatus');
 const TransactionDetail = require('./TransactionDetail');
-const User = require('./User');
+const Account = require('./Acount');
 
 const Model = Sequelize.Model;
 
@@ -23,18 +23,6 @@ TransactionLog.init({
         type: Sequelize.DATE,
         allowNull: false,
     },
-    TransactionStatusId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
-    TransactionDetailId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
-    UserId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
     BiXoa:{
         type:Sequelize.BOOLEAN,
         allowNull:false,
@@ -44,7 +32,7 @@ TransactionLog.init({
     modelName: 'TransactionLog',
     // options
 });
-TransactionStatus.hasMany(TransactionLog, {foreignKey: 'TransactionStatusId'});
-TransactionDetail.hasMany(TransactionLog,{foreignKey:'TransactionDetailId'});
-User.hasMany(TransactionLog,{foreignKey:'UserId'});
+TransactionStatus.hasMany(TransactionLog);
+TransactionDetail.hasMany(TransactionLog);
+Account.hasMany(TransactionLog);
 module.exports = TransactionLog;

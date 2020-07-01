@@ -74,25 +74,13 @@ User.init({
         type: Sequelize.STRING,
         allowNull: true,
     },
-    TypeUser: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-    },
-    UserStatusId: {
-        type: Sequelize.STRING,
-        allowNull: true,
-    },
 
 }, {
     sequelize: db,
     modelName: 'User',
     // options
 });
-// UserStatus.hasMany(NguoiDung, {foreignKey: 'MaTTKH'});
-UserStatus.hasMany(User, {foreignKey: 'UserStatusId', sourceKey: 'UserStatusId'});
-User.belongsTo(UserStatus, {foreignKey: 'UserStatusId', targetKey: 'UserStatusId'});
-// UserType.hasMany(NguoiDung,{foreignKey:'MaLoai'});
-UserType.hasMany(User, {foreignKey: 'UserTypeId', sourceKey: 'UserTypeId'});
-User.belongsTo(UserType, {foreignKey: 'UserTypeId', targetKey: 'UserTypeId'});
+UserStatus.hasMany(User);
+UserType.hasMany(User);
 
 module.exports = User;
