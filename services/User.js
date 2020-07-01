@@ -1,13 +1,17 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const UserStatus = require('./UserStatus');
 const bcrypt = require('bcrypt');
-const UserType = require('./UserType');
 const Model = Sequelize.Model;
+const UserStatus = require('./UserStatus');
+const UserType = require('./UserType');
 
 class User extends Model {
-    static async findUserById(id) {
-        return User.findByPk(id);
+    static async findUserById(UserId) {
+        return User.findOne({
+            where: {
+                UserId,
+            }
+        });
     }
     static async findUserByEmail(EmailAddress) {
         return User.findOne({
@@ -15,6 +19,10 @@ class User extends Model {
                 EmailAddress,
             }
         });
+    }
+    async chanceAvatar(Avatar) {
+        this.Avatar = Avatar;
+        return this.save();
     }
     static async numberOfUsers() {
         return User.count();
@@ -79,7 +87,7 @@ User.init({
         allowNull: true,
     },
     UserStatusId: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: true,
     },
 
@@ -88,11 +96,7 @@ User.init({
     modelName: 'User',
     // options
 });
-// UserStatus.hasMany(NguoiDung, {foreignKey: 'MaTTKH'});
-UserStatus.hasMany(User, {foreignKey: 'UserStatusId', sourceKey: 'UserStatusId'});
-User.belongsTo(UserStatus, {foreignKey: 'UserStatusId', targetKey: 'UserStatusId'});
-// UserType.hasMany(NguoiDung,{foreignKey:'MaLoai'});
-UserType.hasMany(User, {foreignKey: 'UserTypeId', sourceKey: 'UserTypeId'});
-User.belongsTo(UserType, {foreignKey: 'UserTypeId', targetKey: 'UserTypeId'});
+// User.hasOne(UserStatus, {foreignKey: 'UserStatusId', targetKey : 'UserStatusId'});
+// User.hasOne(UserType, {foreignKey: 'UserTypeId', targetKey : 'TypeUser'});
 
 module.exports = User;

@@ -1,0 +1,53 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+        rel="stylesheet">
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/templatemo-training-studio.css">
+</head>
+
+<body>
+    <header class="header-area header-sticky">
+        <div class="container">
+            <%- include('menu');  -%>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Thông tin User</h1>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <img src="public/uploads/<%= currentUser.Avatar %>" alt="" class="img-rounded img-responsive" />
+                        </div>
+                        <div class="col-sm-6 col-md-8">
+                            <h4><b><%= currentUser.UserName %></b></h4>
+                            <p>
+                                ID Acount: <%= currentUser.UserId %>
+                                <br />
+                                Email: </i> <%= currentUser.EmailAddress %>
+                                <br />
+                                Phone: </i> <%= currentUser.CellPhone %>
+                            <!-- Split button -->
+                            <form method="POST" enctype="multipart/form-data">
+                                <input type="file" id="myFile" name="avatar" style="margin-bottom: 5px;">
+                                <button type="submit" class="btn btn-success">Đăng hình</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+</html>
