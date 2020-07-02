@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
+const User = require('./User');
 
 const Model = Sequelize.Model;
 
@@ -25,5 +26,10 @@ UserType.init({
     modelName: 'UserType',
     // options
 });
+// User.hasOne(UserStatus, {foreignKey: 'UserStatusId', targetKey : 'UserStatusId'});
+// UserType.hasMany(User, {foreignKey: 'UserTypeId', targetKey : 'TypeUser'});
+
+// UserType.hasMany(User);
+// User.belongsTo(UserType);
 
 module.exports = UserType;
