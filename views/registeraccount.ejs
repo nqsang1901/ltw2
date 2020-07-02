@@ -34,17 +34,36 @@
     <section class="section" id="features">
         <div class="container">
             <div class="row">
-                <% acount.forEach(function(i) { %>
-                    <div class="card" style="width: 18rem;">
-                        <img src="" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                                the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                <% }) %>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên loại đăng ký</th>
+                            <th>Giới thiệu</th>
+                            <th>Đăng ký</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="active">
+                            <td> 1 </td>
+                            <td> Tài khoản thanh toán </td>
+                            <td> Giới thiệu thanh toán  </td>
+                            <td>
+                                <button type="button" onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/1'"
+                                    class="btn btn-success">Đăng  ký</button>
+                            </td>
+                        </tr>
+                        <tr class="defalut" >>
+                            <td> 2 </td>
+                            <td> Tài khoản tiết kiệm </td>
+                            <td> Giới thiệu tiết kiệm </td>
+                            <td>
+                                <button type="button" onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/2'"
+                                    class="btn btn-success">Đăng ký</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>

@@ -1,15 +1,41 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const User = require('./User');
 const Banking = require('./Banking');
 const TransactionLog = require('./TransactionLog');
 const AcountType = require('./AcountType');
 const AcountStatusType = require('./AcountStatusType');
+const { findAll } = require('./UserStatus');
+const User = require('./User');
 
 const Model = Sequelize.Model;
 
 class Account extends Model {
-    static async add(){
+    static async findAcountByAcountId(AcountId) {
+        return Account.findOne({
+            where: {
+                AcountId,
+            }
+        });
+    }
+    static async findAcountByUserId(UserId) {
+        return Account.findAll({
+            where: {
+                UserId,
+            }
+        });
+    }
+    static async findAcountStatusTypeId(id) {
+        return Account.findAll({
+            where: {AcountStatusTypeId: 1},
+            include: [{
+                model: User,
+                where: {UserId: id},
+                required: false,
+            }]
+        });
+    }
+    static add(AcountId, CurrentBalance, ReleaseDate, UserId , BankId, AcountStatusTypeId, AcountTypeId) {
+        return Account.create({AcountId, CurrentBalance, ReleaseDate, UserId , BankId, AcountStatusTypeId, AcountTypeId});
     }
 }
 Account.init({
@@ -30,12 +56,6 @@ Account.init({
     ExpirationDate: {
         type: Sequelize.DATE,
         allowNull: true,
-    },
-    UserId : {
-        type: Sequelize.INTEGER,
-    },
-    BankId: {
-        type: Sequelize.INTEGER,
     },
     DueDate:{
         type: Sequelize.DATE,

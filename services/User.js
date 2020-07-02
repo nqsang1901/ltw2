@@ -1,13 +1,17 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const UserStatus = require('./UserStatus');
 const bcrypt = require('bcrypt');
-const UserType = require('./UserType');
 const Model = Sequelize.Model;
+const UserStatus = require('./UserStatus');
+const UserType = require('./UserType');
 
 class User extends Model {
-    static async findUserById(id) {
-        return User.findByPk(id);
+    static async findUserById(UserId) {
+        return User.findOne({
+            where: {
+                UserId,
+            }
+        });
     }
     static async findUserByEmail(EmailAddress) {
         return User.findOne({
@@ -16,11 +20,15 @@ class User extends Model {
             }
         });
     }
+    async chanceAvatar(Avatar) {
+        this.Avatar = Avatar;
+        return this.save();
+    }
     static async numberOfUsers() {
         return User.count();
     }
-    static add(UserId, Avatar, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token) {
-        return User.create({ UserId, Avatar, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token});
+    static add(UserId, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token) {
+        return User.create({ UserId, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token});
     }
     static hashPassword(password) {
         return bcrypt.hashSync(password, 10);

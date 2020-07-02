@@ -1,6 +1,9 @@
 const { Router } = require('express');
 const asyncHandler = require('express-async-handler');
 const User = require('../services/User');
+const Acount = require('../services/Acount');
+const random = require('random');
+const GetTime = require("../services/GetTime");
 
 const router = new Router();
 
@@ -14,18 +17,25 @@ router.post('/', async function (req, res, next) {
         const message = "Tài khoản không tồn tại! Vui lòng đăng nhập lại!"
         return res.render('login', { message });
     }
+    if(user.TypeUser == 2) {
+        req.session.userId = user.UserId;
+        return res.redirect('/admin');
+    }
     req.session.userId = user.UserId;
     res.redirect('/');
 });
 
-// router.get('/:id/:token', asyncHandler(async function (req, res) {
-//     const { id, token } = req.params;
-//     var user = await User.findByID(id);
-//     if (user && user.token === token) {
-//         user.save();
-//     }
-//     req.session.userId = user.id;
-//     res.redirect('/articles');
-// }));
+router.get('/:id/:token', asyncHandler(async function (req, res) {
+    const { id, token } = req.params;
+
+    var user = await User.findUserById(id);
+    if (user && user.Token === token) {
+        user.Token = null;
+        user.save();
+    }
+    
+    req.session.userId = id;
+    res.redirect('/');
+}));
 
 module.exports = router;
