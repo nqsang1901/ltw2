@@ -1,12 +1,12 @@
 const { Router } = require('express');
-const Acount = require('../services/Acount');
+const Account = require('../services/Account');
 var dateFormat = require('dateformat');
 
 const router = new Router();
 
 router.get('/', async function index(req, res) {
-    const acount = await Acount.findAcountStatusTypeId();
-    res.render('admin', {acount, dateFormat});
+    const account = await Account.findAccountStatusTypeId();
+    res.render('admin', {account, dateFormat});
 });
 
 module.exports = router;

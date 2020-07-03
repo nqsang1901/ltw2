@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const asyncHandler = require('express-async-handler');
 const User = require('../services/User');
-const Acount = require('../services/Acount');
+const Account = require('../services/Account');
 const random = require('random');
 const GetTime = require("../services/GetTime");
 
@@ -13,29 +13,29 @@ router.get('/', function (req, res, next) {
 // saving account
 
 router.get('/:id/:AcountTypeId', asyncHandler(async function (req, res) {
-    const { id, AcountTypeId } = req.params;
+    const { id, AccountTypeId } = req.params;
 
-    const acountcheck = await Acount.findAcountByUserId(id);
+    const accountcheck = await Acount.findAccountByUserId(id);
     if (acountcheck[0]) {
-        if (acountcheck.length >= 2) {
+        if (accountcheck.length >= 2) {
             return res.redirect('/registeraccount');
         } else {
             // const checkAcountType = await acountcheck.for(acount => acount == AcountTypeId);
-            if (acountcheck[0].UserId == AcountTypeId) {
+            if (accountcheck[0].UserId == AccountTypeId) {
                 return res.redirect('/registeraccount');
             }
         }
     }
 
-    let AcountId; 0
+    let AccountId; 0
     while (true) {
-        AcountId = random.int(100000, 999999);
-        const acountcheck = await Acount.findAcountByAcountId(AcountId);
-        if (!acountcheck) {
+        AccountId = random.int(100000, 999999);
+        const accountcheck = await Account.findAccountByAcountId(AccountId);
+        if (!accountcheck) {
             break;
         }
     }
-    await Acount.add(AcountId, 0, GetTime.getTheCurrentTime(), id, 1, 1, AcountTypeId);
+    await Account.add(AccountId, 0, GetTime.getTheCurrentTime(), id, 1, 1, AccountTypeId);
     req.session.userId = id;
     res.redirect('/');
 }));

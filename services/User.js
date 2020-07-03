@@ -86,7 +86,7 @@ User.init({
         type: Sequelize.INTEGER,
         allowNull: true,
     },
-    UserStatusId: {
+    UserStatusId:{
         type: Sequelize.INTEGER,
         allowNull: true,
     },
