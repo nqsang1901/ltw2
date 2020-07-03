@@ -17,7 +17,7 @@ router.post('/', async function (req, res, next) {
         const message = "Tài khoản không tồn tại! Vui lòng đăng nhập lại!"
         return res.render('login', { message });
     }
-    if(user.TypeUser == 2) {
+    if(user.UserTypeId == 2) {
         req.session.userId = user.UserId;
         return res.redirect('/admin');
     }

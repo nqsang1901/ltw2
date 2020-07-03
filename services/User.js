@@ -28,7 +28,7 @@ class User extends Model {
         return User.count();
     }
     static add(UserId, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token) {
-        return User.create({ UserId, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token});
+        return User.create({ UserId, UserName, EmailAddress, PassWord, IdentityImages, IdentityNumber, DateOfBirth, Token, UserTypeId: 1, UserStatusId: 1});
     }
     static hashPassword(password) {
         return bcrypt.hashSync(password, 10);
@@ -82,7 +82,7 @@ User.init({
         type: Sequelize.STRING,
         allowNull: true,
     },
-    TypeUser: {
+    UserTypeId: {
         type: Sequelize.INTEGER,
         allowNull: true,
     },
@@ -90,13 +90,16 @@ User.init({
         type: Sequelize.INTEGER,
         allowNull: true,
     },
-
 }, {
     sequelize: db,
     modelName: 'User',
     // options
 });
-// User.hasOne(UserStatus, {foreignKey: 'UserStatusId', targetKey : 'UserStatusId'});
-// User.hasOne(UserType, {foreignKey: 'UserTypeId', targetKey : 'TypeUser'});
+
+User.belongsTo(UserStatus, {foreignKey: 'UserStatusId', targetKey: 'UserStatusId'});
+UserStatus.hasMany(User, {sourceKey: 'UserStatusId'});
+
+User.belongsTo(UserType, {foreignKey: 'UserTypeId', targetKey: 'UserTypeId'});
+UserType.hasMany(User, {sourceKey: 'UserTypeId'});
 
 module.exports = User;

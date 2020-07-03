@@ -5,8 +5,7 @@ var dateFormat = require('dateformat');
 const router = new Router();
 
 router.get('/', async function index(req, res) {
-    console.log(req.currentUser.UserId);
-    const acount = await Acount.findAcountStatusTypeId(req.currentUser.UserId);
+    const acount = await Acount.findAcountStatusTypeId();
     res.render('admin', {acount, dateFormat});
 });
 

@@ -24,12 +24,12 @@ class Account extends Model {
             }
         });
     }
-    static async findAcountStatusTypeId(id) {
+    static async findAcountStatusTypeId() {
         return Account.findAll({
             where: {AcountStatusTypeId: 1},
             include: [{
                 model: User,
-                where: {UserId: id},
+                where: {UserTypeId: null},
                 required: false,
             }]
         });
@@ -89,20 +89,8 @@ Account.init({
     modelName: 'Account',
     // options
 });
-// AcountType.hasMany(Account, {foreignKey: 'AcountTypeId', sourceKey: 'AcountTypeId'});
-// Account.belongsTo(AcountType, {foreignKey: 'AcountTypeId', targetKey: 'AcountTypeId'});
 
-// User.hasMany(Account, {foreignKey: 'UserId', sourceKey: 'UserId'});
-// Account.belongsTo(User, {foreignKey: 'UserId', targetKey: 'UserId'});
-
-// Banking.hasMany(Account, {foreignKey: 'BankId', sourceKey: 'BankId'});
-// Account.belongsTo(Banking, {foreignKey: 'BankId', targetKey: 'BankId'});
-
-// AcountStatusType.hasMany(Account, {foreignKey: 'AcountStatusTypeId', sourceKey: 'AcountStatusTypeId'});
-// Account.belongsTo(AcountStatusType, {foreignKey: 'AcountStatusTypeId', targetKey: 'AcountStatusTypeId'});
-
-// TransactionLog.hasMany(Account, {foreignKey: 'TransactionId', sourceKey: 'TransactionId'});
-// Account.belongsTo(TransactionLog, {foreignKey: 'TransactionId', targetKey: 'TransactionId'});
-
+Account.belongsTo(User, {foreignKey: 'UserId', targetKey: 'UserId'});
+User.hasMany(Account, {sourceKey: 'UserId'});
 
 module.exports = Account;
