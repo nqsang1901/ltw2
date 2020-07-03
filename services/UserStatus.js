@@ -26,8 +26,8 @@ UserStatus.init({
     modelName: 'UserStatus',
     // options
 });
-// User.belongsTo(UserStatus, {foreignKey: 'UserStatusId', targetKey  : 'UserStatusId'});
-// UserStatus.hasMany(User, {as: 'users', foreignKey: 'UserStatusId'});
+// User.belongsTo(UserStatus, {foreignKey: 'UserStatusId', targetKey  : 'StatusId'});
+// UserStatus.hasMany(User, {foreignKey: 'UserStatusId', sourceKey: 'StatusId'});
 
 // UserStatus.hasMany(User);
 // User.belongsTo(UserStatus);

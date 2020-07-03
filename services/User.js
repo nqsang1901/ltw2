@@ -82,13 +82,22 @@ User.init({
         type: Sequelize.STRING,
         allowNull: true,
     },
+    StatusId:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+    },
+    TypeId:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+    }
+
 
 }, {
     sequelize: db,
     modelName: 'User',
     // options
 });
-UserStatus.hasMany(User);
-UserType.hasMany(User);
+// UserStatus.hasMany(User);
+// UserType.hasMany(User);
 
 module.exports = User;

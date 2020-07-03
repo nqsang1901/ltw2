@@ -26,8 +26,8 @@ UserType.init({
     modelName: 'UserType',
     // options
 });
-// User.hasOne(UserStatus, {foreignKey: 'UserStatusId', targetKey : 'UserStatusId'});
-// UserType.hasMany(User, {foreignKey: 'UserTypeId', targetKey : 'TypeUser'});
+// User.belongsTo(UserType, {foreignKey: 'UserTypeId', targetKey : 'TypeId'});
+// UserType.hasMany(User, {foreignKey: 'UserTypeId', sourceKey : 'TypeId'});
 
 // UserType.hasMany(User);
 // User.belongsTo(UserType);

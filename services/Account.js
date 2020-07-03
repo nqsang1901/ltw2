@@ -1,32 +1,32 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const Banking = require('./Banking');
-const TransactionLog = require('./TransactionLog');
-const AcountType = require('./AcountType');
-const AcountStatusType = require('./AcountStatusType');
+// const Banking = require('./Banking');
+// const TransactionLog = require('./TransactionLog');
+// const AccountType = require('./AccountType');
+// const AccountStatusType = require('./AccountStatusType');
 const { findAll } = require('./UserStatus');
 const User = require('./User');
 
 const Model = Sequelize.Model;
 
 class Account extends Model {
-    static async findAcountByAcountId(AcountId) {
+    static async findAccountByAcountId(AccountId) {
         return Account.findOne({
             where: {
-                AcountId,
+                AccountId,
             }
         });
     }
-    static async findAcountByUserId(UserId) {
+    static async findAccountByUserId(UserId) {
         return Account.findAll({
             where: {
                 UserId,
             }
         });
     }
-    static async findAcountStatusTypeId(id) {
+    static async findAccountStatusTypeId(id) {
         return Account.findAll({
-            where: {AcountStatusTypeId: 1},
+            where: {AccountStatusTypeId: 1},
             include: [{
                 model: User,
                 where: {UserId: id},
@@ -34,16 +34,17 @@ class Account extends Model {
             }]
         });
     }
-    static add(AcountId, CurrentBalance, ReleaseDate, UserId , BankId, AcountStatusTypeId, AcountTypeId) {
-        return Account.create({AcountId, CurrentBalance, ReleaseDate, UserId , BankId, AcountStatusTypeId, AcountTypeId});
+    static add(AccountId, CurrentBalance, ReleaseDate, UserId , BankId, AccountStatusTypeId, AccountTypeId) {
+        return Account.create({AccountId, CurrentBalance, ReleaseDate, UserId , BankId, AccountStatusTypeId, AccountTypeId});
     }
 }
 Account.init({
     // attributes
-    AcountId: {
+    AccountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
+        // unique: true,
+        primaryKey: true,
     },
     CurrentBalance: {
         type: Sequelize.DOUBLE,
@@ -65,16 +66,22 @@ Account.init({
         type:Sequelize.FLOAT,
         allowNull:true,
     },
+    AccountStatusTypeId:{
+        type: Sequelize.INTEGER,
+    },
+    AccountTypeId:{
+        type: Sequelize.INTEGER,
+    }
 },
 {
     sequelize: db,
     modelName: 'Account',
     // options
 });
-AcountType.hasMany(Account);
-User.hasMany(Account);
-Banking.hasMany(Account);
-AcountStatusType.hasMany(Account);
-TransactionLog.hasMany(Account);
+// AcountType.hasMany(Account);
+// User.hasMany(Account);
+// Banking.hasMany(Account);
+// AcountStatusType.hasMany(Account);
+// TransactionLog.hasMany(Account);
 
 module.exports = Account;
