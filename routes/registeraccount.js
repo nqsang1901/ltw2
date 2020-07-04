@@ -12,16 +12,16 @@ router.get('/', function (req, res, next) {
 });
 // saving account
 
-router.get('/:id/:AcountTypeId', asyncHandler(async function (req, res) {
+router.get('/:id/:AccountTypeId', asyncHandler(async function (req, res) {
     const { id, AccountTypeId } = req.params;
 
-    const accountcheck = await Acount.findAccountByUserId(id);
-    if (acountcheck[0]) {
+    const accountcheck = await Account.findAccountByUserId(id);
+    if (accountcheck[0]) {
         if (accountcheck.length >= 2) {
             return res.redirect('/registeraccount');
         } else {
             // const checkAcountType = await acountcheck.for(acount => acount == AcountTypeId);
-            if (accountcheck[0].UserId == AccountTypeId) {
+            if (accountcheck[0].AccountTypeId == AccountTypeId) {
                 return res.redirect('/registeraccount');
             }
         }

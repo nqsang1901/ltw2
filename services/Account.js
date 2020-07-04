@@ -29,7 +29,6 @@ class Account extends Model {
             where: {AccountStatusTypeId: 1},
             include: [{
                 model: User,
-                where: {UserId: id},
                 required: false,
             }]
         });
@@ -45,6 +44,10 @@ Account.init({
         allowNull: false,
         // unique: true,
         primaryKey: true,
+    },
+    UserId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
     },
     CurrentBalance: {
         type: Sequelize.DOUBLE,
@@ -71,17 +74,16 @@ Account.init({
     },
     AccountTypeId:{
         type: Sequelize.INTEGER,
-    }
+    },
+
 },
 {
     sequelize: db,
     modelName: 'Account',
     // options
 });
-// AcountType.hasMany(Account);
-// User.hasMany(Account);
-// Banking.hasMany(Account);
-// AcountStatusType.hasMany(Account);
-// TransactionLog.hasMany(Account);
+
+Account.belongsTo(User, {foreignKey: 'UserId', targetKey: 'UserId'});
+User.hasMany(Account, {sourceKey: 'UserId'});
 
 module.exports = Account;
