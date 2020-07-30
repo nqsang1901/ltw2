@@ -20,6 +20,32 @@ class Account extends Model {
             where: { UserId },
         });
     }
+    static async transferIn(UserId, money, AccountId) {
+        const accountSend = await Account.findOne({
+            where: {
+                UserId,
+                AccountTypeId : 1,
+                AccountStatusTypeId: 2,
+                CurrentBalance: {
+                    [Sequelize.Op.gte]: money
+                }
+            },
+        });
+        const accountGet = await Account.findOne({
+            where: {
+                AccountId,
+            },
+        });
+        if(accountSend && accountGet) {
+            accountSend.CurrentBalance = accountSend.CurrentBalance - money;
+            accountGet.CurrentBalance = accountGet.CurrentBalance + money;
+            accountSend.save();
+            accountGet.save();
+
+            return true;
+        } 
+        return false;
+    }
     static async findAccountStatusTypeId() {
         return Account.findAll({
             where: { AccountStatusTypeId: 1 },
