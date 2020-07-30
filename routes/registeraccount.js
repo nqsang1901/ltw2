@@ -19,26 +19,26 @@ router.get('/:id/:AccountTypeId', asyncHandler(async function (req, res) {
     const { id, AccountTypeId } = req.params;
 
     const accountcheck = await Account.findAccountByUserId(id);
-    if (accountcheck[0]) {
+    if (accountcheck[0] != null) {
         if (accountcheck.length >= 2) {
             return res.redirect('/registeraccount');
         } else {
-            // const checkAcountType = await acountcheck.for(acount => acount == AcountTypeId);
             if (accountcheck[0].AccountTypeId == AccountTypeId) {
                 return res.redirect('/registeraccount');
             }
         }
     }
 
-    let AccountId; 0
+    var AccountId;
     while (true) {
-        AccountId = random.int(100000, 999999);
+        AccountId = await random.int(100000, 999999);
+        console.log(AccountId);
         const accountcheck = await Account.findAccountByAcountId(AccountId);
         if (!accountcheck) {
             break;
         }
     }
-    await Account.add(AccountId, 0, GetTime.getTheCurrentTime(), id, 1, 1, AccountTypeId);
+    await Account.add(AccountId, id, 0, new Date(GetTime.getTheCurrentTime()), 1, AccountTypeId);
     req.session.userId = id;
     res.redirect('/');
 }));

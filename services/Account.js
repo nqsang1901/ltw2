@@ -15,6 +15,11 @@ class Account extends Model {
             }]
         });
     }
+    static async findAccountByUserId(UserId) {
+        return Account.findAll({
+            where: { UserId },
+        });
+    }
     static async findAccountStatusTypeId() {
         return Account.findAll({
             where: { AccountStatusTypeId: 1 },
@@ -24,8 +29,8 @@ class Account extends Model {
             }]
         });
     }
-    static add(AccountId, CurrentBalance, ReleaseDate, UserId, BankId, AccountStatusTypeId, AccountTypeId) {
-        return Account.create({ AccountId, CurrentBalance, ReleaseDate, UserId, BankId, AccountStatusTypeId, AccountTypeId });
+    static add(AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId) {
+        return Account.create({ AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId });
     }
 }
 Account.init({
