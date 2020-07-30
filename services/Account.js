@@ -15,6 +15,11 @@ class Account extends Model {
             }]
         });
     }
+    static async findAllAccount() {
+        return Account.findAll({
+            
+        });
+    }
     static async findAccountByUserId(UserId) {
         return Account.findAll({
             where: { UserId },

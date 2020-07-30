@@ -13,6 +13,13 @@ class User extends Model {
             }
         });
     }
+    static async findAllUser() {
+        return User.findAll({
+            where: {
+                UserTypeId : 1,
+            }
+        });
+    }
     static async findUserByEmail(EmailAddress) {
         return User.findOne({
             where: {

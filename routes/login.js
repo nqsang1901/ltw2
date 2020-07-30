@@ -18,7 +18,7 @@ router.post('/', async function (req, res, next) {
     }
     if(user.UserTypeId == 2) {
         req.session.userId = user.UserId;
-        return res.redirect('/admin');
+        return res.redirect('/admin/user');
     }
     req.session.userId = user.UserId;
     res.redirect('/');
@@ -30,6 +30,7 @@ router.get('/:id/:token', asyncHandler(async function (req, res) {
     var user = await User.findUserById(id);
     if (user && user.Token === token) {
         user.Token = null;
+        user.UserStatusId = 2;
         user.save();
     }
     

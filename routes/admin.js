@@ -1,12 +1,18 @@
 const { Router } = require('express');
 const Account = require('../services/Account');
+const User = require('../services/User');
 var dateFormat = require('dateformat');
 
 const router = new Router();
 
-router.get('/', async function (req, res) {
-    const account = await Account.findAccountStatusTypeId();
-    res.render('admin', { account, dateFormat });
+router.get('/user', async function (req, res) {
+    const users = await User.findAllUser();
+    res.render('Admin/table', { users, dateFormat });
+});
+
+router.get('/account', async function (req, res) {
+    const accounts = await Account.findAllAccount();
+    res.render('Admin/index', { accounts, dateFormat });
 });
 
 router.get('/:AccountId/edit', async function (req, res) {
