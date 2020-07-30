@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 const TransactionStatus = require('./TransactionStatus');
 const TransactionDetail = require('./TransactionDetail');
-const Account = require('./Acount');
+const Account = require('./Account');
 
 const Model = Sequelize.Model;
 
