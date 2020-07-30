@@ -8,6 +8,9 @@ const GetTime = require("../services/GetTime");
 const router = new Router();
 
 router.get('/', function (req, res, next) {
+    if (!req.session.userId) {
+        res.redirect('/login');
+    }
     res.render('registeraccount');
 });
 // saving account

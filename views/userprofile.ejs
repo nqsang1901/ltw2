@@ -29,25 +29,34 @@
     </header>
 
     <!-- ***** Header Area End ***** -->
-
-    <!-- ***** Features Item Start ***** -->
-    <section class="section" id="features">
-        <div class="container">
-            <div class="row">
-                <% account.forEach(function(i) { %>
-                    <div class="card" style="width: 18rem;">
-                        <!-- <img src="" class="card-img-top" alt="..."> -->
-                        <div class="card-body">
-                            <h4 class="card-title"><%= i.User.UserName %> </h4>
-                            <h5 class="card-title"><%= i.AccountId %> </h5>
-                            <p class="card-text"><%= (i.AccountTypeId == 1 ? 'Đăng ký tài khoản thanh toán' : 'Đăng ký tài khoản tiết kiệm') %> </p>
-                            <a href="admin/<%= i.AccountId %>/edit" class="btn btn-primary">Xác nhận</a>
+    <div class="container">
+        <h1>Thông tin User</h1>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <img src="public/uploads/<%= account.User.IdentityImages %>" alt=""
+                                class="img-rounded img-responsive" />
+                        </div>
+                        <div class="col-sm-6 col-md-8">
+                            <h4><b><%= account.User.UserName %></b></h4>
+                            ID Acount: <%= account.User.UserId %>
+                            <br />
+                            Email: </i> <%= account.User.EmailAddress %>
+                            <br />
+                            Phone: </i> <%= account.User.CellPhone %>
+                            <br />
+                            <a href="http://localhost:3000/admin/<%= account.AccountId %>/edit/argee"><button>Đồng ý</button></a>
+                            <a href="http://localhost:3000/admin"><button>Quay lại</button></a>
                         </div>
                     </div>
-                <% }) %>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+    <!-- ***** Features Item Start ***** -->
+
     <footer>
         <div class="container">
             <div class="row">
