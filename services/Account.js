@@ -4,6 +4,7 @@ const { findAll } = require('./UserStatus');
 const User = require('./User');
 const AccountStatusType = require('./AccountStatusType');
 const AccountType = require('./AccountType');
+const Maturity = require('./Maturity');
 const Model = Sequelize.Model;
 
 class Account extends Model {
@@ -112,6 +113,17 @@ Account.init({
         type: Sequelize.FLOAT,
         allowNull: true,
     },
+    SavingMoney: {
+        type: Sequelize.FLOAT,
+        allowNull: true,
+    },
+    MoneyInterest: {
+        type: Sequelize.FLOAT,
+        allowNull: true,
+    },
+    MaturityId : {
+        type: Sequelize.INTEGER,
+    },
     AccountStatusTypeId: {
         type: Sequelize.INTEGER,
     },
@@ -138,6 +150,8 @@ AccountType.hasMany(Account, {sourceKey: 'AccountTypeId'});
 Account.belongsTo(AccountStatusType, {foreignKey: 'AccountStatusTypeId', targetKey: 'AccountStatusTypeId'});
 AccountStatusType.hasMany(Account, { sourceKey: 'AccountStatusTypeId'});
 
+Account.belongsTo(Maturity, {foreignKey: 'MaturityId', targetKey: 'MaturityId'});
+Maturity.hasMany(Account, { sourceKey: 'MaturityId'});
 // AccountType.belongsTo(Account, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
 // Account.hasMany(AccountType, {sourceKey: 'AccountTypeId'});
 
