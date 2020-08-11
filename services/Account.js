@@ -85,7 +85,7 @@ Account.init({
     AccountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // unique: true,
+        //unique: true,
         primaryKey: true,
     },
     UserId: {
