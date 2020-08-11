@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const Account = require('../services/Account');
 const User = require('../services/User');
-// const TransactionLog = require('./TransactionLog');
+const TransactionLog = require('../services/TransactionLog');
 
 var dateFormat = require('dateformat');
 

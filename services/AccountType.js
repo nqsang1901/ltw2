@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const Account = require('./Account');
 const Model = Sequelize.Model;
 
 class AccountType extends Model {
@@ -15,7 +14,7 @@ AccountType.init({
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
-        unique: true,
+        // unique: true,
     },
     AccountTypeDescription: {
         type: Sequelize.STRING,
@@ -26,5 +25,4 @@ AccountType.init({
     modelName: 'AccountType',
     // options
 });
-
 module.exports = AccountType;

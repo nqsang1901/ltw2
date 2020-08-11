@@ -6,9 +6,8 @@ const Account = require('./Account');
 
 class TransactionLog extends Model {
 
-    // static async add(TransactionId,AccountId,TransactionDetailId,TransactionStatusId,BiXoa){
-    //     return TransactionLog.create(TransactionId,AccountId,TransactionDetailId,TransactionStatusId,BiXoa);
-    // }
+    static async add(){
+    }
 }
 TransactionLog.init({
     // attributes
@@ -42,7 +41,7 @@ TransactionLog.init({
 });
 
 TransactionLog.belongsTo(Account, { foreignKey: 'AccountId', targetKey: 'AccountId' });
-Account.hasMany(TransactionLog, { sourceKey: 'AccountId' });
+Account.hasOne(TransactionLog, { sourceKey: 'AccountId' });
 
 TransactionLog.belongsTo(TransactionStatus, {foreignKey: 'TransactionStatusId', targetKey: 'TransactionStatusId'});
 TransactionStatus.hasMany(TransactionLog, { sourceKey: 'TransactionStatusId'});

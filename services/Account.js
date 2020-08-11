@@ -1,11 +1,16 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const { findAll } = require('./UserStatus');
+// const { findAll } = require('./UserStatus');
+const Model = Sequelize.Model;
 const User = require('./User');
 const AccountStatusType = require('./AccountStatusType');
 const AccountType = require('./AccountType');
+<<<<<<< HEAD
 const Maturity = require('./Maturity');
 const Model = Sequelize.Model;
+=======
+
+>>>>>>> 48e08bb8a62e44fd1077db1329e3954bda50dfa7
 
 class Account extends Model {
     static async findAccountByAcountId(AccountId) {
@@ -77,8 +82,8 @@ class Account extends Model {
         account.save();
         return true;
     }
-    static add(AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId) {
-        return Account.create({ AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId });
+    static add(AccountId, CurrentBalance, ReleaseDate) {
+        return Account.create({ AccountId,  CurrentBalance, ReleaseDate });
     }
 }
 Account.init({
@@ -126,9 +131,11 @@ Account.init({
     },
     AccountStatusTypeId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
     },
     AccountTypeId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
     },
 
 },
@@ -137,9 +144,6 @@ Account.init({
         modelName: 'Account',
         // options
     });
-
-// Account.belongsTo(User, { foreignKey: 'UserId', targetKey: 'UserId' });
-// User.hasMany(Account, { sourceKey: 'UserId' });
 
 Account.belongsTo(User, { foreignKey: 'UserId', targetKey: 'UserId' });
 User.hasMany(Account, { sourceKey: 'UserId' });
