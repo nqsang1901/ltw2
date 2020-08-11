@@ -2,7 +2,8 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 const { findAll } = require('./UserStatus');
 const User = require('./User');
-
+const AccountStatusType = require('./AccountStatusType');
+const AccountType = require('./AccountType');
 const Model = Sequelize.Model;
 
 class Account extends Model {
@@ -60,6 +61,21 @@ class Account extends Model {
             }]
         });
     }
+    static async rechargeAccount(money, AccountId) {
+        if(money%1000!= 0)
+        {
+            return false;
+        }
+        const account = await Account.findOne({
+            where: {
+                AccountId, 
+            },
+            
+        });
+        account.CurrentBalance = account.CurrentBalance + money;
+        account.save();
+        return true;
+    }
     static add(AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId) {
         return Account.create({ AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId });
     }
@@ -69,8 +85,8 @@ Account.init({
     AccountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // unique: true,
         primaryKey: true,
+        unique: true,
     },
     UserId: {
         type: Sequelize.INTEGER,
@@ -110,7 +126,22 @@ Account.init({
         // options
     });
 
+// Account.belongsTo(User, { foreignKey: 'UserId', targetKey: 'UserId' });
+// User.hasMany(Account, { sourceKey: 'UserId' });
+
 Account.belongsTo(User, { foreignKey: 'UserId', targetKey: 'UserId' });
 User.hasMany(Account, { sourceKey: 'UserId' });
+
+Account.belongsTo(AccountType, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
+AccountType.hasMany(Account, {sourceKey: 'AccountTypeId'});
+
+Account.belongsTo(AccountStatusType, {foreignKey: 'AccountStatusTypeId', targetKey: 'AccountStatusTypeId'});
+AccountStatusType.hasMany(Account, { sourceKey: 'AccountStatusTypeId'});
+
+// AccountType.belongsTo(Account, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
+// Account.hasMany(AccountType, {sourceKey: 'AccountTypeId'});
+
+// AccountStatusType.belongsTo(Account, {foreignKey: 'AccountStatusTypeId', targetKey: 'AccountStatusTypeId'});
+// Account.hasMany(AccountStatusType, { sourceKey: 'AccountStatusTypeId'});
 
 module.exports = Account;

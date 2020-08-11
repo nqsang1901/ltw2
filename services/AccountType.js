@@ -14,8 +14,8 @@ AccountType.init({
     AccountTypeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // unique: true,
         primaryKey: true,
+        unique: true,
     },
     AccountTypeDescription: {
         type: Sequelize.STRING,
@@ -26,6 +26,5 @@ AccountType.init({
     modelName: 'AccountType',
     // options
 });
-AccountType.hasMany(Account, {foreignKey: 'AccountTypeId', sourceKey: 'AccountTypeId'});
-Account.belongsTo(AccountType, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
+
 module.exports = AccountType;

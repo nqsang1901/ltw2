@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Bootstrap Metro Dashboard by Dennis Ji for ARM demo</title>
+	<title>Recharrge Account</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- start: CSS -->
 	<link id="bootstrap-style" href="css/bootstrap.min.css" rel="stylesheet">
@@ -103,16 +103,9 @@
 												<span class="label label-warning"><%= ( i.AccountTypeId == 1 ? 'Tài khoản thanh toán' : 'Tài khoản tiết kiệm') %></span>
 											</td>
 											<td class="center">
-												<a class="btn btn-success" href="#">
+												<a class="btn btn-success" href="rechargeAccount/<%= i.AccountId %>">
 													<i class="halflings-icon white zoom-in"></i>
-												</a>
-												<a class="btn btn-info" href="#">
-													<i class="halflings-icon white edit"></i>
-												</a>
-												<a class="btn btn-danger" href="#">
-													<i class="halflings-icon white trash"></i>
-	
-												</a>
+												</a>							
 											</td>
 										</tr>
 									<% }) %> 	

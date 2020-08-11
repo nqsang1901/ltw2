@@ -17,8 +17,8 @@ AccountStatusType.init({
     AccountStatusTypeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // unique: true,
         primaryKey: true,
+        unique: true,
     },
     AccountStatusDescription: {
         type: Sequelize.STRING,
@@ -29,6 +29,5 @@ AccountStatusType.init({
     modelName: 'AccountStatusType',
     // options
 });
-AccountStatusType.hasMany(Account, {foreignKey: 'AccountStatusTypeId', sourceKey: 'AccountStatusTypeId'});
-Account.belongsTo(AccountStatusType, {foreignKey: 'AccountStatusTypeId', targetKey: 'AccountStatusTypeId'});
+
 module.exports = AccountStatusType;

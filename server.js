@@ -34,9 +34,9 @@ app.use('/registeraccount', require('./routes/registeraccount'));
 
 app.use('/public',express.static(__dirname +'/public'));
 app.use('/admin',express.static(__dirname +'/views/Admin'));
-app.use(express.static(__dirname + '/views/Admin'));
-// app.use('/images',express.static(__dirname +'/'));
-// app.use('/images',express.static(__dirname +'/images'));
+app.use('/admin/rechargeAccount',express.static(__dirname +'/views/Admin'));
+
+
 app.use(express.static('public'));
 
 db.sync().then(function () {
