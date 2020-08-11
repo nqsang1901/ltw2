@@ -6,7 +6,6 @@ const Model = Sequelize.Model;
 class TransactionDetail extends Model {
 
     static async add(){
-        
     }
 }
 TransactionDetail.init({
@@ -14,7 +13,7 @@ TransactionDetail.init({
     TransactionDetailId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
+        primaryKey: true,
     },
     TransactionDate: {
         type: Sequelize.DATE,
@@ -23,17 +22,14 @@ TransactionDetail.init({
     TransactionAmount: {
         type: Sequelize.DOUBLE,
         allowNull: false,
-        
     },
     Content: {
         type: Sequelize.STRING,
         allowNull: false,
-        
     },
     BeneficiaryBank: {
         type: Sequelize.STRING,
         allowNull: false,
-        
     },
     BeneficiaryUser:{
         type:Sequelize.STRING,
@@ -48,5 +44,4 @@ TransactionDetail.init({
     modelName: 'TransactionDetail',
     // options
 });
-
 module.exports = TransactionDetail;

@@ -5,7 +5,8 @@ const Model = Sequelize.Model;
 
 class TransactionStatus extends Model {
 
-    static async add(){
+    static async add()
+    {
         
     }
 }
@@ -14,7 +15,7 @@ TransactionStatus.init({
     TransactionStatusId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
+        primaryKey: true,
     },
     TransactionStatusDescription: {
         type: Sequelize.STRING,

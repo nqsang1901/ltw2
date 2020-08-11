@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const Account = require('../services/Account');
 const User = require('../services/User');
+// const TransactionLog = require('./TransactionLog');
+
 var dateFormat = require('dateformat');
 
 const router = new Router();
@@ -13,6 +15,36 @@ router.get('/user', async function (req, res) {
 router.get('/account', async function (req, res) {
     const accounts = await Account.findAllAccount();
     res.render('Admin/index', { accounts, dateFormat });
+});
+
+router.get('/recharge', async function (req, res) {
+    const accounts = await Account.findAllAccount();
+    res.render('Admin/recharge', { accounts, dateFormat });
+});
+
+router.get('/rechargeAccount/:AccountId', async function (req, res) {
+    const { AccountId } = req.params;
+    console.log(AccountId);
+    const accounts = await Account.findAccountByAcountId(AccountId);
+    console.log(accounts);
+
+    res.render('Admin/rechargeAccount', { accounts, dateFormat });
+
+});
+
+router.post('/rechargeAccount/:AccountId', async function (req, res) {
+    const { AccountId } = req.params;
+    const money = parseFloat(req.body.moneyInput, 10);
+    console.log(AccountId);
+    console.log(req.body.moneyInput);
+    const recharge = await Account.rechargeAccount(money, parseInt(AccountId, 10));
+    if (recharge == false) {
+        const message = "Số tiền không hợp lệ!"
+        const accounts = await Account.findAccountByAcountId(AccountId);
+
+        res.render('Admin/rechargeAccount', { accounts, dateFormat, message });
+    }
+    res.redirect('/admin/recharge');
 });
 
 router.get('/:AccountId/edit', async function (req, res) {

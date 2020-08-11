@@ -26,6 +26,5 @@ AccountType.init({
     modelName: 'AccountType',
     // options
 });
-AccountType.hasMany(Account, {foreignKey: 'AccountTypeId', sourceKey: 'AccountTypeId'});
-Account.belongsTo(AccountType, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
+
 module.exports = AccountType;
