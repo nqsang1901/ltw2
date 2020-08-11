@@ -16,6 +16,7 @@ TransactionStatus.init({
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
+        unique: true,
     },
     TransactionStatusDescription: {
         type: Sequelize.STRING,

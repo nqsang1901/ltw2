@@ -13,7 +13,8 @@ AccountType.init({
     AccountTypeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
+        primaryKey: true,
+        // unique: true,
     },
     AccountTypeDescription: {
         type: Sequelize.STRING,

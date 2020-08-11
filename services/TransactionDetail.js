@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
+const TransactionLog = require('./TransactionLog');
 
 const Model = Sequelize.Model;
 
@@ -14,6 +15,7 @@ TransactionDetail.init({
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
+        unique: true,
     },
     TransactionDate: {
         type: Sequelize.DATE,
@@ -44,4 +46,8 @@ TransactionDetail.init({
     modelName: 'TransactionDetail',
     // options
 });
+
+TransactionDetail.belongsTo(TransactionLog, {foreignKey: 'TransactionDetailId', targetKey: 'TransactionDetailId'});
+TransactionLog.hasOne(TransactionDetail, { sourceKey: 'TransactionDetailId'});
+
 module.exports = TransactionDetail;

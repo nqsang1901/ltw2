@@ -86,8 +86,8 @@ Account.init({
     AccountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
         unique: true,
-
     },
     UserId: {
         type: Sequelize.INTEGER,
@@ -132,9 +132,16 @@ Account.init({
 Account.belongsTo(User, { foreignKey: 'UserId', targetKey: 'UserId' });
 User.hasMany(Account, { sourceKey: 'UserId' });
 
-AccountType.belongsTo(Account, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
-Account.hasMany(AccountType, {sourceKey: 'AccountTypeId'});
+Account.belongsTo(AccountType, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
+AccountType.hasMany(Account, {sourceKey: 'AccountTypeId'});
 
-AccountStatusType.belongsTo(Account, {foreignKey: 'AccountStatusTypeId', targetKey: 'AccountStatusTypeId'});
-Account.hasMany(AccountStatusType, { sourceKey: 'AccountStatusTypeId'});
+Account.belongsTo(AccountStatusType, {foreignKey: 'AccountStatusTypeId', targetKey: 'AccountStatusTypeId'});
+AccountStatusType.hasMany(Account, { sourceKey: 'AccountStatusTypeId'});
+
+// AccountType.belongsTo(Account, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
+// Account.hasMany(AccountType, {sourceKey: 'AccountTypeId'});
+
+// AccountStatusType.belongsTo(Account, {foreignKey: 'AccountStatusTypeId', targetKey: 'AccountStatusTypeId'});
+// Account.hasMany(AccountStatusType, { sourceKey: 'AccountStatusTypeId'});
+
 module.exports = Account;
