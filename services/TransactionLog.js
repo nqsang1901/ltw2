@@ -2,7 +2,6 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 const Model = Sequelize.Model;
 const TransactionStatus = require('./TransactionStatus');
-const TransactionDetail = require('./TransactionDetail');
 const Account = require('./Account');
 
 class TransactionLog extends Model {
@@ -17,6 +16,7 @@ TransactionLog.init({
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
+        unique: true,
     },
     AccountId: {
         type: Sequelize.INTEGER,
@@ -40,12 +40,11 @@ TransactionLog.init({
     modelName: 'TransactionLog',
     // options
 });
-Account.belongsTo(TransactionLog, { foreignKey: 'AccountId', targetKey: 'AccountId' });
-TransactionLog.hasMany(Account, { sourceKey: 'AccountId' });
 
-TransactionLog.belongsTo(TransactionDetail, {foreignKey: 'TransactionDetailId', targetKey: 'TransactionDetailId'});
-TransactionDetail.hasMany(TransactionLog, { sourceKey: 'TransactionDetailId'});
+TransactionLog.belongsTo(Account, { foreignKey: 'AccountId', targetKey: 'AccountId' });
+Account.hasMany(TransactionLog, { sourceKey: 'AccountId' });
 
 TransactionLog.belongsTo(TransactionStatus, {foreignKey: 'TransactionStatusId', targetKey: 'TransactionStatusId'});
 TransactionStatus.hasMany(TransactionLog, { sourceKey: 'TransactionStatusId'});
+
 module.exports = TransactionLog;

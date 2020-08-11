@@ -49,6 +49,7 @@ User.init({
     UserId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
         unique: true,
     },
     Avatar: {
