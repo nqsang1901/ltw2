@@ -77,7 +77,7 @@ Account.init({
         allowNull: false,
     },
     CurrentBalance: {
-        type: Sequelize.DOUBLE,
+        type: Sequelize.FLOAT,
         allowNull: false,
     },
     ReleaseDate: {
@@ -92,7 +92,7 @@ Account.init({
         type: Sequelize.DATE,
         allowNull: true,
     },
-    InterestRate: {
+    BankInterest: {
         type: Sequelize.FLOAT,
         allowNull: true,
     },
