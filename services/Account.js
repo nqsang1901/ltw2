@@ -1,10 +1,11 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const { findAll } = require('./UserStatus');
+// const { findAll } = require('./UserStatus');
+const Model = Sequelize.Model;
 const User = require('./User');
 const AccountStatusType = require('./AccountStatusType');
 const AccountType = require('./AccountType');
-const Model = Sequelize.Model;
+
 
 class Account extends Model {
     static async findAccountByAcountId(AccountId) {
@@ -76,8 +77,8 @@ class Account extends Model {
         account.save();
         return true;
     }
-    static add(AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId) {
-        return Account.create({ AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId });
+    static add(AccountId, CurrentBalance, ReleaseDate) {
+        return Account.create({ AccountId,  CurrentBalance, ReleaseDate });
     }
 }
 Account.init({
@@ -85,8 +86,8 @@ Account.init({
     AccountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // unique: true,
-        primaryKey: true,
+        unique: true,
+
     },
     UserId: {
         type: Sequelize.INTEGER,
@@ -114,9 +115,11 @@ Account.init({
     },
     AccountStatusTypeId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
     },
     AccountTypeId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
     },
 
 },
@@ -126,17 +129,9 @@ Account.init({
         // options
     });
 
-// Account.belongsTo(User, { foreignKey: 'UserId', targetKey: 'UserId' });
-// User.hasMany(Account, { sourceKey: 'UserId' });
-
 Account.belongsTo(User, { foreignKey: 'UserId', targetKey: 'UserId' });
 User.hasMany(Account, { sourceKey: 'UserId' });
 
-// Account.belongsTo(AccountType, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
-// AccountType.hasMany(Account, {sourceKey: 'AccountTypeId'});
-
-// Account.belongsTo(AccountStatusType, {foreignKey: 'AccountStatusTypeId', targetKey: 'AccountStatusTypeId'});
-// AccountStatusType.hasMany(Account, { sourceKey: 'AccountStatusTypeId'});
 AccountType.belongsTo(Account, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
 Account.hasMany(AccountType, {sourceKey: 'AccountTypeId'});
 
