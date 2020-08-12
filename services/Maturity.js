@@ -3,7 +3,7 @@ const db = require('./db');
 
 const Model = Sequelize.Model;
 
-class TransactionStatus extends Model {
+class Maturity extends Model {
 
     static async add()
     {
@@ -28,4 +28,4 @@ Maturity.init({
     // options
 });
 
-module.exports = TransactionStatus;
+module.exports = Maturity;

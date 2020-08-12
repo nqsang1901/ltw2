@@ -6,7 +6,17 @@ const Account = require('./Account');
 
 class TransactionLog extends Model {
 
-    static async add(){
+    static async add(TransactionId,AccountId,TransactionDetailId,TransactionStatusId,BiXoa){
+        return TransactionLog.create({TransactionId,AccountId,TransactionDetailId,TransactionStatusId,BiXoa});
+    }
+    static async findAllTransactionLog() {
+        return TransactionLog.findAll({  
+        });
+    }
+    static async findTransactionLogByAccountId(AccountId) {
+        return TransactionLog.findAll({
+            where: { AccountId },
+        });
     }
 }
 TransactionLog.init({

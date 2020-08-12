@@ -16,7 +16,7 @@ AccountStatusType.init({
     AccountStatusTypeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
+        //primaryKey: true,
         unique: true,
     },
     AccountStatusDescription: {

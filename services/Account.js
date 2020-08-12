@@ -5,12 +5,7 @@ const Model = Sequelize.Model;
 const User = require('./User');
 const AccountStatusType = require('./AccountStatusType');
 const AccountType = require('./AccountType');
-<<<<<<< HEAD
 const Maturity = require('./Maturity');
-const Model = Sequelize.Model;
-=======
-
->>>>>>> 48e08bb8a62e44fd1077db1329e3954bda50dfa7
 
 class Account extends Model {
     static async findAccountByAcountId(AccountId) {
@@ -92,7 +87,7 @@ Account.init({
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
-        unique: true,
+        //unique: true,
     },
     UserId: {
         type: Sequelize.INTEGER,
@@ -114,21 +109,22 @@ Account.init({
         type: Sequelize.DATE,
         allowNull: true,
     },
-    BankInterest: {
-        type: Sequelize.FLOAT,
-        allowNull: true,
-    },
-    SavingMoney: {
-        type: Sequelize.FLOAT,
-        allowNull: true,
-    },
-    MoneyInterest: {
-        type: Sequelize.FLOAT,
-        allowNull: true,
-    },
-    MaturityId : {
-        type: Sequelize.INTEGER,
-    },
+    // BankInterest: {
+    //     type: Sequelize.FLOAT,
+    //     allowNull: true,
+    // },
+    // SavingMoney: {
+    //     type: Sequelize.FLOAT,
+    //     allowNull: true,
+    // },
+    // MoneyInterest: {
+    //     type: Sequelize.FLOAT,
+    //     allowNull: true,
+    // },
+    // MaturityId : {
+    //     type: Sequelize.INTEGER,
+    //     allowNull: true,
+    // },
     AccountStatusTypeId: {
         type: Sequelize.INTEGER,
         allowNull: true,
