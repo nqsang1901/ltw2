@@ -28,6 +28,7 @@ class Account extends Model {
         });
     }
     static async transferIn(UserId, money, AccountId) {
+        console.log(UserId, money, AccountId);
         const accountSend = await Account.findOne({
             where: {
                 UserId,
