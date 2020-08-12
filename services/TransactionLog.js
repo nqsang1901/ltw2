@@ -13,6 +13,16 @@ class TransactionLog extends Model {
 
     static async add(TransactionId, UserId, AccountId, TransactionStatusId) {
         return TransactionLog.create({ TransactionId, UserId, AccountId, TransactionStatusId });
+
+    }
+    static async findAllTransactionLog() {
+        return TransactionLog.findAll({
+        });
+    }
+    static async findTransactionLogByAccountId(AccountId) {
+        return TransactionLog.findAll({
+            where: { AccountId },
+        });
     }
 }
 TransactionLog.init({
@@ -53,7 +63,7 @@ TransactionLog.init({
 // Account.hasMany(TransactionLog, { sourceKey: 'AccountId' });
 
 TransactionLog.belongsTo(User, { foreignKey: 'UserId', targetKey: 'UserId' });
-User.hasMany(TransactionLog, {sourceKey: 'UserId'});
+User.hasMany(TransactionLog, { sourceKey: 'UserId' });
 
 TransactionLog.belongsTo(TransactionStatus, { foreignKey: 'TransactionStatusId', targetKey: 'TransactionStatusId' });
 TransactionStatus.hasMany(TransactionLog, { sourceKey: 'TransactionStatusId' });
