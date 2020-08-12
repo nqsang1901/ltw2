@@ -6,6 +6,10 @@ const User = require('./User');
 const AccountStatusType = require('./AccountStatusType');
 const AccountType = require('./AccountType');
 const Maturity = require('./Maturity');
+<<<<<<< HEAD
+const Model = Sequelize.Model;
+=======
+>>>>>>> 1eac18eaca76b3547b0c91fc1b27aa0e2985fc87
 
 class Account extends Model {
     static async findAccountByAcountId(AccountId) {
@@ -53,6 +57,68 @@ class Account extends Model {
         }
         return false;
     }
+    //Ham xu li gui tien 
+    static async Deposit(UserId,AccountId, money,interest) {
+        const account = await Account.findOne({
+            where: {
+                UserId,
+                AccountId,
+                AccountTypeId : 2,
+                AccountStatusTypeId: 2,
+                CurrentBalance: {
+                    [Sequelize.Op.gte]: money
+                }
+            },
+        });
+        if(account) {
+            account.CurrentBalance = account.CurrentBalance - money;
+            account.SavingMoney= account.SavingMoney + money;
+            account.BankInterest= interest;
+            account.save();
+            return true;
+        } 
+        return false;
+    }
+    //Ham xu li tinh tien lai 
+    static async Interest(UserId,AccountId,interest,Savingmoney) {
+        const account = await Account.findOne({
+            where: {
+                UserId,
+                AccountId,
+                AccountTypeId : 2,
+                AccountStatusTypeId: 2,
+                CurrentBalance: {
+                    [Sequelize.Op.gte]: money
+                }
+            },
+        });
+        if(account) {
+            account.MoneyInterest =Savingmoney*interest/360;
+            account.save();
+            return true;
+        } 
+        return false;
+    }
+        //Ham xu li so du sau khi gia han
+        static async BalanceBeforMaturity(UserId,AccountId, money) {
+            const account = await Account.findOne({
+                where: {
+                    UserId,
+                    AccountId,
+                    AccountTypeId : 2,
+                    AccountStatusTypeId: 2,
+                    CurrentBalance: {
+                        [Sequelize.Op.gte]: money
+                    }
+                },
+            });
+            if(account) {
+                account.CurrentBalance = account.CurrentBalance + money;
+                account.save();
+                return true;
+            } 
+            return false;
+        }
     static async findAccountStatusTypeId() {
         return Account.findAll({
             where: { AccountStatusTypeId: 1 },

@@ -29,6 +29,7 @@ app.get('/logout', require('./routes/logout'));
 app.use('/profile', require('./routes/profile'));
 app.use('/transfer', require('./routes/transfer'));
 app.use('/admin', require('./routes/admin'));
+app.use('/Deposit', require('./routes/SavingDeposit'));
 app.use('/registeraccount', require('./routes/registeraccount'));
 // app.get('*', require('./routes/error'));
 
