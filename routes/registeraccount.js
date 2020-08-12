@@ -8,12 +8,11 @@ const GetTime = require("../services/GetTime");
 const router = new Router();
 
 router.get('/', function (req, res, next) {
-    if (!req.session.userId) {
+    if (typeof req.session.userId == "undefined") {
         res.redirect('/login');
     }
     res.render('registeraccount');
 });
-// saving account
 
 router.get('/:id/:AccountTypeId', asyncHandler(async function (req, res) {
     const { id, AccountTypeId } = req.params;

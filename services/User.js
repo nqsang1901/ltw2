@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const Model = Sequelize.Model;
 const UserStatus = require('./UserStatus');
 const UserType = require('./UserType');
+const Account = require('./Account');
 
 class User extends Model {
     static async findUserById(UserId) {

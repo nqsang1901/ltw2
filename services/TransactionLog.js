@@ -17,6 +17,7 @@ class TransactionLog extends Model {
     }
     static async findAllTransactionLog() {
         return TransactionLog.findAll({
+            
         });
     }
     static async findTransactionLogByAccountId(AccountId) {

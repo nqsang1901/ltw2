@@ -17,9 +17,9 @@ class Account extends Model {
             }]
         });
     }
-    static async findAllAccount() {
-        return Account.findAll({
-
+    static async findAccountByTypeAccount(UserId, AccountTypeId) {
+        return Account.findOne({
+            where: { UserId, AccountTypeId },
         });
     }
     static async findAccountByUserId(UserId) {
@@ -28,7 +28,6 @@ class Account extends Model {
         });
     }
     static async transferIn(UserId, money, AccountId) {
-        console.log(UserId, money, AccountId);
         const accountSend = await Account.findOne({
             where: {
                 UserId,
@@ -46,7 +45,7 @@ class Account extends Model {
         });
         if (accountSend && accountGet) {
             accountSend.CurrentBalance = accountSend.CurrentBalance - money;
-            accountGet.CurrentBalance = accountGet.CurrentBalance + money;
+            accountGet.CurrentBalance = accountGet.CurrentBalance + parseInt(money, 10);
             accountSend.save();
             accountGet.save();
 
