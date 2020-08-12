@@ -15,7 +15,7 @@ UserStatus.init({
     UserStatusId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
+        //primaryKey: true,
         unique: true,
     },
     UserStatusDescription: {
