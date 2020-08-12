@@ -11,18 +11,23 @@ class TransactionLog extends Model {
         return TransactionLog.count();
     }
 
-    static async add(TransactionId, UserId, AccountId, TransactionStatusId) {
-        return TransactionLog.create({ TransactionId, UserId, AccountId, TransactionStatusId });
+    static async add(TransactionId, UserId, AccountId, TransactionStatusId, money, token, TransactionDate) {
+        return TransactionLog.create({ TransactionId, UserId, AccountId, TransactionStatusId, money, token, TransactionDate });
 
     }
-    static async findAllTransactionLog() {
-        return TransactionLog.findAll({
-            
+    static async findAllTransactionLogById(TransactionId) {
+        return TransactionLog.findOne({
+            where: { TransactionId },
         });
     }
     static async findTransactionLogByAccountId(AccountId) {
         return TransactionLog.findAll({
             where: { AccountId },
+        });
+    }
+    static async findTransactionLogByToken(token) {
+        return TransactionLog.findOne({
+            where: { token },
         });
     }
 }
@@ -44,6 +49,18 @@ TransactionLog.init({
     },
     TransactionStatusId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+    },
+    money: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+    },
+    token: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
+    TransactionDate: {
+        type: Sequelize.DATE,
         allowNull: false,
     },
     // TransactionDetailId: {

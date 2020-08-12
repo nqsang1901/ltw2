@@ -29,12 +29,11 @@
                         </div> -->
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <form method="POST" accept-charset="UTF-8" role="form">
+                            <form method="POST" action="/transfer/confirmemail" accept-charset="UTF-8" role="form">
                                 <fieldset>
                                     <div class="form-group">
-                                        <input type="hidden" id="custId" name="custId" value="token">
-                                        <input type="hidden" id="custId" name="custId" value="money">
-                                        <input type="hidden" id="custId" name="custId" value="accountid">
+                                       
+                                        <%= typeof(message) != "undefined" ? message : "" %>
                                         <input class="form-control" placeholder="Nhập mã xác thực" id="confirmemail"
                                             name="confirmemail" type="text">
                                     </div>                                   

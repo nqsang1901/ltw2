@@ -6,10 +6,6 @@ const User = require('./User');
 const AccountStatusType = require('./AccountStatusType');
 const AccountType = require('./AccountType');
 const Maturity = require('./Maturity');
-<<<<<<< HEAD
-const Model = Sequelize.Model;
-=======
->>>>>>> 1eac18eaca76b3547b0c91fc1b27aa0e2985fc87
 
 class Account extends Model {
     static async findAccountByAcountId(AccountId) {
