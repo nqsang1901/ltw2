@@ -15,7 +15,7 @@ Maturity.init({
     MaturityId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
+        //primaryKey: true,
         unique: true,
     },
     MaturityName: {

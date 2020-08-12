@@ -24,7 +24,7 @@ TransactionLog.init({
     TransactionId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
+        //primaryKey: true,
         unique: true,
     },
     AccountId: {

@@ -19,7 +19,7 @@ class Account extends Model {
     }
     static async findAllAccount() {
         return Account.findAll({
-            
+
         });
     }
     static async findAccountByUserId(UserId) {
@@ -31,7 +31,7 @@ class Account extends Model {
         const accountSend = await Account.findOne({
             where: {
                 UserId,
-                AccountTypeId : 1,
+                AccountTypeId: 1,
                 AccountStatusTypeId: 2,
                 CurrentBalance: {
                     [Sequelize.Op.gte]: money
@@ -43,14 +43,14 @@ class Account extends Model {
                 AccountId,
             },
         });
-        if(accountSend && accountGet) {
+        if (accountSend && accountGet) {
             accountSend.CurrentBalance = accountSend.CurrentBalance - money;
             accountGet.CurrentBalance = accountGet.CurrentBalance + money;
             accountSend.save();
             accountGet.save();
 
             return true;
-        } 
+        }
         return false;
     }
     static async findAccountStatusTypeId() {
@@ -63,22 +63,21 @@ class Account extends Model {
         });
     }
     static async rechargeAccount(money, AccountId) {
-        if(money%1000!= 0)
-        {
+        if (money % 1000 != 0) {
             return false;
         }
         const account = await Account.findOne({
             where: {
-                AccountId, 
+                AccountId,
             },
-            
+
         });
         account.CurrentBalance = account.CurrentBalance + money;
         account.save();
         return true;
     }
-    static add(AccountId, CurrentBalance, ReleaseDate) {
-        return Account.create({ AccountId,  CurrentBalance, ReleaseDate });
+    static add(AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId) {
+        return Account.create({ AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId });
     }
 }
 Account.init({
@@ -86,8 +85,8 @@ Account.init({
     AccountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
-        //unique: true,
+        //primaryKey: true,
+        unique: true,
     },
     UserId: {
         type: Sequelize.INTEGER,
@@ -109,22 +108,21 @@ Account.init({
         type: Sequelize.DATE,
         allowNull: true,
     },
-    // BankInterest: {
-    //     type: Sequelize.FLOAT,
-    //     allowNull: true,
-    // },
-    // SavingMoney: {
-    //     type: Sequelize.FLOAT,
-    //     allowNull: true,
-    // },
-    // MoneyInterest: {
-    //     type: Sequelize.FLOAT,
-    //     allowNull: true,
-    // },
-    // MaturityId : {
-    //     type: Sequelize.INTEGER,
-    //     allowNull: true,
-    // },
+    BankInterest: {
+        type: Sequelize.FLOAT,
+        allowNull: true,
+    },
+    SavingMoney: {
+        type: Sequelize.FLOAT,
+        allowNull: true,
+    },
+    MoneyInterest: {
+        type: Sequelize.FLOAT,
+        allowNull: true,
+    },
+    MaturityId: {
+        type: Sequelize.INTEGER,
+    },
     AccountStatusTypeId: {
         type: Sequelize.INTEGER,
         allowNull: true,
@@ -144,14 +142,14 @@ Account.init({
 Account.belongsTo(User, { foreignKey: 'UserId', targetKey: 'UserId' });
 User.hasMany(Account, { sourceKey: 'UserId' });
 
-Account.belongsTo(AccountType, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
-AccountType.hasMany(Account, {sourceKey: 'AccountTypeId'});
+Account.belongsTo(AccountType, { foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId' });
+AccountType.hasMany(Account, { sourceKey: 'AccountTypeId' });
 
-Account.belongsTo(AccountStatusType, {foreignKey: 'AccountStatusTypeId', targetKey: 'AccountStatusTypeId'});
-AccountStatusType.hasMany(Account, { sourceKey: 'AccountStatusTypeId'});
+Account.belongsTo(AccountStatusType, { foreignKey: 'AccountStatusTypeId', targetKey: 'AccountStatusTypeId' });
+AccountStatusType.hasMany(Account, { sourceKey: 'AccountStatusTypeId' });
 
-Account.belongsTo(Maturity, {foreignKey: 'MaturityId', targetKey: 'MaturityId'});
-Maturity.hasMany(Account, { sourceKey: 'MaturityId'});
+Account.belongsTo(Maturity, { foreignKey: 'MaturityId', targetKey: 'MaturityId' });
+Maturity.hasMany(Account, { sourceKey: 'MaturityId' });
 // AccountType.belongsTo(Account, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
 // Account.hasMany(AccountType, {sourceKey: 'AccountTypeId'});
 

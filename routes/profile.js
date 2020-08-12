@@ -5,12 +5,12 @@ const User = require('../services/User');
 
 const router = new Router();
 
-router.get('/', function getProfile(req, res, next) {
+router.get('/', asyncHandler (function getProfile(req, res, next) {
     if (!req.session.userId) {
         res.redirect('/login');
     }
     res.render('profile');
-});
+}));
 
 router.post('/', upload.single('avatar'), asyncHandler(async function(req, res, next) {
     const UserId = req.currentUser.UserId;
