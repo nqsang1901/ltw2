@@ -2,11 +2,27 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 const Model = Sequelize.Model;
 const TransactionStatus = require('./TransactionStatus');
-const Account = require('./Account');
+// const Account = require('./Account');
+const User = require('./User');
 
 class TransactionLog extends Model {
 
-    static async add(){
+    static async numberOfTransactionLog() {
+        return TransactionLog.count();
+    }
+
+    static async add(TransactionId, UserId, AccountId, TransactionStatusId) {
+        return TransactionLog.create({ TransactionId, UserId, AccountId, TransactionStatusId });
+
+    }
+    static async findAllTransactionLog() {
+        return TransactionLog.findAll({
+        });
+    }
+    static async findTransactionLogByAccountId(AccountId) {
+        return TransactionLog.findAll({
+            where: { AccountId },
+        });
     }
 }
 TransactionLog.init({
@@ -14,14 +30,14 @@ TransactionLog.init({
     TransactionId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
+        //primaryKey: true,
         unique: true,
     },
-    AccountId: {
+    UserId: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    TransactionDetailId: {
+    AccountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
@@ -29,21 +45,27 @@ TransactionLog.init({
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    BiXoa:{
-        type:Sequelize.BOOLEAN,
-        allowNull:false,
-    },
-    
+    // TransactionDetailId: {
+    //     type: Sequelize.INTEGER,
+    //     allowNull: false,
+    // },
+    // BiXoa:{
+    //     type:Sequelize.BOOLEAN,
+    //     allowNull:false,
+    // },
 }, {
     sequelize: db,
     modelName: 'TransactionLog',
     // options
 });
 
-TransactionLog.belongsTo(Account, { foreignKey: 'AccountId', targetKey: 'AccountId' });
-Account.hasOne(TransactionLog, { sourceKey: 'AccountId' });
+// TransactionLog.belongsTo(Account, { foreignKey: 'AccountId', targetKey: 'AccountId' });
+// Account.hasMany(TransactionLog, { sourceKey: 'AccountId' });
 
-TransactionLog.belongsTo(TransactionStatus, {foreignKey: 'TransactionStatusId', targetKey: 'TransactionStatusId'});
-TransactionStatus.hasMany(TransactionLog, { sourceKey: 'TransactionStatusId'});
+TransactionLog.belongsTo(User, { foreignKey: 'UserId', targetKey: 'UserId' });
+User.hasMany(TransactionLog, { sourceKey: 'UserId' });
+
+TransactionLog.belongsTo(TransactionStatus, { foreignKey: 'TransactionStatusId', targetKey: 'TransactionStatusId' });
+TransactionStatus.hasMany(TransactionLog, { sourceKey: 'TransactionStatusId' });
 
 module.exports = TransactionLog;

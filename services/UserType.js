@@ -15,7 +15,7 @@ UserType.init({
     UserTypeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
+        //primaryKey: true,
         unique: true,
     },
     UserTypeDescription: {

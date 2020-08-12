@@ -2,7 +2,7 @@ const { Router } = require('express');
 const Account = require('../services/Account');
 const User = require('../services/User');
 const TransactionLog = require('../services/TransactionLog');
-
+const random = require('random');
 var dateFormat = require('dateformat');
 
 const router = new Router();
@@ -43,6 +43,11 @@ router.post('/rechargeAccount/:AccountId', async function (req, res) {
         const accounts = await Account.findAccountByAcountId(AccountId);
 
         res.render('Admin/rechargeAccount', { accounts, dateFormat, message });
+    }
+    if (recharge == true) {
+        var TransactionLogId;
+        TransactionLogId = await random.int(10000000, 99999999);      
+        await TransactionLog.add(TransactionLogId,AccountId,1,1,0);
     }
     res.redirect('/admin/recharge');
 });

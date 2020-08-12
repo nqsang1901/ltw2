@@ -3,7 +3,7 @@ const db = require('./db');
 
 const Model = Sequelize.Model;
 
-class TransactionStatus extends Model {
+class Maturity extends Model {
 
     static async add()
     {
@@ -15,7 +15,7 @@ Maturity.init({
     MaturityId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
+        //primaryKey: true,
         unique: true,
     },
     MaturityName: {
@@ -28,4 +28,4 @@ Maturity.init({
     // options
 });
 
-module.exports = TransactionStatus;
+module.exports = Maturity;
