@@ -7,26 +7,30 @@ const GetTime = require("../services/GetTime");
 
 const router = new Router();
 
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
     if (typeof req.session.userId == "undefined") {
         res.redirect('/login');
     }
-    res.render('registeraccount');
+
+    const savingsaccount = await Account.findAccountByTypeAccount(req.session.userId, 1);
+    const paymentaccount = await Account.findAccountByTypeAccount(req.session.userId, 2);
+    console.log(savingsaccount);
+    res.render('registeraccount', {savingsaccount, paymentaccount});
 });
 
 router.get('/:id/:AccountTypeId', asyncHandler(async function (req, res) {
     const { id, AccountTypeId } = req.params;
 
-    const accountcheck = await Account.findAccountByUserId(id);
-    if (accountcheck[0] != null) {
-        if (accountcheck.length >= 2) {
-            return res.redirect('/registeraccount');
-        } else {
-            if (accountcheck[0].AccountTypeId == AccountTypeId) {
-                return res.redirect('/registeraccount');
-            }
-        }
-    }
+    // const accountcheck = await Account.findAccountByUserId(id);
+    // if (accountcheck[0] != null) {
+    //     if (accountcheck.length >= 2) {
+    //         return res.redirect('/registeraccount');
+    //     } else {
+    //         if (accountcheck[0].AccountTypeId == AccountTypeId) {
+    //             return res.redirect('/registeraccount');
+    //         }
+    //     }
+    // }
 
     var AccountId;
     while (true) {
@@ -39,7 +43,7 @@ router.get('/:id/:AccountTypeId', asyncHandler(async function (req, res) {
     }
     await Account.add(AccountId, id, 0, new Date(GetTime.getTheCurrentTime()), 1, AccountTypeId);
     req.session.userId = id;
-    res.redirect('/');
+    res.redirect('/registeraccount');
 }));
 
 module.exports = router;

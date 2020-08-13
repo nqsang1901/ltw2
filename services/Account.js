@@ -11,10 +11,10 @@ class Account extends Model {
     static async findAccountByAcountId(AccountId) {
         return Account.findOne({
             where: { AccountId },
-            include: [{
-                model: User,
-                required: false,
-            }]
+            // include: [{
+            //     model: User,
+            //     required: false,
+            // }]
         });
     }
     static async findAccountByTypeAccount(UserId, AccountTypeId) {
@@ -212,6 +212,7 @@ AccountStatusType.hasMany(Account, { sourceKey: 'AccountStatusTypeId' });
 
 Account.belongsTo(Maturity, { foreignKey: 'MaturityId', targetKey: 'MaturityId' });
 Maturity.hasMany(Account, { sourceKey: 'MaturityId' });
+
 // AccountType.belongsTo(Account, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
 // Account.hasMany(AccountType, {sourceKey: 'AccountTypeId'});
 

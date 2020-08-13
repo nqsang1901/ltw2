@@ -24,9 +24,9 @@
 			<div id="sidebar-left" class="span2">
 				<div class="nav-collapse sidebar-nav">
 					<ul class="nav nav-tabs nav-stacked main-menu">
-						<li><a href="user"><i class="icon-bar-chart"></i><span class="hidden-tablet">
+						<li><a href="/admin/user"><i class="icon-bar-chart"></i><span class="hidden-tablet">
 									User</span></a></li>
-						<li><a href="account"><i class="icon-align-justify"></i><span class="hidden-tablet">
+						<li><a href="/admin/account"><i class="icon-align-justify"></i><span class="hidden-tablet">
 									Account</span></a></li>
 					</ul>
 				</div>
@@ -72,7 +72,7 @@
 												<span class="label label-warning"><%= ( i.UserStatusId == 1 ? 'Đang chờ xác thực' : i.UserStatusId == 2 ? 'Đã xác thực' : 'Tạm khóa') %></span>
 											</td>
 											<td class="center">
-												<a class="btn btn-success" href="#">
+												<a class="btn btn-success" href="<%= i.UserId %>">
 													<i class="halflings-icon white zoom-in"></i>
 												</a>
 												<a class="btn btn-info" href="#">

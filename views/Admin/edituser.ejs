@@ -28,8 +28,6 @@
 									User</span></a></li>
 						<li><a href="/admin/account"><i class="icon-align-justify"></i><span class="hidden-tablet">
 									Account</span></a></li>
-						<li><a href="/admin/recharge"><i class="icon-align-justify"></i><span class="hidden-tablet">
-									Recharge</span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -57,40 +55,15 @@
 							<table class="table table-striped table-bordered bootstrap-datatable datatable">
 								<thead>
 									<tr>
-										<th>AccountId</th>
-										<th>Release Date</th>
-										<th>Current Balance</th>
+										<th>UserId</th>
+										<th>UserName</th>
+										<th>EmailAddress</th>
 										<th>Status</th>
-										<th>Type</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
 								<tbody>
-									<% accounts.forEach(function(i) { %>
-										<tr>
-											<td><%= i.AccountId %></td>
-											<td class="center"><%= dateFormat(i.ReleaseDate) %></td>
-											<td class="center"><%= i.CurrentBalance %></td>
-											<td class="center">
-												<span class="label label-warning"><%= ( i.AccountStatusTypeId == 1 ? 'Đang chờ xác thực' : i.AccountStatusTypeId == 2 ? 'Đã xác thực' : 'Tạm khóa') %></span>
-											</td>
-											<td class="center">
-												<span class="label label-warning"><%= ( i.AccountTypeId == 1 ? 'Tài khoản thanh toán' : 'Tài khoản tiết kiệm') %></span>
-											</td>
-											<td class="center">
-												<a class="btn btn-success" href="#">
-													<i class="halflings-icon white zoom-in"></i>
-												</a>
-												<a class="btn btn-info" href="#">
-													<i class="halflings-icon white edit"></i>
-												</a>
-												<a class="btn btn-danger" href="#">
-													<i class="halflings-icon white trash"></i>
-	
-												</a>
-											</td>
-										</tr>
-									<% }) %> 	
+									
 								</tbody>
 							</table>
 						</div>

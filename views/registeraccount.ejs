@@ -51,20 +51,28 @@
                                 <td> Tài khoản thanh toán </td>
                                 <td> Giới thiệu thanh toán </td>
                                 <td>
-                                    <button type="button"
+                                    <% if(savingsaccount) { %>
+                                        <%= savingsaccount.AccountStatusTypeId == 2 ? 'Bạn đã có tài khoản thanh toán' : savingsaccount.AccountStatusTypeId == 1 ? 'Đang chờ xác nhận' : 'Đã bị khóa' %>
+                                    <% } else { %>
+                                        <button type="button"
                                         onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/1'"
                                         class="btn btn-success">Đăng ký</button>
+                                    <% } %>
                                 </td>
                             </tr>
                             <tr class="defalut">
-                                <td> 2 </td>
-                                <td> Tài khoản tiết kiệm </td>
-                                <td> Giới thiệu tiết kiệm </td>
-                                <td>
-                                    <button type="button"
-                                        onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/2'"
-                                        class="btn btn-success">Đăng ký</button>
-                                </td>
+                                    <td> 2 </td>
+                                    <td> Tài khoản tiết kiệm </td>
+                                    <td> Giới thiệu tiết kiệm </td>
+                                    <td>
+                                        <% if(paymentaccount) { %>
+                                            <%= paymentaccount.AccountStatusTypeId == 2 ? 'Bạn đã có tài khoản tiết kiệm' : paymentaccount.AccountStatusTypeId == 1 ? 'Đang chờ xác nhận' : 'Đã bị khóa' %>
+                                        <% } else { %>
+                                            <button type="button"
+                                            onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/2'"
+                                            class="btn btn-success">Đăng ký</button>
+                                        <% } %>
+                                    </td>
                             </tr>
                         </tbody>
                     </table>

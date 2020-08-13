@@ -27,7 +27,9 @@
                 <div class="panel-body">
                     <form method="POST" accept-charset="UTF-8" role="form">
                         <fieldset>
-                            <%= typeof(message) != "undefined" ? "Không tìm thấy tài khoản! Vui lòng đăng nhập lại!" : "" %>
+                            <% if(typeof(message) != "undefined") { %>
+                                <p style="color: red;"> <%= message %></p>
+                            <% } %>
                             <div class="form-group">
                                 <input class="form-control" placeholder="E-mail" id="email" name="email" type="text">
                             </div>

@@ -27,7 +27,9 @@
                 <div class="panel-body">
                     <form method="POST"  accept-charset="UTF-8" role="form" enctype="multipart/form-data" >
                         <fieldset>
-                            <%= typeof(message) != "undefined" ? message : "" %>
+                            <% if(typeof(message) != "undefined") { %>
+                                <p style="color: red;"> <%= message %></p>
+                            <% } %>
                             <div class="form-group">
                                 <input class="form-control" placeholder="User Name" id="username" name="username" type="text">
                             </div>
