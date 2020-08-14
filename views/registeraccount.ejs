@@ -31,7 +31,7 @@
         <div class="container">
             <div class="col-lg-6 offset-lg-3">
                 <div class="section-heading">
-                    
+
                 </div>
             </div>
             <div class="row">
@@ -50,20 +50,29 @@
                                 <td> 1 </td>
                                 <td> Tài khoản thanh toán </td>
                                 <td> Giới thiệu thanh toán </td>
+                                <% if( account1.AccountId == null){ %>
                                 <td>
-                                    <button type="button"
-                                        onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/1'"
+                                        <button type="button"
+                                         onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/1'"
                                         class="btn btn-success">Đăng ký</button>
                                 </td>
+                                <% }else{  %>
+                                   <td>Đã đăng ký</td> 
+                                <% } %>
                             </tr>
+
                             <tr class="defalut">
                                 <td> 2 </td>
                                 <td> Tài khoản tiết kiệm </td>
                                 <td> Giới thiệu tiết kiệm </td>
                                 <td>
+                                    <% if(account2.AccountId==null){ %>
                                     <button type="button"
                                         onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/2'"
                                         class="btn btn-success">Đăng ký</button>
+                                    <% }else{  %>
+                                    <span>Đã đăng ký</span>
+                                    <% } %>
                                 </td>
                             </tr>
                         </tbody>

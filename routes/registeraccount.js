@@ -7,12 +7,15 @@ const GetTime = require("../services/GetTime");
 
 const router = new Router();
 
-router.get('/', function (req, res, next) {
+router.get('/',   async function (req, res, next) {
     if (!req.session.userId) {
         res.redirect('/login');
-    }
-    res.render('registeraccount');
+    }  
+    const account1 =   await Account.findAccountByUserIdAndType(req.session.userId,1);
+    const account2 =   await Account.findAccountByUserIdAndType(req.session.userId,2); 
+    res.render('registeraccount',{account1,account2});
 });
+
 // saving account
 
 router.get('/:id/:AccountTypeId', asyncHandler(async function (req, res) {
@@ -28,7 +31,6 @@ router.get('/:id/:AccountTypeId', asyncHandler(async function (req, res) {
             }
         }
     }
-
     var AccountId;
     while (true) {
         AccountId = await random.int(100000, 999999);

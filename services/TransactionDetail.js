@@ -41,10 +41,10 @@ TransactionDetail.init({
         type: Sequelize.STRING,
         allowNull: false,
     },
-    BeneficiaryUser: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
+    // BeneficiaryUser: {
+    //     type: Sequelize.STRING,
+    //     allowNull: false,
+    // },
     // BiXoa:{
     //     type:Sequelize.BOOLEAN,
     //     allowNull:false,

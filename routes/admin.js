@@ -2,9 +2,9 @@ const { Router } = require('express');
 const Account = require('../services/Account');
 const User = require('../services/User');
 const TransactionLog = require('../services/TransactionLog');
-const random = require('random');
+const TransactionDetail = require('../services/TransactionDetail');
 var dateFormat = require('dateformat');
-
+const GetTime = require("../services/GetTime");
 const router = new Router();
 
 router.get('/user', async function (req, res) {
@@ -44,10 +44,13 @@ router.post('/rechargeAccount/:AccountId', async function (req, res) {
 
         res.render('Admin/rechargeAccount', { accounts, dateFormat, message });
     }
+    const numtransaction = await TransactionLog.numberOfTransactionLog() + 1;
+    const account =await Account.findAccountByAcountId(AccountId);
+    const UserId =account.UserId;
     if (recharge == true) {
-        var TransactionLogId;
-        TransactionLogId = await random.int(10000000, 99999999);      
-        await TransactionLog.add(TransactionLogId,AccountId,1,1,0);
+        TransactionLog.add(numtransaction,UserId,AccountId,1);
+        TransactionDetail.add(await TransactionDetail.numberOfTransactionDetail() + 1,numtransaction,
+        new Date(GetTime.getTheCurrentTime()),money,' ','Refund banking');
     }
     res.redirect('/admin/recharge');
 });
