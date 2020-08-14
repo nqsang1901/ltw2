@@ -27,62 +27,126 @@
             </div>
             <!-- <h1>Thông tin User</h1> -->
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="col-xs-12 col-sm-12 col-md-12">                    
                     <div class="well well-sm">
                         <div class="row">
-                            <div class="col-sm-6 col-md-4">
-                                <img src="public/uploads/<%= currentUser.Avatar %>" alt=""
-                                    class="img-rounded img-responsive" />
+                            <div class="col-sm-12 col-md-12">
+                                <div class="container emp-profile">
+                                    <!-- <form method="POST" enctype="multipart/form-data"> -->
+                                    <div class="row">
+                                        <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4">
+                                            <div class="profile-img">
+                                                <img src="public/uploads/<%= currentUser.Avatar %>" alt="" class="img-rounded img-responsive" style="height: 75%; width: 50%" />
+                                                <form method="POST" enctype="multipart/form-data" style="margin-top: 5px;">
+                                                    
+                                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                        <label class="btn btn-secondary active">
+                                                            <input type="file" id="myFile" name="avatar" style="display:none;" />
+                                                          <input type="radio" name="options" id="option1" autocomplete="off" for="myFile"> Chọn hình
+                                                        </label>
+                                                        <label class="btn btn-secondary">
+                                                          <input type="submit"  name="options" id="option2" value="Đồng ý" autocomplete="off">
+                                                        </label>
+                                                      </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="profile-head">
+                                                <div class="row">
+                                                    <!-- <div class="col-md-6">
+                                                            <label>Name</label>
+                                                        </div> -->
+                                                    <div class="col-md-6">
+                                                        <h2><%= currentUser.UserName %></h2>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Email</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= currentUser.EmailAddress %> %></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Số điện thoại</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= currentUser.CellPhone %></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Ngày sinh: </label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= dateFormat(currentUser.DateOfBirth) %></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Địa chỉ: </label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= currentUser.Address %></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Trạng thái tài khoản: </label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= currentUser.UserStatusId == 2 ? 'Bình thường' : currentUser.UserStatusId == 3 ? 'Đã khóa' : 'Chưa xác thực gmail' %></p>
+                                                    </div>
+                                                </div>
+                                                <!-- <p class="proile-rating">RANKINGS : <span>8/10</span></p> -->
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <!-- <div class="profile-work">
+                                                <p>Ngân hàng</p>
+                                                <a href="">Điều khoản người dùng</a><br />
+                                                <a href="">Thông tin ngân hàng</a><br />
+                                                <a href="">Tài khoản thanh toán</a><br />
+                                                <a href="">Tài khoản tiết kiệm</a>
+
+                                            </div> -->
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h5><b>Tài Khoản Thanh Toán</b></h5>
+                                            <% if(payaccount) { %>                                                
+                                                <h6>Số dư: <%= payaccount.CurrentBalance %></h6>
+                                                <h6>Trạng thái: <%= payaccount.AccountStatusTypeId %></h6>
+                                            <% } else { %>
+                                                <p>Bạn chưa có tài khoản thanh toán</p>
+                                            <% } %>
+                                            <hr>
+                                            <h5><b>Tài khoản tiết kiệm</b></h5>
+                                            <% if(savingaccount) { %>                                                
+                                                <h6>Số dư: <%= savingaccount.CurrentBalance %></h6>
+                                                <h6>Trạng thái: <%= savingaccount.AccountStatusTypeId %></h6>
+                                            <% } else { %>
+                                                <p>Bạn chưa có tài khoản tiết kiệm</p>
+                                            <% } %>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- </form> -->
                             </div>
-                            <div class="col-sm-6 col-md-8">
-                                <h4><b><%= currentUser.UserName %></b></h4>
-                                <p>
-                                    ID Acount: <%= currentUser.UserId %>
-                                    <br />
-                                    Email: </i> <%= currentUser.EmailAddress %>
-                                    <br />
-                                    Phone: </i> <%= currentUser.CellPhone %>
-                                    <!-- Split button -->
-                                <form method="POST" enctype="multipart/form-data">
-                                    <input type="file" id="myFile" name="avatar" style="margin-bottom: 5px;">
-                                    <button type="submit" class="btn btn-success">Đăng hình</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6">
-                    <div class="well well-sm">
-                        <div class="row">
-                            <div class="col-sm-6 col-md-4">
-                                <img src="public/uploads/<%= currentUser.Avatar %>" alt=""
-                                    class="img-rounded img-responsive" />
-                            </div>
-                            <h3>Tài khoản thanh toán</h3>
-                            <div class="col-sm-6 col-md-8">
-                                <h4><b><%= currentUser.UserName %></b></h4>
-                                <p>
-                                    ID Acount: <%= currentUser.UserId %>
-                                    <br />
-                                    Email: </i> <%= currentUser.EmailAddress %>
-                                    <br />
-                                    Phone: </i> <%= currentUser.CellPhone %>
-                                    <!-- Split button -->
-                                <form method="POST" enctype="multipart/form-data">
-                                    <input type="file" id="myFile" name="avatar" style="margin-bottom: 5px;">
-                                    <button type="submit" class="btn btn-success">Đăng hình</button>
-                                </form>
-                            </div>
-                            <h3>Tài khoản tiết kiệm</h3>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </section>
-    
+
 
 </body>
 

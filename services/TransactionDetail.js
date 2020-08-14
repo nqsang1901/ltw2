@@ -9,8 +9,8 @@ class TransactionDetail extends Model {
     static async numberOfTransactionDetail() {
         return TransactionDetail.count();
     }
-    static async add(TransactionDetailId, TransactionId, TransactionDate, TransactionAmount, Content, BeneficiaryBank, BeneficiaryUser) {
-        return TransactionDetail.create({ TransactionDetailId, TransactionId, TransactionDate, TransactionAmount, Content, BeneficiaryBank, BeneficiaryUser });
+    static async add(TransactionDetailId, TransactionId, Content, BeneficiaryBank, BeneficiaryUser) {
+        return TransactionDetail.create({ TransactionDetailId, TransactionId, Content, BeneficiaryBank, BeneficiaryUser });
     }
 }
 TransactionDetail.init({
@@ -25,14 +25,6 @@ TransactionDetail.init({
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    TransactionDate: {
-        type: Sequelize.DATE,
-        allowNull: false,
-    },
-    TransactionAmount: {
-        type: Sequelize.DOUBLE,
-        allowNull: false,
-    },
     Content: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -41,14 +33,10 @@ TransactionDetail.init({
         type: Sequelize.STRING,
         allowNull: false,
     },
-    // BeneficiaryUser: {
-    //     type: Sequelize.STRING,
-    //     allowNull: false,
-    // },
-    // BiXoa:{
-    //     type:Sequelize.BOOLEAN,
-    //     allowNull:false,
-    // },
+    BeneficiaryUser: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
 }, {
     sequelize: db,
     modelName: 'TransactionDetail',
@@ -56,6 +44,6 @@ TransactionDetail.init({
 });
 
 TransactionDetail.belongsTo(TransactionLog, { foreignKey: 'TransactionId', targetKey: 'TransactionId' });
-TransactionLog.hasOne(TransactionDetail, { sourceKey: 'TransactionId', });
+TransactionLog.hasOne(TransactionDetail, { foreignKey: 'TransactionId', sourceKey: 'TransactionId' });
 
 module.exports = TransactionDetail;

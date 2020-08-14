@@ -52,9 +52,13 @@
                                 <td> Giới thiệu thanh toán </td>
                                 <% if( account1.AccountId == null){ %>
                                 <td>
+                                    <% if(savingsaccount) { %>
+                                        <%= savingsaccount.AccountStatusTypeId == 2 ? 'Bạn đã có tài khoản thanh toán' : savingsaccount.AccountStatusTypeId == 1 ? 'Đang chờ xác nhận' : 'Đã bị khóa' %>
+                                    <% } else { %>
                                         <button type="button"
-                                         onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/1'"
+                                        onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/1'"
                                         class="btn btn-success">Đăng ký</button>
+                                    <% } %>
                                 </td>
                                 <% }else{  %>
                                    <td>Đã đăng ký</td> 
@@ -62,18 +66,18 @@
                             </tr>
 
                             <tr class="defalut">
-                                <td> 2 </td>
-                                <td> Tài khoản tiết kiệm </td>
-                                <td> Giới thiệu tiết kiệm </td>
-                                <td>
-                                    <% if(account2.AccountId==null){ %>
-                                    <button type="button"
-                                        onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/2'"
-                                        class="btn btn-success">Đăng ký</button>
-                                    <% }else{  %>
-                                    <span>Đã đăng ký</span>
-                                    <% } %>
-                                </td>
+                                    <td> 2 </td>
+                                    <td> Tài khoản tiết kiệm </td>
+                                    <td> Giới thiệu tiết kiệm </td>
+                                    <td>
+                                        <% if(paymentaccount) { %>
+                                            <%= paymentaccount.AccountStatusTypeId == 2 ? 'Bạn đã có tài khoản tiết kiệm' : paymentaccount.AccountStatusTypeId == 1 ? 'Đang chờ xác nhận' : 'Đã bị khóa' %>
+                                        <% } else { %>
+                                            <button type="button"
+                                            onclick="window.location.href='/registeraccount/<%= currentUser.UserId %>/2'"
+                                            class="btn btn-success">Đăng ký</button>
+                                        <% } %>
+                                    </td>
                             </tr>
                         </tbody>
                     </table>

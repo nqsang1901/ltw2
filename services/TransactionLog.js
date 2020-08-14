@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 const Model = Sequelize.Model;
 const TransactionStatus = require('./TransactionStatus');
+const TransactionType = require('./TransactionType');
 // const Account = require('./Account');
 const User = require('./User');
 
@@ -11,17 +12,23 @@ class TransactionLog extends Model {
         return TransactionLog.count();
     }
 
-    static async add(TransactionId, UserId, AccountId, TransactionStatusId) {
-        return TransactionLog.create({ TransactionId, UserId, AccountId, TransactionStatusId });
+    static async add(TransactionId, UserId, AccountId, TransactionStatusId, TransactionTypeId, money, token, TransactionDate) {
+        return TransactionLog.create({ TransactionId, UserId, AccountId, TransactionStatusId, TransactionTypeId, money, token, TransactionDate });
 
     }
-    static async findAllTransactionLog() {
-        return TransactionLog.findAll({
+    static async findAllTransactionLogById(TransactionId) {
+        return TransactionLog.findOne({
+            where: { TransactionId },
         });
     }
     static async findTransactionLogByAccountId(AccountId) {
         return TransactionLog.findAll({
             where: { AccountId },
+        });
+    }
+    static async findTransactionLogByToken(token) {
+        return TransactionLog.findOne({
+            where: { token },
         });
     }
 }
@@ -43,6 +50,22 @@ TransactionLog.init({
     },
     TransactionStatusId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+    },
+    TransactionTypeId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+    },
+    money: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+    },
+    token: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
+    TransactionDate: {
+        type: Sequelize.DATE,
         allowNull: false,
     },
     // TransactionDetailId: {
@@ -67,5 +90,8 @@ User.hasMany(TransactionLog, { sourceKey: 'UserId' });
 
 TransactionLog.belongsTo(TransactionStatus, { foreignKey: 'TransactionStatusId', targetKey: 'TransactionStatusId' });
 TransactionStatus.hasMany(TransactionLog, { sourceKey: 'TransactionStatusId' });
+
+TransactionLog.belongsTo(TransactionType, { foreignKey: 'TransactionTypeId', targetKey: 'TransactionTypeId' });
+TransactionType.hasMany(TransactionLog, { sourceKey: 'TransactionTypeId' });
 
 module.exports = TransactionLog;

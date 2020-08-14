@@ -29,18 +29,15 @@
                         </div> -->
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <form method="POST" accept-charset="UTF-8" role="form">
+                            <form method="POST" action="/transfer/confirmemail" accept-charset="UTF-8" role="form">
                                 <fieldset>
                                     <div class="form-group">
-                                        <% if(typeof(message) != "undefined") { %>
-                                            <p style="color: red;"> <%= message %></p>
-                                        <% } %>
-                                        <input class="form-control" placeholder="Recipient Account Number" id="AccountId" name="AccountId" type="text">
-                                        <input class="form-control" placeholder="Amount Of Money" id="money" name="money" type="text">                    
-                                        <input class="form-control" placeholder="Password" id="password" name="password" type="text">
-                                        <input class="form-control" placeholder="Content" id="content" name="content" type="text">
-                                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Gửi ngay">
-                                    </div>
+                                       
+                                        <%= typeof(message) != "undefined" ? message : "" %>
+                                        <input class="form-control" placeholder="Nhập mã xác thực" id="confirmemail"
+                                            name="confirmemail" type="text">
+                                    </div>                                   
+                                    <input class="btn btn-lg btn-success btn-block" type="submit" value="Gửi ngay">
                                 </fieldset>
                             </form>
                         </div>

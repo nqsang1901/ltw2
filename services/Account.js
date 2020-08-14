@@ -11,15 +11,15 @@ class Account extends Model {
     static async findAccountByAcountId(AccountId) {
         return Account.findOne({
             where: { AccountId },
-            include: [{
-                model: User,
-                required: false,
-            }]
+            // include: [{
+            //     model: User,
+            //     required: false,
+            // }]
         });
     }
-    static async findAllAccount() {
-        return Account.findAll({
-
+    static async findAccountByTypeAccount(UserId, AccountTypeId) {
+        return Account.findOne({
+            where: { UserId, AccountTypeId },
         });
     }
     static async findAccountByUserId(UserId) {
@@ -41,7 +41,6 @@ class Account extends Model {
         })
     }
     static async transferIn(UserId, money, AccountId) {
-        console.log(UserId, money, AccountId);
         const accountSend = await Account.findOne({
             where: {
                 UserId,
@@ -59,7 +58,7 @@ class Account extends Model {
         });
         if (accountSend && accountGet) {
             accountSend.CurrentBalance = accountSend.CurrentBalance - money;
-            accountGet.CurrentBalance = accountGet.CurrentBalance + money;
+            accountGet.CurrentBalance = accountGet.CurrentBalance + parseInt(money, 10);
             accountSend.save();
             accountGet.save();
 
@@ -67,6 +66,68 @@ class Account extends Model {
         }
         return false;
     }
+    //Ham xu li gui tien 
+    static async Deposit(UserId,AccountId, money,interest) {
+        const account = await Account.findOne({
+            where: {
+                UserId,
+                AccountId,
+                AccountTypeId : 2,
+                AccountStatusTypeId: 2,
+                CurrentBalance: {
+                    [Sequelize.Op.gte]: money
+                }
+            },
+        });
+        if(account) {
+            account.CurrentBalance = account.CurrentBalance - money;
+            account.SavingMoney= account.SavingMoney + money;
+            account.BankInterest= interest;
+            account.save();
+            return true;
+        } 
+        return false;
+    }
+    //Ham xu li tinh tien lai 
+    static async Interest(UserId,AccountId,interest,Savingmoney) {
+        const account = await Account.findOne({
+            where: {
+                UserId,
+                AccountId,
+                AccountTypeId : 2,
+                AccountStatusTypeId: 2,
+                CurrentBalance: {
+                    [Sequelize.Op.gte]: money
+                }
+            },
+        });
+        if(account) {
+            account.MoneyInterest =Savingmoney*interest/360;
+            account.save();
+            return true;
+        } 
+        return false;
+    }
+        //Ham xu li so du sau khi gia han
+        static async BalanceBeforMaturity(UserId,AccountId, money) {
+            const account = await Account.findOne({
+                where: {
+                    UserId,
+                    AccountId,
+                    AccountTypeId : 2,
+                    AccountStatusTypeId: 2,
+                    CurrentBalance: {
+                        [Sequelize.Op.gte]: money
+                    }
+                },
+            });
+            if(account) {
+                account.CurrentBalance = account.CurrentBalance + money;
+                account.save();
+                return true;
+            } 
+            return false;
+        }
     static async findAccountStatusTypeId() {
         return Account.findAll({
             where: { AccountStatusTypeId: 1 },
@@ -164,6 +225,7 @@ AccountStatusType.hasMany(Account, { sourceKey: 'AccountStatusTypeId' });
 
 Account.belongsTo(Maturity, { foreignKey: 'MaturityId', targetKey: 'MaturityId' });
 Maturity.hasMany(Account, { sourceKey: 'MaturityId' });
+
 // AccountType.belongsTo(Account, {foreignKey: 'AccountTypeId', targetKey: 'AccountTypeId'});
 // Account.hasMany(AccountType, {sourceKey: 'AccountTypeId'});
 
