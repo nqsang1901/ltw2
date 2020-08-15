@@ -80,7 +80,7 @@ User.init({
         allowNull: false,
     },
     DateOfBirth: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: true,
     },
     Address: {
