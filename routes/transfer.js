@@ -12,7 +12,7 @@ const crypto = require('crypto');
 const router = new Router();
 
 router.get('/In', function (req, res, next) {
-    if (typeof req.session.userId == "undefined") {
+    if (typeof req.currentUser == "undefined") {
         res.redirect('/login');
     }
     res.render('Transfer/transferIn');

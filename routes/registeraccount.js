@@ -8,7 +8,7 @@ const GetTime = require("../services/GetTime");
 const router = new Router();
 
 router.get('/', async function (req, res, next) {
-    if (typeof req.session.userId == "undefined") {
+    if (typeof req.currentUser == "undefined") {
         res.redirect('/login');
     }
 

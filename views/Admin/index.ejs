@@ -42,6 +42,22 @@
 					</li>
 					<li><a href="#">Tables</a></li>
 				</ul>
+				<form method="POST" action="/admin/account">
+					<label for="statusAccount">Tìm theo trạng thái</label>
+					<select name="statusAccount" id="statusAccount">
+						<option value="1">Tài khoản chưa xác thực</option>
+						<option value="2">Tài khoản đã xác thực</option>
+						<option value="3">Tài khoản đã khóa</option>
+						<option value="">Tất cả...</option>
+					</select>
+					<label for="typeAccount">Tìm theo loại tài khoản:</label>
+					<select name="typeAccount" id="typeAccount">
+						<option value="1">Tài khoản thanh toán</option>
+						<option value="2">Tài khoản tiết kiệm</option>
+						<option value="">Tất cả...</option>
+					</select>
+					<input type="submit" value="Tìm kiếm"/>
+				</form>
 
 				<div class="row-fluid sortable">
 					<div class="box span12">
@@ -67,42 +83,43 @@
 								</thead>
 								<tbody>
 									<% accounts.forEach(function(i) { %>
-										<tr>
-											<td><%= i.AccountId %></td>
-											<td class="center"><%= asia(i.ReleaseDate, '%m/%d/%Y - %H:%M:%S', 'Asia/Hong_Kong') %></td>
-											<td class="center"><%= formatMoney(i.CurrentBalance, 'VNĐ') %></td>
-											<td class="center">
-												<!-- <span class="label label-warning"><%#= ( i.AccountStatusTypeId == 1 ? 'Đang chờ xác thực' : i.AccountStatusTypeId == 2 ? 'Đã xác thực' : 'Tạm khóa') %></span> -->
-												<% if(i.AccountStatusTypeId == 1) { %>
-													<span class="label label-warning">Đang chờ xác thực</span>
-												<% } else if(i.AccountStatusTypeId == 2) { %>
-													<span class="label label-success">Đã xác thực</span>
-												<% } else { %>
-													<span class="label label-danger">Đã khóa</span>
-												<% } %>
-											</td>
-											<td class="center">
-												<!-- <span class="label label-warning"><%#= ( i.AccountTypeId == 1 ? 'Tài khoản thanh toán' : 'Tài khoản tiết kiệm') %></span> -->
-												<% if(i.AccountTypeId == 1) { %>
-													<span class="label label-primary">Tài khoản thanh toán</span>
-												<% } else { %>
-													<span class="label label-info">Tài khoản tiết kiệm</span>
-												<% } %>
-											</td>
-											<td class="center">
-												<a class="btn btn-success" href="#">
-													<i class="halflings-icon white zoom-in"></i>
-												</a>
-												<a class="btn btn-info" href="#">
-													<i class="halflings-icon white edit"></i>
-												</a>
-												<a class="btn btn-danger" href="#">
-													<i class="halflings-icon white trash"></i>
-	
-												</a>
-											</td>
-										</tr>
-									<% }) %> 	
+									<tr>
+										<td><%= i.AccountId %></td>
+										<td class="center">
+											<%= asia(i.ReleaseDate, '%m/%d/%Y - %H:%M:%S', 'Asia/Hong_Kong') %></td>
+										<td class="center"><%= formatMoney(i.CurrentBalance, 'VNĐ') %></td>
+										<td class="center">
+											<!-- <span class="label label-warning"><%#= ( i.AccountStatusTypeId == 1 ? 'Đang chờ xác thực' : i.AccountStatusTypeId == 2 ? 'Đã xác thực' : 'Tạm khóa') %></span> -->
+											<% if(i.AccountStatusTypeId == 1) { %>
+											<span class="label label-warning">Đang chờ xác thực</span>
+											<% } else if(i.AccountStatusTypeId == 2) { %>
+											<span class="label label-success">Đã xác thực</span>
+											<% } else { %>
+											<span class="label label-danger">Đã khóa</span>
+											<% } %>
+										</td>
+										<td class="center">
+											<!-- <span class="label label-warning"><%#= ( i.AccountTypeId == 1 ? 'Tài khoản thanh toán' : 'Tài khoản tiết kiệm') %></span> -->
+											<% if(i.AccountTypeId == 1) { %>
+											<span class="label label-primary">Tài khoản thanh toán</span>
+											<% } else { %>
+											<span class="label label-info">Tài khoản tiết kiệm</span>
+											<% } %>
+										</td>
+										<td class="center">
+											<a class="btn btn-success" href="#">
+												<i class="halflings-icon white zoom-in"></i>
+											</a>
+											<a class="btn btn-info" href="#">
+												<i class="halflings-icon white edit"></i>
+											</a>
+											<a class="btn btn-danger" href="#">
+												<i class="halflings-icon white trash"></i>
+
+											</a>
+										</td>
+									</tr>
+									<% }) %>
 								</tbody>
 							</table>
 						</div>

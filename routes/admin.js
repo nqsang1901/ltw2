@@ -29,9 +29,25 @@ router.get('/user', async function (req, res) {
     res.render('Admin/table', { users });
 });
 
+router.post('/user', async function (req, res) {
+    checkAdmin(req,res);
+    const fname = req.body.fname;
+    const users = await User.findAllUserByFname(fname);
+    res.render('Admin/table', { users });
+});
+
 router.get('/account', async function (req, res) {
     checkAdmin(req,res);
     const accounts = await Account.findAll();
+    res.render('Admin/index', { accounts, asia, formatMoney });
+});
+
+router.post('/account', async function (req, res) {
+    checkAdmin(req,res);
+    const statusAccount = req.body.statusAccount;
+    const typeAccount = req.body.typeAccount;
+    console.log(statusAccount, typeAccount);
+    const accounts = await Account.findAccountByStatusAndTYpe( statusAccount, typeAccount);
     res.render('Admin/index', { accounts, asia, formatMoney });
 });
 
@@ -44,9 +60,7 @@ router.get('/recharge', async function (req, res) {
 router.get('/rechargeAccount/:AccountId', async function (req, res) {
     checkAdmin(req,res);
     const { AccountId } = req.params;
-    console.log(AccountId);
     const accounts = await Account.findAccountByAcountId(AccountId);
-    console.log(accounts);
 
     res.render('Admin/rechargeAccount', { accounts, dateFormat });
 
