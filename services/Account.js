@@ -16,6 +16,24 @@ class Account extends Model {
             //     required: false,
             // }]
         });
+    }   
+    static async findAccountByStatusAndTYpe(statusAccount, typeAccount) {
+        if(statusAccount == "") {
+            if(typeAccount == "") {
+                return Account.findAll();
+            } else {
+                return Account.findAll({
+                    where: {AccountTypeId : typeAccount },
+                });
+            }
+        } else if (typeAccount == "") {
+            return Account.findAll({
+                where: { AccountStatusTypeId : statusAccount},
+            });
+        }
+        return Account.findAll({
+            where: { AccountStatusTypeId : statusAccount, AccountTypeId : typeAccount },
+        });
     }
     static async findAccountByTypeAccount(UserId, AccountTypeId) {
         return Account.findOne({

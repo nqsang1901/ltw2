@@ -14,7 +14,7 @@ function formatMoney(n, currency) {
 const router = new Router();
 
 router.get('/', async function getProfile(req, res, next) {
-    if (typeof req.session.userId == "undefined") {
+    if (typeof req.currentUser == "undefined") {
         res.redirect('/login');
     }
     const payaccount = await Account.findAccountByTypeAccount(req.currentUser.UserId, 1);
