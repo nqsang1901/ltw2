@@ -51,6 +51,45 @@ router.get('/rechargeAccount/:AccountId', async function (req, res) {
     res.render('Admin/rechargeAccount', { accounts, dateFormat });
 
 });
+router.get('/edituser/:UserId', async function (req, res) {
+    checkAdmin(req,res);
+    const { UserId } = req.params;
+    const user = await User.findUserById(UserId);
+    res.render('Admin/edituser',{user});
+});
+router.get('/watchuser/:UserId', async function (req, res) {
+    checkAdmin(req,res);
+    const { UserId } = req.params;
+    const user = await User.findUserById(UserId);
+    res.render('Admin/watchUser',{user});
+});
+router.get('/lockuser/:UserId', async function (req, res) {
+    checkAdmin(req,res);
+    const { UserId } = req.params;
+    const user = await User.findUserById(UserId);
+    const users = await User.findAllUser();
+    if(user.UserStatusId == 3){
+        user.UserStatusId =2;
+        user.save();
+        res.redirect('/admin/user');
+    }
+    else{
+        user.UserStatusId =3;
+        user.save();
+        res.redirect('/admin/user');
+    }
+});
+router.post('/edituser/:UserId', async function (req, res) {
+    checkAdmin(req,res);
+    const { UserId } = req.params;
+    const user = await User.findUserById(UserId);
+    user.UserName = req.body.userName;
+    user.IdentityNumber = req.body.identity;
+    user.Address = req.body.address;
+    user.DateOfBirth = req.body.date;
+    user.save();
+    res.redirect('/Admin/user');
+});
 
 router.post('/rechargeAccount/:AccountId', async function (req, res) {
     checkAdmin(req,res);
