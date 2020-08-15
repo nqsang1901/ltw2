@@ -18,14 +18,14 @@ router.get('/In', function (req, res, next) {
     res.render('Transfer/transferIn');
 });
 
-router.get('/confirmemail', function (req, res, next) {
+router.get('/confirmemail', function (req, res, next) { // Trang xác thực gmail
     if (typeof req.session.userId == "undefined") {
         res.redirect('/login');
     }
     res.render('Transfer/confirmemail');
 });
 
-router.post('/confirmemail', async function (req, res, next) {
+router.post('/confirmemail', async function (req, res, next) { // Xử lý xác thực gmail
     const token = req.body.confirmemail;
     const UserId = req.session.userId;
     const transaction = await TransactionLog.findTransactionLogByToken(token);
@@ -49,16 +49,17 @@ router.post('/confirmemail', async function (req, res, next) {
 });
 
 router.post('/In', async function (req, res, next) {
-    const inforTransaction = req.body;
+    const inforTransaction = req.body; // AccountId, money, password, content
     const UserId = req.session.userId;
     const user = await User.findUserById(UserId);
     const accountget = await Account.findAccountByAcountId(inforTransaction.AccountId);
-    console.log(accountget);
 
     if (User.verifyPassword(inforTransaction.password, user.PassWord) == false) {
         res.render('Transfer/transferIn', { message: 'Mật khẩu không khớp!' });
     } else if(accountget == null || accountget.AccountTypeId != 1) {
         res.render('Transfer/transferIn', { message: 'Tài khoản chuyển đến không hợp lệ!' });
+    }else if(inforTransaction.money < 10000 || inforTransaction.money > 5000000) {
+        res.render('Transfer/transferIn', { message: 'Số tiền không hợp lệ!' });
     } else {
         const token = crypto.randomBytes(3).toString('hex').toUpperCase();
         // await Email.send(user.EmailAddress, 'Mã xác thực chuyển tiền', 'Mã xác thực chuyển tiền của bạn là: ' + token);

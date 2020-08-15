@@ -16,7 +16,7 @@
                 <li class="scroll-to-section"><a href="#our-classes">Classes</a></li>
                 <li class="scroll-to-section"><a href="#contact-us">Contact</a></li> 
                 <% if(currentUser){ %>
-                    <li><a>Xin chào, <%= (currentUser.UserName)%> </a></li>
+                    <li><a href="/profile">Xin chào, <%= (currentUser.UserName)%> </a></li>
                     <li><a href="/logout">Logout </a></li>
                 <% } else{ %>
                     <!-- <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
