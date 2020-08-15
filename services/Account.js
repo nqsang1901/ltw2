@@ -35,7 +35,6 @@ class Account extends Model {
     static async findUserByAccountId(AccountId){
         return User.findOne({
             where:{
-                AccountId,
                 UserId,
             }
         })

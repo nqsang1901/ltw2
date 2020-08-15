@@ -677,7 +677,21 @@ features
   margin-right: 30px;
   height: 120px;
 }
-
+.feature-item .left-icon img {
+  -webkit-transition-duration: 1s;
+      -moz-transition-duration: 1s;
+      -o-transition-duration: 1s;
+      transition-duration: 1s;
+      -webkit-transition-property: -webkit-transform;
+      -moz-transition-property: -moz-transform;
+      -o-transition-property: -o-transform;
+      transition-property: transform;
+  }
+  .feature-item .left-icon img:hover {
+    transform: rotate(35deg);
+    -webkit-transform: rotate(35deg);
+    -ms-transform: rotate(35deg);
+    }
 .feature-item .right-content {
   display: inline;
 }

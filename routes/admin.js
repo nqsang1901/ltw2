@@ -63,6 +63,21 @@ router.get('/watchuser/:UserId', async function (req, res) {
     const user = await User.findUserById(UserId);
     res.render('Admin/watchUser',{user});
 });
+router.get('/accountverification/:AccountId', async function (req, res) {
+    checkAdmin(req,res);
+    const { AccountId } = req.params;
+    const account = await Account.findAccountByAcountId(AccountId);
+    const user = await User.findUserById(account.UserId);
+    res.render('Admin/accountverification',{user});
+});
+router.post('/accountverification/:AccountId', async function (req, res) {
+    checkAdmin(req,res);
+    const { AccountId } = req.params;
+    const account = await Account.findAccountByAcountId(AccountId);
+    account.AccountStatusTypeId =2;
+    account.save();
+    res.redirect('/admin/account');
+});
 router.get('/lockuser/:UserId', async function (req, res) {
     checkAdmin(req,res);
     const { UserId } = req.params;

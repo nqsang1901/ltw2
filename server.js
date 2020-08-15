@@ -40,6 +40,7 @@ app.use('/admin',express.static(__dirname +'/views/Admin'));
 app.use('/admin/rechargeAccount',express.static(__dirname +'/views/Admin'));
 app.use('/admin/edituser',express.static(__dirname +'/views/Admin'));
 app.use('/admin/watchUser',express.static(__dirname +'/views/Admin'));
+app.use('/admin/accountverification',express.static(__dirname +'/views/Admin'));
 
 
 app.use(express.static('public'));
