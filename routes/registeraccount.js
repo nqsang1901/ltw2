@@ -14,7 +14,6 @@ router.get('/', async function (req, res, next) {
 
     const savingsaccount = await Account.findAccountByTypeAccount(req.session.userId, 1);
     const paymentaccount = await Account.findAccountByTypeAccount(req.session.userId, 2);
-    console.log(savingsaccount);
     res.render('registeraccount', {savingsaccount, paymentaccount});
 });
 

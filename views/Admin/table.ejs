@@ -69,7 +69,14 @@
 											<td class="center"><%= i.UserName %></td>
 											<td class="center"><%= i.EmailAddress %></td>
 											<td class="center">
-												<span class="label label-warning"><%= ( i.UserStatusId == 1 ? 'Đang chờ xác thực' : i.UserStatusId == 2 ? 'Đã xác thực' : 'Tạm khóa') %></span>
+												<!-- <span class="label label-warning"><%#= ( i.UserStatusId == 1 ? 'Đang chờ xác thực' : i.UserStatusId == 2 ? 'Đã xác thực' : 'Tạm khóa') %></span> -->
+												<% if(i.UserStatusId == 1) { %>
+													<span class="label label-warning">Đang chờ xác thực</span>
+												<% } else if(i.UserStatusId == 2) { %>
+													<span class="label label-success">Đã xác thực</span>
+												<% } else { %>
+													<span class="label label-danger">Đã khóa</span>
+												<% } %>
 											</td>
 											<td class="center">
 												<a class="btn btn-success" href="<%= i.UserId %>">

@@ -27,6 +27,7 @@
     "pg-hstore": "^2.3.3",
     "random": "^2.2.0",
     "save": "^2.4.0",
-    "sequelize": "^6.2.2"
+    "sequelize": "^6.2.2",
+    "timezone": "^1.0.23"
   }
 }

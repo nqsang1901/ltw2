@@ -50,7 +50,7 @@
                                 <td> 1 </td>
                                 <td> Tài khoản thanh toán </td>
                                 <td> Giới thiệu thanh toán </td>
-                                <% if( account1.AccountId == null){ %>
+                                <%# if( account1.AccountId == null){ %>
                                 <td>
                                     <% if(savingsaccount) { %>
                                         <%= savingsaccount.AccountStatusTypeId == 2 ? 'Bạn đã có tài khoản thanh toán' : savingsaccount.AccountStatusTypeId == 1 ? 'Đang chờ xác nhận' : 'Đã bị khóa' %>
@@ -60,9 +60,9 @@
                                         class="btn btn-success">Đăng ký</button>
                                     <% } %>
                                 </td>
-                                <% }else{  %>
-                                   <td>Đã đăng ký</td> 
-                                <% } %>
+                                <%# }else{  %>
+                                   <!-- <td>Đã đăng ký</td>  -->
+                                <%# } %>
                             </tr>
 
                             <tr class="defalut">
