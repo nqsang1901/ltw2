@@ -69,13 +69,25 @@
 									<% accounts.forEach(function(i) { %>
 										<tr>
 											<td><%= i.AccountId %></td>
-											<td class="center"><%= dateFormat(i.ReleaseDate) %></td>
-											<td class="center"><%= i.CurrentBalance %></td>
+											<td class="center"><%= asia(i.ReleaseDate, '%m/%d/%Y - %H:%M:%S', 'Asia/Hong_Kong') %></td>
+											<td class="center"><%= formatMoney(i.CurrentBalance, 'VNĐ') %></td>
 											<td class="center">
-												<span class="label label-warning"><%= ( i.AccountStatusTypeId == 1 ? 'Đang chờ xác thực' : i.AccountStatusTypeId == 2 ? 'Đã xác thực' : 'Tạm khóa') %></span>
+												<!-- <span class="label label-warning"><%#= ( i.AccountStatusTypeId == 1 ? 'Đang chờ xác thực' : i.AccountStatusTypeId == 2 ? 'Đã xác thực' : 'Tạm khóa') %></span> -->
+												<% if(i.AccountStatusTypeId == 1) { %>
+													<span class="label label-warning">Đang chờ xác thực</span>
+												<% } else if(i.AccountStatusTypeId == 2) { %>
+													<span class="label label-success">Đã xác thực</span>
+												<% } else { %>
+													<span class="label label-danger">Đã khóa</span>
+												<% } %>
 											</td>
 											<td class="center">
-												<span class="label label-warning"><%= ( i.AccountTypeId == 1 ? 'Tài khoản thanh toán' : 'Tài khoản tiết kiệm') %></span>
+												<!-- <span class="label label-warning"><%#= ( i.AccountTypeId == 1 ? 'Tài khoản thanh toán' : 'Tài khoản tiết kiệm') %></span> -->
+												<% if(i.AccountTypeId == 1) { %>
+													<span class="label label-primary">Tài khoản thanh toán</span>
+												<% } else { %>
+													<span class="label label-info">Tài khoản tiết kiệm</span>
+												<% } %>
 											</td>
 											<td class="center">
 												<a class="btn btn-success" href="rechargeAccount/<%= i.AccountId %>">

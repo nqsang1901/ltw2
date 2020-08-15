@@ -4,6 +4,12 @@ const asyncHandler = require('express-async-handler');
 const User = require('../services/User');
 const Account = require('../services/Account');
 var dateFormat = require('dateformat');
+const tz = require('timezone');
+const asia = tz(require('timezone/Asia'));
+
+function formatMoney(n, currency) {
+    return n.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") + ' ' + currency;
+}
 
 const router = new Router();
 
@@ -13,7 +19,7 @@ router.get('/', async function getProfile(req, res, next) {
     }
     const payaccount = await Account.findAccountByTypeAccount(req.currentUser.UserId, 1);
     const savingaccount = await Account.findAccountByTypeAccount(req.currentUser.UserId, 2);
-    res.render('profile', {payaccount, savingaccount, dateFormat});
+    res.render('profile', {payaccount, savingaccount, asia, formatMoney});
 });
 
 router.post('/', upload.single('avatar'), asyncHandler(async function(req, res, next) {

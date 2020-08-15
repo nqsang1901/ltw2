@@ -82,7 +82,7 @@
                                                         <label>Ngày sinh: </label>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <p><%= dateFormat(currentUser.DateOfBirth) %></p>
+                                                        <p><%= asia(currentUser.DateOfBirth, '%m/%d/%Y', 'Asia/Hong_Kong') %></p>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -120,7 +120,7 @@
                                         <div class="col-md-8">
                                             <h5><b>Tài Khoản Thanh Toán</b></h5>
                                             <% if(payaccount) { %>                                                
-                                                <h6>Số dư: <%= payaccount.CurrentBalance %></h6>
+                                                <h6>Số dư: <%= formatMoney(payaccount.CurrentBalance,'VNĐ') %></h6>
                                                 <h6>Trạng thái: <%= payaccount.AccountStatusTypeId %></h6>
                                             <% } else { %>
                                                 <p>Bạn chưa có tài khoản thanh toán</p>
@@ -128,7 +128,7 @@
                                             <hr>
                                             <h5><b>Tài khoản tiết kiệm</b></h5>
                                             <% if(savingaccount) { %>                                                
-                                                <h6>Số dư: <%= savingaccount.CurrentBalance %></h6>
+                                                <h6>Số dư: <%= formatMoney(savingaccount.CurrentBalance,'VNĐ') %></h6>
                                                 <h6>Trạng thái: <%= savingaccount.AccountStatusTypeId %></h6>
                                             <% } else { %>
                                                 <p>Bạn chưa có tài khoản tiết kiệm</p>

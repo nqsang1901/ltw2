@@ -6,6 +6,12 @@ const TransactionDetail = require('../services/TransactionDetail');
 const random = require('random');
 var dateFormat = require('dateformat');
 const GetTime = require("../services/GetTime");
+const tz = require('timezone');
+const asia = tz(require('timezone/Asia'));
+
+function formatMoney(n, currency) {
+    return n.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") + ' ' + currency;
+}
 
 const router = new Router();
 
@@ -20,19 +26,19 @@ async function checkAdmin(req, res) {
 router.get('/user', async function (req, res) {
     checkAdmin(req,res);
     const users = await User.findAllUser();
-    res.render('Admin/table', { users, dateFormat });
+    res.render('Admin/table', { users });
 });
 
 router.get('/account', async function (req, res) {
     checkAdmin(req,res);
     const accounts = await Account.findAll();
-    res.render('Admin/index', { accounts, dateFormat });
+    res.render('Admin/index', { accounts, asia, formatMoney });
 });
 
 router.get('/recharge', async function (req, res) {
     checkAdmin(req,res);
     const accounts = await Account.findAll();
-    res.render('Admin/recharge', { accounts, dateFormat });
+    res.render('Admin/recharge', { accounts, asia, formatMoney});
 });
 
 router.get('/rechargeAccount/:AccountId', async function (req, res) {
