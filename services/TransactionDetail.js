@@ -9,8 +9,8 @@ class TransactionDetail extends Model {
     static async numberOfTransactionDetail() {
         return TransactionDetail.count();
     }
-    static async add(TransactionDetailId, TransactionId, Content, BeneficiaryBank, BeneficiaryUser) {
-        return TransactionDetail.create({ TransactionDetailId, TransactionId, Content, BeneficiaryBank, BeneficiaryUser });
+    static async add(TransactionDetailId, TransactionId, Content, BeneficiaryBank) {
+        return TransactionDetail.create({ TransactionDetailId, TransactionId, Content, BeneficiaryBank });
     }
 }
 TransactionDetail.init({
@@ -30,10 +30,6 @@ TransactionDetail.init({
         allowNull: false,
     },
     BeneficiaryBank: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    BeneficiaryUser: {
         type: Sequelize.STRING,
         allowNull: false,
     },

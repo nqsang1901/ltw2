@@ -69,13 +69,13 @@ router.get('/edituser/:UserId', async function (req, res) {
     checkAdmin(req,res);
     const { UserId } = req.params;
     const user = await User.findUserById(UserId);
-    res.render('Admin/edituser',{user});
+    res.render('Admin/edituser',{user, asia});
 });
 router.get('/watchuser/:UserId', async function (req, res) {
     checkAdmin(req,res);
     const { UserId } = req.params;
     const user = await User.findUserById(UserId);
-    res.render('Admin/watchUser',{user});
+    res.render('Admin/watchUser',{user, asia});
 });
 router.get('/accountverification/:AccountId', async function (req, res) {
     checkAdmin(req,res);
@@ -139,8 +139,8 @@ router.post('/rechargeAccount/:AccountId', async function (req, res) {
         // TransactionLogId = await random.int(10000000, 99999999);
         // TransactionId, UserId, AccountId, TransactionStatusId, type, money, token, TransactionDate
         const accountget = await Account.findAccountByAcountId(AccountId);
-        await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 2, 2, money, null, new Date(GetTime.getTheCurrentTime()));
-        await TransactionDetail.add(await TransactionDetail.count() + 1, await TransactionLog.count(), 'NAP TIEN', 1, accountget.UserId);
+        await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 2, 3, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
+        await TransactionDetail.add(await TransactionDetail.count() + 1, await TransactionLog.count(), 'NAP TIEN', 1);
     }
     res.redirect('/admin/recharge');
 });

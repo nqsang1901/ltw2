@@ -64,8 +64,8 @@ router.post('/In', async function (req, res, next) {
         const token = crypto.randomBytes(3).toString('hex').toUpperCase();
         // await Email.send(user.EmailAddress, 'Mã xác thực chuyển tiền', 'Mã xác thực chuyển tiền của bạn là: ' + token);
         const numtransaction = await TransactionLog.count() + 1;
-        await TransactionLog.add(numtransaction, UserId, inforTransaction.AccountId, 2, 1, inforTransaction.money, token, new Date(GetTime.getTheCurrentTime()));
-        TransactionDetail.add(await TransactionDetail.count() + 1, numtransaction, inforTransaction.content, 1, accountget.UserId);
+        await TransactionLog.add(numtransaction, UserId, inforTransaction.AccountId, 2, 1, inforTransaction.money, token, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
+        TransactionDetail.add(await TransactionDetail.count() + 1, numtransaction, inforTransaction.content, 1);
         res.redirect('/transfer/confirmemail');
     }
 });

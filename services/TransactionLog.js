@@ -12,8 +12,8 @@ class TransactionLog extends Model {
         return TransactionLog.count();
     }
 
-    static async add(TransactionId, UserId, AccountId, TransactionStatusId, TransactionTypeId, money, token, TransactionDate) {
-        return TransactionLog.create({ TransactionId, UserId, AccountId, TransactionStatusId, TransactionTypeId, money, token, TransactionDate });
+    static async add(TransactionId, UserId, AccountId, TransactionStatusId, TransactionTypeId, money, token, TransactionDate, BeneficiaryUser) {
+        return TransactionLog.create({ TransactionId, UserId, AccountId, TransactionStatusId, TransactionTypeId, money, token, TransactionDate, BeneficiaryUser});
 
     }
     static async findAllTransactionLogById(TransactionId) {
@@ -29,6 +29,17 @@ class TransactionLog extends Model {
     static async findTransactionLogByToken(token) {
         return TransactionLog.findOne({
             where: { token },
+        });
+    }
+    static async findTransactionLogByUserId(UserId) {
+        return TransactionLog.findAll({
+            where: {
+                [Sequelize.Op.or]: [
+                    { UserId : UserId },
+                    { BeneficiaryUser : UserId },
+                ]
+            },
+            limit: 5,
         });
     }
 }
@@ -66,6 +77,10 @@ TransactionLog.init({
     },
     TransactionDate: {
         type: Sequelize.DATE,
+        allowNull: false,
+    },
+    BeneficiaryUser: {
+        type: Sequelize.INTEGER,
         allowNull: false,
     },
     // TransactionDetailId: {

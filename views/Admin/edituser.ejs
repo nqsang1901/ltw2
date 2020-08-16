@@ -88,7 +88,7 @@
 										  <div class="control-group">
 											<label class="control-label" for="date01">Date of birth</label>
 											<div class="controls">
-											  <input type="text" class="input-xlarge datepicker" name="date" value="<%= user.DateOfBirth %> ">
+											  <input type="text" class="input-xlarge datepicker" name="date" value="<%= asia(user.DateOfBirth, '%m/%d/%Y', 'Asia/Hong_Kong') %> ">
 											</div>
 										  </div>
 										  <div class="form-actions">

@@ -27,7 +27,7 @@
             </div>
             <!-- <h1>Thông tin User</h1> -->
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">                    
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="well well-sm">
                         <div class="row">
                             <div class="col-sm-12 col-md-12">
@@ -36,18 +36,24 @@
                                     <div class="row">
                                         <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4">
                                             <div class="profile-img">
-                                                <img src="public/uploads/<%= currentUser.Avatar %>" alt="" class="img-rounded img-responsive" style="height: 75%; width: 50%" />
-                                                <form method="POST" enctype="multipart/form-data" style="margin-top: 5px;">
-                                                    
+                                                <img src="public/uploads/<%= currentUser.Avatar %>" alt=""
+                                                    class="img-rounded img-responsive"
+                                                    style="height: 75%; width: 50%" />
+                                                <form method="POST" enctype="multipart/form-data"
+                                                    style="margin-top: 5px;">
+
                                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                                         <label class="btn btn-secondary active">
-                                                            <input type="file" id="myFile" name="avatar" style="display:none;" />
-                                                          <input type="radio" name="options" id="option1" autocomplete="off" for="myFile"> Chọn hình
+                                                            <input type="file" id="myFile" name="avatar"
+                                                                style="display:none;" />
+                                                            <input type="radio" name="options" id="option1"
+                                                                autocomplete="off" for="myFile"> Chọn hình
                                                         </label>
                                                         <label class="btn btn-secondary">
-                                                          <input type="submit"  name="options" id="option2" value="Đồng ý" autocomplete="off">
+                                                            <input type="submit" name="options" id="option2"
+                                                                value="Đồng ý" autocomplete="off">
                                                         </label>
-                                                      </div>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -82,7 +88,8 @@
                                                         <label>Ngày sinh: </label>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <p><%= asia(currentUser.DateOfBirth, '%m/%d/%Y', 'Asia/Hong_Kong') %></p>
+                                                        <p><%= asia(currentUser.DateOfBirth, '%m/%d/%Y', 'Asia/Hong_Kong') %>
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -98,7 +105,8 @@
                                                         <label>Trạng thái tài khoản: </label>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <p><%= currentUser.UserStatusId == 2 ? 'Bình thường' : currentUser.UserStatusId == 3 ? 'Đã khóa' : 'Chưa xác thực gmail' %></p>
+                                                        <p><%= currentUser.UserStatusId == 2 ? 'Bình thường' : currentUser.UserStatusId == 3 ? 'Đã khóa' : 'Chưa xác thực gmail' %>
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <!-- <p class="proile-rating">RANKINGS : <span>8/10</span></p> -->
@@ -118,18 +126,78 @@
                                             </div> -->
                                         </div>
                                         <div class="col-md-8">
+                                            <!-- Thanh toán -->
                                             <h5><b>Tài Khoản Thanh Toán</b></h5>
-                                            <% if(payaccount) { %>                                                
-                                                <h6>Số dư: <%= formatMoney(payaccount.CurrentBalance,'VNĐ') %></h6>
-                                                <h6>Trạng thái: <%= payaccount.AccountStatusTypeId %></h6>
+                                            <% if(payaccount) { %>
+                                            <h6>Số dư: <%= formatMoney(payaccount.CurrentBalance,'VNĐ') %></h6>
+                                            <h6>Trạng thái: <%= payaccount.AccountStatusTypeId == 2 ? 'Hoạt động' : (payaccount.AccountStatusTypeId == 1 ? 'Chưa xác thực' : 'Đã khóa') %></h6>
+                                            <input type="button" class="btnPayment" value="Xem lịch sử giao dịch">
+                                                    <div class="tbPayment" style="display:none;">
+                                                        <table
+                                                            class="table table-striped table-bordered bootstrap-datatable datatable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>STT</th>
+                                                                    <th>Tài khoản nhận</th>
+                                                                    <th>Số tiền</th>
+                                                                    <th>Ngày giao dịch</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% transactionLog.forEach(function(i) { %>
+                                                                <% if(i.TransactionTypeId == 1) { %>
+                                                                    <tr>                                                                      
+                                                                        <td><%= i.TransactionId %></td>
+                                                                        <td class="center"><%= i.AccountId %></td>
+                                                                        <td class="center">
+                                                                            <%= (i.UserId == currentUser.UserId ? '- ' + i.money : '+ ' + i.money) %>
+                                                                        </td>
+                                                                        <td class="center">
+                                                                            <%= asia(i.TransactionDate, '%m/%d/%Y- %H:%M:%S', 'Asia/Hong_Kong') %>
+                                                                        </td>
+                                                                    </tr>
+                                                                <% }}) %>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                             <% } else { %>
                                                 <p>Bạn chưa có tài khoản thanh toán</p>
                                             <% } %>
                                             <hr>
+                                            <!-- Tiết kiệm -->
                                             <h5><b>Tài khoản tiết kiệm</b></h5>
-                                            <% if(savingaccount) { %>                                                
+                                            <% if(savingaccount) { %>
                                                 <h6>Số dư: <%= formatMoney(savingaccount.CurrentBalance,'VNĐ') %></h6>
-                                                <h6>Trạng thái: <%= savingaccount.AccountStatusTypeId %></h6>
+                                                <h6>Trạng thái: <%= savingaccount.AccountStatusTypeId == 2 ? 'Hoạt động' : (savingaccount.AccountStatusTypeId == 1 ? 'Chưa xác thực' : 'Đã khóa') %></h6>
+                                                <input type="button" class="btnSavings" value="Xem lịch sử giao dịch">
+                                                    <div class="tbSavings" style="display:none;">
+                                                        <table
+                                                            class="table table-striped table-bordered bootstrap-datatable datatable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>STT</th>
+                                                                    <th>Tài khoản nhận</th>
+                                                                    <th>Số tiền</th>
+                                                                    <th>Ngày giao dịch</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% transactionLog.forEach(function(i) { %>
+                                                                <% if(i.TransactionTypeId == 2) { %>
+                                                                    <tr>                                                                 
+                                                                        <td><%= i.TransactionId %></td>
+                                                                        <td class="center"><%= i.AccountId %></td>
+                                                                        <td class="center">
+                                                                            <%= (i.UserId == currentUser.UserId ? '- ' + i.money : '+ ' + i.money) %>
+                                                                        </td>
+                                                                        <td class="center">
+                                                                            <%= asia(i.TransactionDate, '%m/%d/%Y- %H:%M:%S', 'Asia/Hong_Kong') %>
+                                                                        </td>
+                                                                    </tr>
+                                                                <% }}) %>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                             <% } else { %>
                                                 <p>Bạn chưa có tài khoản tiết kiệm</p>
                                             <% } %>
@@ -147,10 +215,33 @@
         </div>
     </section>
 
-   <!-- jQuery -->
-   <script src="../public/js/jquery-2.1.0.min.js"></script>
-   <script src="../public/js/scrollreveal.min.js"></script>
-   <script src="../public/js/custom.js"></script>
+    <!-- jQuery -->
+    <script src="../public/js/jquery-2.1.0.min.js"></script>
+    <script src="../public/js/scrollreveal.min.js"></script>
+    <script src="../public/js/custom.js"></script>
+    <script>
+        var btnPay = document.querySelector(".btnPayment");
+        var tbPay = document.querySelector(".tbPayment");
+
+        btnPay.addEventListener("click", function () {
+            if (tbPay.style.display == "none") {
+                tbPay.style.display = "block";
+            } else {
+                tbPay.style.display = "none";
+            }
+        });
+
+        var btnSav = document.querySelector(".btnSavings");
+        var tbSav = document.querySelector(".tbSavings");
+
+        btnSav.addEventListener("click", function () {
+            if (tbSav.style.display == "none") {
+                tbSav.style.display = "block";
+            } else {
+                tbSav.style.display = "none";
+            }
+        });
+    </script>
 </body>
 
 </html>

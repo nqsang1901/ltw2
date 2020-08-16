@@ -5,6 +5,7 @@ const User = require('../services/User');
 const Account = require('../services/Account');
 var dateFormat = require('dateformat');
 const tz = require('timezone');
+const TransactionLog = require('../services/TransactionLog');
 const asia = tz(require('timezone/Asia'));
 
 function formatMoney(n, currency) {
@@ -19,7 +20,10 @@ router.get('/', async function getProfile(req, res, next) {
     }
     const payaccount = await Account.findAccountByTypeAccount(req.currentUser.UserId, 1);
     const savingaccount = await Account.findAccountByTypeAccount(req.currentUser.UserId, 2);
-    res.render('profile', {payaccount, savingaccount, asia, formatMoney});
+    console.log(req.session.UserId);
+    const transactionLog = await TransactionLog.findTransactionLogByUserId(req.session.userId);
+    console.log(transactionLog);
+    res.render('profile', {payaccount, savingaccount, asia, formatMoney, transactionLog});
 });
 
 router.post('/', upload.single('avatar'), asyncHandler(async function(req, res, next) {

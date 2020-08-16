@@ -32,6 +32,7 @@
                             <form method="POST" accept-charset="UTF-8" role="form">
                                 <fieldset>
                                     <div class="form-group">
+                                        <%- (currentUser.UserStatusId != 2 ? '<p style="color:brown">Tài khoản của bạn chưa xác thực email hoặc bị khóa</p>' : '') -%>
                                         <p style="color: brown; margin-bottom: 15px;">Số tiền từ 10.000 VNĐ đến 5.000.000 VNĐ</p>
                                         <% if(typeof(message) != "undefined") { %>
                                             <p style="color: red;"> <%= message %></p>
@@ -44,7 +45,7 @@
                                         <input class="form-control" placeholder="" id="password" name="password" type="password">
                                         <b>Nội dung:</b>
                                         <input class="form-control" placeholder="" id="content" name="content" type="text">
-                                        <input class="btn btn-lg btn-success btn-block" style="margin-top: 10px;" type="submit" value="Gửi ngay">
+                                        <input class="btn btn-lg btn-success btn-block" <%- (currentUser.UserStatusId != 2 ? 'disabled="true"' : ' ') -%>  style="margin-top: 10px;" type="submit" value="Gửi ngay">
                                     </div>
                                 </fieldset>
                             </form>

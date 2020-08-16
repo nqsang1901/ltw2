@@ -63,14 +63,14 @@
 											<strong style="font-size: 16px;" >Email:  </strong> <a style="font-size: 16px;"><%= user.EmailAddress %></a><br>
 											<strong style="font-size: 16px;" >Phone:  </strong> <a style="font-size: 16px;"><%= user.CellPhone %></a><br>
 											<strong style="font-size: 16px;" >Identity Number:  </strong> <a style="font-size: 16px;"><%= user.IdentityNumber %></a><br>
-											<strong style="font-size: 16px;" >Date of birth:  </strong> <a style="font-size: 16px;"><%= user.DateOfBirth %></a><br>
+											<strong style="font-size: 16px;" >Date of birth:  </strong> <a style="font-size: 16px;"><%= asia(user.DateOfBirth, '%m/%d/%Y', 'Asia/Hong_Kong') %></a><br>
 											<strong style="font-size: 16px;" >Address:  </strong> <a style="font-size: 16px;"><%= user.Address %></a><br>
 											<% if(user.UserStatusId == 1) {  %> 
-												<strong style="font-size: 16px;">Status:</strong> <span class="label label-info">Đã xác nhận</span> 
+												<strong style="font-size: 16px;">Status:</strong> <span class="label label-warning">Chưa xác thực</span> 
 											<% } else if(user.UserStatusId == 2){ %> 
-												<strong style="font-size: 16px;">Status:</strong> <span class="label label-important">Chưa xác nhận</span> 
+												<strong style="font-size: 16px;">Status:</strong> <span class="label label-success">Đã xác thực</span> 
 											<% } else{ %> 
-												<strong style="font-size: 16px;">Status:</strong> <span class="label label-warning">Khóa</span> 
+												<strong style="font-size: 16px;">Status:</strong> <span class="label label-danger">Khóa</span> 
 											<% } %> 
 								</li>
 							</ul>
