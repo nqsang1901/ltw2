@@ -96,6 +96,7 @@ router.get('/lockuser/:UserId', async function (req, res) {
     checkAdmin(req,res);
     const { UserId } = req.params;
     const user = await User.findUserById(UserId);
+    const account = await Account.findAccountByUserId(UserId);
     const users = await User.findAllUser();
     if(user.UserStatusId == 3){
         user.UserStatusId =2;
@@ -105,7 +106,32 @@ router.get('/lockuser/:UserId', async function (req, res) {
     else{
         user.UserStatusId =3;
         user.save();
+        account.forEach(function(i){
+            i.AccountStatusTypeId = 3;
+            i.save();
+        });
         res.redirect('/admin/user');
+    }
+});
+router.get('/lockaccount/:AccountId', async function (req, res) {
+    checkAdmin(req,res);
+    const { AccountId } = req.params;
+    const account = await Account.findAccountByAcountId(AccountId);
+    const user = await User.findUserById(account.UserId);
+    if(account.AccountStatusTypeId == 3){
+        if(user.UserStatusId!=3){
+        account.AccountStatusTypeId =2;
+        account.save();
+        }
+        else{
+
+        }
+        res.redirect('/admin/account');
+    }
+    else{
+        account.AccountStatusTypeId =3;
+        account.save();
+        res.redirect('/admin/account');
     }
 });
 router.post('/edituser/:UserId', async function (req, res) {
