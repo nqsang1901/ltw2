@@ -29,10 +29,11 @@ router.post('/confirmemail', async function (req, res, next) { // Xử lý xác 
     const token = req.body.confirmemail;
     const UserId = req.session.userId;
     const transaction = await TransactionLog.findTransactionLogByToken(token);
-    
+    const user = await User.findUserById(UserId);
+    const account = await Account.findAccountByUserId(UserId);
     if (!transaction) {
         res.render('Transfer/confirmemail', { message: "Mã xác thực không đúng" });
-    } else if (new Date(GetTime.getTheCurrentTime()) - new Date(transaction.TransactionDate) > 100000) {
+    } else if (new Date(GetTime.getTheCurrentTime()) - new Date(transaction.TransactionDate) > 5 * 60000) {
         res.render('Transfer/confirmemail', { message: "Mã xác thực đã hết hạn" });
     }
 
@@ -45,6 +46,7 @@ router.post('/confirmemail', async function (req, res, next) { // Xử lý xác 
     }
     transaction.TransactionStatusId = 1;
     transaction.save();
+    await Email.send(user.EmailAddress, account.AccountId + ' thay đổi số dư', account.AccountId + ' bị trừ -' + transaction.money);
     res.redirect('/profile');
 });
 
@@ -62,7 +64,7 @@ router.post('/In', async function (req, res, next) {
         res.render('Transfer/transferIn', { message: 'Số tiền không hợp lệ!' });
     } else {
         const token = crypto.randomBytes(3).toString('hex').toUpperCase();
-        // await Email.send(user.EmailAddress, 'Mã xác thực chuyển tiền', 'Mã xác thực chuyển tiền của bạn là: ' + token);
+        await Email.send(user.EmailAddress, 'Mã xác thực chuyển tiền', 'Mã xác thực chuyển tiền của bạn là: ' + token);
         const numtransaction = await TransactionLog.count() + 1;
         await TransactionLog.add(numtransaction, UserId, inforTransaction.AccountId, 2, 1, inforTransaction.money, token, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
         TransactionDetail.add(await TransactionDetail.count() + 1, numtransaction, inforTransaction.content, 1);

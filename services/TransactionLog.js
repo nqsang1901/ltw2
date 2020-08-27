@@ -40,6 +40,10 @@ class TransactionLog extends Model {
                 ]
             },
             limit: 5,
+            order: [
+                ['TransactionDate', 'DESC'],
+            ],
+
         });
     }
 }

@@ -26,8 +26,8 @@ router.post('/', upload.single('avatar'), asyncHandler(async function (req, res,
     //  UserId, UserName, EmailAddress, PassWord, soCMND, Token
     const birth = req.body.DateOfBirth.split('/');
     const user = await User.add(id, getUser.username, getUser.email, password, req.file.filename, getUser.IdentityNumber, new Date(birth[2], birth[1] - 1, birth[0], 14, 39, 7), token);
-    // await Email.send(getUser.email, 'Mã kích hoạt tài khoản', `${process.env.BASE_URL}/login/${id}/${token}`);
-    await Email.send(getUser.email, 'Mã kích hoạt tài khoản', `http://localhost:3000/login/${id}/${token}`);
+    await Email.send(getUser.email, 'Mã kích hoạt tài khoản', `${process.env.BASE_URL}/login/${id}/${token}`);
+    // await Email.send(getUser.email, 'Mã kích hoạt tài khoản', `http://localhost:3000/login/${id}/${token}`);
     res.locals.user = user;
     req.session.userId = user.id;
     res.redirect('/');

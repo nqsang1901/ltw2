@@ -8,6 +8,7 @@ var dateFormat = require('dateformat');
 const GetTime = require("../services/GetTime");
 const tz = require('timezone');
 const asia = tz(require('timezone/Asia'));
+const Email = require('../services/Email');
 
 function formatMoney(n, currency) {
     return n.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") + ' ' + currency;
@@ -159,7 +160,7 @@ router.post('/rechargeAccount/:AccountId', async function (req, res) {
     }
     const numtransaction = await TransactionLog.numberOfTransactionLog() + 1;
     const account =await Account.findAccountByAcountId(AccountId);
-    const UserId =account.UserId;
+    const user = await User.findAccountByUserId(account.UserId);
     if (recharge == true) {
         // var TransactionLogId;
         // TransactionLogId = await random.int(10000000, 99999999);
@@ -167,6 +168,7 @@ router.post('/rechargeAccount/:AccountId', async function (req, res) {
         const accountget = await Account.findAccountByAcountId(AccountId);
         await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 2, 3, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
         await TransactionDetail.add(await TransactionDetail.count() + 1, await TransactionLog.count(), 'NAP TIEN', 1);
+        await Email.send(user.EmailAddress, AccountId + ' Thay đổi số dư' , AccountId + ' cộng thêm +' + money);
     }
     res.redirect('/admin/recharge');
 });
