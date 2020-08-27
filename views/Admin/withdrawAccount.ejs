@@ -3,14 +3,13 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Account Verification</title>
+	<title>Withdraw Account</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- start: CSS -->
 	<link id="bootstrap-style" href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link id="base-style" href="css/style.css" rel="stylesheet">
 	<link id="base-style-responsive" href="css/style-responsive.css" rel="stylesheet">
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<link
 		href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext'
 		rel='stylesheet' type='text/css'>
@@ -44,45 +43,55 @@
 					<li><a href="#">Tables</a></li>
 				</ul>
 				<div class="row-fluid sortable">
-					<div class="box span12" onTablet="span12" onDesktop="span12">
-						<div class="box-header">
-							<h2><i class="halflings-icon white user"></i><span class="break"></span></h2>
+					<div class="box span12">
+						<div class="box-header" data-original-title>
+							<h2><i class="halflings-icon white edit"></i><span class="break"></span>Withdraw Account</h2>
 							<div class="box-icon">
+								<a href="#" class="btn-setting"><i class="halflings-icon white wrench"></i></a>
 								<a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
 								<a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>
 							</div>
 						</div>
 						<div class="box-content">
-							<ul class="dashboard-list">
-								<li>
-									<a href="#">
-										<img style="height: 250px; width: 500px;"
-											src="../../public/uploads/<%= user.IdentityImages %>">
-									</a>
-									<br>
-									<form class="form-horizontal" method="POST">
-										<div class="form-actions">
-											<button type="submit" class="btn btn-primary"> OK</button>
-											<button type="button" class="btn"
-												onclick="window.location.replace('../account')">Cancel</button>
+							<form method="POST" class="form-horizontal">
+								<fieldset>
+									<div class="control-group">
+										<label class="control-label">STK:</label>
+										<label class="control-label"><%= accounts.AccountId %> </label>
+							
+									</div>
+									<div class="control-group">
+										<label class="control-label" for="appendedPrependedInput">Enter the amount</label>
+										<div class="controls">
+											<div class="input-prepend input-append">
+												<span class="add-on">$</span><input id="moneyInput" name="moneyInput"
+													size="16" type="text"><span class="add-on">.00</span>
+											</div>
 										</div>
-									</form>
-
-								</li>
-
-							</ul>
+									</div>	
+									<%= typeof(message) != "undefined" ? message : "" %>
+									<div class="form-actions">
+										<button type="submit" class="btn btn-primary">Save changes</button>
+										<button type="button" class="btn" onclick="window.location.replace('../withdraw')">Cancel</button>
+									</div>
+								</fieldset>
+							</form>
 						</div>
 					</div>
 					<!--/span-->
 
-
 				</div>
+				<!--/row-->
 
+				<!--/row-->
 			</div>
+			<!--/.fluid-container-->
 
+			<!-- end: Content -->
 		</div>
-
+		<!--/#content.span10-->
 	</div>
+	<!--/fluid-row-->
 
 	<div class="clearfix"></div>
 

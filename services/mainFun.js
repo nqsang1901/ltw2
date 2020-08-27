@@ -2,7 +2,7 @@ const mainFunCol1 = [
     {
         name: "Thông tin tài khoản",
         path: "profile",
-        content: "Please do not re-distribute this template ZIP file on any template collection website. This is not allowed.",
+        content: "Thông tin người dùng và các tài khoản của người dùng.",
         link: "Discover More",
         img: "/public/images/taikhoan.png",
         alt: "First One"
@@ -10,7 +10,7 @@ const mainFunCol1 = [
     {
         name: "Đăng ký tài khoản",
         path: "registeraccount",
-        content: "If you wish to support TemplateMo website via PayPal, please feel free to contact us. We appreciate it a lot.",
+        content: "Đăng ký tài khoản thanh toán và tài khoản tiết kiệm.",
         link: "Discover More",
         img: "/public/images/thanhtoan.png",
         alt: "second one"
@@ -18,7 +18,7 @@ const mainFunCol1 = [
     {
         name: "Chuyển khoản trong hệ thống",
         path: "transfer/In",
-        content: 'Credit goes to <a rel="nofollow" href="https://www.pexels.com" target="_blank">Pexels website</a> for images and video background used in this HTML template.',
+        content: 'Chuyển khoản cho các tài khoản có cùng hệ thống ngân hàng.',
         link: "Discover More",
         img: "/public/images/tronghethong.png",
         alt: "third gym training"
@@ -29,7 +29,7 @@ const mainFunCol2 = [
     {
         name: "Chuyển khoản ngoài hệ thống",
         path: "transfer/Out",
-        content: 'You may want to browse through <a rel="nofollow" href="https://templatemo.com/tag/digital-marketing" target="_parent">Digital Marketing</a> or <a href="https://templatemo.com/tag/corporate">Corporate</a> HTML CSS templates on our website.',
+        content: 'Chuyển khoản cho các tài khoản khác hệ thống ngân hàng.',
         link: "Discover More",
         img: "/public/images/liennganhang.png",
         alt: "fourth muscle"
@@ -37,15 +37,15 @@ const mainFunCol2 = [
     {
         name: "Tiền gửi trực tuyến",
         path: "",
-        content: "IThis template is built on Bootstrap v4.3.1 framework. It is easy to adapt the columns and sections.",
+        content: "Thông tin lãi suất, kỳ hạn của tài khoản tiết kiệm.",
         link: "Discover More",
         img: "/public/images/tietkiem.png",
         alt: "training fifth"
     },
     {
-        name: "Thông tin dịch vụ",
+        name: "Thông tin ứng dụng",
         path: "",
-        content: 'Suspendisse fringilla et nisi et mattis. Curabitur sed finibus nisi. Integer nibh sapien, vehicula et auctor.',
+        content: 'Thông tin ứng dụng refund banking. Đang cập nhật thêm chức năng',
         link: "Discover More",
         img: "/public/images/thongtin.png",
         alt: "gym training"

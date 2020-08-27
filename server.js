@@ -38,6 +38,7 @@ app.use(express.static(__dirname + '/public'));
 app.use('/public',express.static(__dirname +'/public'));
 app.use('/admin',express.static(__dirname +'/views/Admin'));
 app.use('/admin/rechargeAccount',express.static(__dirname +'/views/Admin'));
+app.use('/admin/withdrawAccount',express.static(__dirname +'/views/Admin'));
 app.use('/admin/edituser',express.static(__dirname +'/views/Admin'));
 app.use('/admin/watchUser',express.static(__dirname +'/views/Admin'));
 app.use('/admin/accountverification',express.static(__dirname +'/views/Admin'));

@@ -168,6 +168,22 @@ class Account extends Model {
         account.save();
         return true;
     }
+    static async withdrawAccount(money, AccountId) {
+        if (money % 1000 != 0) {
+            return false;
+        }
+        const account = await Account.findOne({
+            where: {
+                AccountId,
+            },
+        });
+        if(money > account.CurrentBalance){
+            return false;
+        }
+        account.CurrentBalance = account.CurrentBalance - money;
+        account.save();
+        return true;
+    }
     static add(AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId) {
         return Account.create({ AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId });
     }

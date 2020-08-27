@@ -28,6 +28,8 @@ router.get('/confirmemail', function (req, res, next) { // Trang xác thực gma
 router.post('/confirmemail', async function (req, res, next) { // Xử lý xác thực gmail
     const token = req.body.confirmemail;
     const UserId = req.session.userId;
+    const user = await User.findUserById(UserId);
+    const account =await Account.findAccountByUserId(UserId);
     const transaction = await TransactionLog.findTransactionLogByToken(token);
     
     if (!transaction) {
@@ -37,6 +39,7 @@ router.post('/confirmemail', async function (req, res, next) { // Xử lý xác 
     }
 
     const result = await Account.transferIn(UserId, transaction.money, transaction.AccountId);
+    const account1 = await Account.findAccountByAcountId(transaction.AccountId);
     transaction.token = null;
     if (result == false) {
         transaction.TransactionStatusId = 2;
@@ -45,6 +48,8 @@ router.post('/confirmemail', async function (req, res, next) { // Xử lý xác 
     }
     transaction.TransactionStatusId = 1;
     transaction.save();
+    await Email.send(user.EmailAddress, 'Refundbank' , 'Tài khoản '+ account.AccountId +':-'+ String( transaction.money) + ' ,Số dư: ' + String(account.CurrentBalance-transaction.money));
+    await Email.send(user.EmailAddress, 'Refundbank' , 'Tài khoản '+ account1.AccountId +':+'+ String( transaction.money) + ' ,Số dư: ' + String(account.CurrentBalance+transaction.money));
     res.redirect('/profile');
 });
 
@@ -62,7 +67,7 @@ router.post('/In', async function (req, res, next) {
         res.render('Transfer/transferIn', { message: 'Số tiền không hợp lệ!' });
     } else {
         const token = crypto.randomBytes(3).toString('hex').toUpperCase();
-        // await Email.send(user.EmailAddress, 'Mã xác thực chuyển tiền', 'Mã xác thực chuyển tiền của bạn là: ' + token);
+        await Email.send(user.EmailAddress, 'Mã xác thực chuyển tiền', 'Mã xác thực chuyển tiền của bạn là: ' + token);
         const numtransaction = await TransactionLog.count() + 1;
         await TransactionLog.add(numtransaction, UserId, inforTransaction.AccountId, 2, 1, inforTransaction.money, token, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
         TransactionDetail.add(await TransactionDetail.count() + 1, numtransaction, inforTransaction.content, 1);
