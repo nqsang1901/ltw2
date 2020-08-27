@@ -8,9 +8,8 @@ const random = require('random');
 var dateFormat = require('dateformat');
 const GetTime = require("../services/GetTime");
 const tz = require('timezone');
-// const { now } = require('sequelize/types/lib/utils');
-// const { NOW } = require('sequelize/types');
 const asia = tz(require('timezone/Asia'));
+const Email = require('../services/Email');
 
 function formatMoney(n, currency) {
     return n.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") + ' ' + currency;

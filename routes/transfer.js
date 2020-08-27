@@ -31,10 +31,11 @@ router.post('/confirmemail', async function (req, res, next) { // Xử lý xác 
     const user = await User.findUserById(UserId);
     const account =await Account.findAccountByUserId(UserId);
     const transaction = await TransactionLog.findTransactionLogByToken(token);
-    
+    const user = await User.findUserById(UserId);
+    const account = await Account.findAccountByUserId(UserId);
     if (!transaction) {
         res.render('Transfer/confirmemail', { message: "Mã xác thực không đúng" });
-    } else if (new Date(GetTime.getTheCurrentTime()) - new Date(transaction.TransactionDate) > 100000) {
+    } else if (new Date(GetTime.getTheCurrentTime()) - new Date(transaction.TransactionDate) > 5 * 60000) {
         res.render('Transfer/confirmemail', { message: "Mã xác thực đã hết hạn" });
     }
 
