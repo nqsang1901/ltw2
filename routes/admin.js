@@ -3,6 +3,7 @@ const Account = require('../services/Account');
 const User = require('../services/User');
 const TransactionLog = require('../services/TransactionLog');
 const TransactionDetail = require('../services/TransactionDetail');
+const Email = require('../services/Email');
 const random = require('random');
 var dateFormat = require('dateformat');
 const GetTime = require("../services/GetTime");
@@ -65,6 +66,14 @@ router.get('/rechargeAccount/:AccountId', async function (req, res) {
     res.render('Admin/rechargeAccount', { accounts, dateFormat });
 
 });
+router.get('/withdrawAccount/:AccountId', async function (req, res) {
+    checkAdmin(req,res);
+    const { AccountId } = req.params;
+    const accounts = await Account.findAccountByAcountId(AccountId);
+
+    res.render('Admin/withdrawAccount', { accounts, dateFormat });
+
+});
 router.get('/edituser/:UserId', async function (req, res) {
     checkAdmin(req,res);
     const { UserId } = req.params;
@@ -75,7 +84,9 @@ router.get('/watchuser/:UserId', async function (req, res) {
     checkAdmin(req,res);
     const { UserId } = req.params;
     const user = await User.findUserById(UserId);
-    res.render('Admin/watchUser',{user, asia});
+    const payaccount = await Account.findAccountByTypeAccount(UserId, 1);
+    const savingaccount = await Account.findAccountByTypeAccount(UserId, 2);
+    res.render('Admin/watchUser',{user, asia,payaccount, savingaccount,formatMoney});
 });
 router.get('/accountverification/:AccountId', async function (req, res) {
     checkAdmin(req,res);
@@ -96,6 +107,7 @@ router.get('/lockuser/:UserId', async function (req, res) {
     checkAdmin(req,res);
     const { UserId } = req.params;
     const user = await User.findUserById(UserId);
+    const account = await Account.findAccountByUserId(UserId);
     const users = await User.findAllUser();
     if(user.UserStatusId == 3){
         user.UserStatusId =2;
@@ -105,7 +117,32 @@ router.get('/lockuser/:UserId', async function (req, res) {
     else{
         user.UserStatusId =3;
         user.save();
+        account.forEach(function(i){
+            i.AccountStatusTypeId = 3;
+            i.save();
+        });
         res.redirect('/admin/user');
+    }
+});
+router.get('/lockaccount/:AccountId', async function (req, res) {
+    checkAdmin(req,res);
+    const { AccountId } = req.params;
+    const account = await Account.findAccountByAcountId(AccountId);
+    const user = await User.findUserById(account.UserId);
+    if(account.AccountStatusTypeId == 3){
+        if(user.UserStatusId!=3){
+        account.AccountStatusTypeId =2;
+        account.save();
+        }
+        else{
+
+        }
+        res.redirect('/admin/account');
+    }
+    else{
+        account.AccountStatusTypeId =3;
+        account.save();
+        res.redirect('/admin/account');
     }
 });
 router.post('/edituser/:UserId', async function (req, res) {
@@ -134,17 +171,46 @@ router.post('/rechargeAccount/:AccountId', async function (req, res) {
     const numtransaction = await TransactionLog.numberOfTransactionLog() + 1;
     const account =await Account.findAccountByAcountId(AccountId);
     const UserId =account.UserId;
+    const user = await User.findUserById(UserId);
+    console.log("123");
     if (recharge == true) {
         // var TransactionLogId;
         // TransactionLogId = await random.int(10000000, 99999999);
         // TransactionId, UserId, AccountId, TransactionStatusId, type, money, token, TransactionDate
         const accountget = await Account.findAccountByAcountId(AccountId);
-        await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 2, 3, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
+        await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 1, 3, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
         await TransactionDetail.add(await TransactionDetail.count() + 1, await TransactionLog.count(), 'NAP TIEN', 1);
+        await Email.send(user.EmailAddress, 'Refundbank' , 'Tài khoản '+ account.AccountId +':+'+ String(money) + ' ,Số dư: ' + String(account.CurrentBalance+money));
     }
     res.redirect('/admin/recharge');
 });
 
+router.post('/withdrawAccount/:AccountId', async function (req, res) {
+    checkAdmin(req,res);
+    const { AccountId } = req.params;
+    const money = parseFloat(req.body.moneyInput, 10);
+    const recharge = await Account.withdrawAccount(money, parseInt(AccountId, 10));
+    if (recharge == false) {
+        const message = "Số tiền không hợp lệ hoặc số dư không đủ";
+        const accounts = await Account.findAccountByAcountId(AccountId);
+
+        res.render('Admin/rechargeAccount', { accounts, dateFormat, message });
+    }
+    const numtransaction = await TransactionLog.numberOfTransactionLog() + 1;
+    const account =await Account.findAccountByAcountId(AccountId);
+    const UserId =account.UserId;
+    const user = await User.findUserById(UserId);
+    if (recharge == true) {
+        // var TransactionLogId;
+        // TransactionLogId = await random.int(10000000, 99999999);
+        // TransactionId, UserId, AccountId, TransactionStatusId, type, money, token, TransactionDate
+        const accountget = await Account.findAccountByAcountId(AccountId);
+        await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 1, 3, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
+        await TransactionDetail.add(await TransactionDetail.count() + 1, await TransactionLog.count(), 'RUT TIEN', 1);
+        await Email.send(user.EmailAddress, 'Refundbank' , 'Tài khoản '+ account.AccountId +':-'+ String(money) + ' ,Số dư: ' + String(account.CurrentBalance-money));
+    }
+    res.redirect('/admin/recharge');
+});
 router.get('/:AccountId/edit', async function (req, res) {
     checkAdmin(req,res);
     const { AccountId } = req.params;

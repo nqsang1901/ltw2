@@ -30,7 +30,7 @@
 						<li><a href="/admin/account"><i class="icon-align-justify"></i><span class="hidden-tablet">
 									Account</span></a></li>
 						<li><a href="/admin/recharge"><i class="icon-align-justify"></i><span class="hidden-tablet">
-									Recharge</span></a></li>
+									Recharge and Withdraw</span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -58,27 +58,64 @@
 									<a href="#">
 										<img class="avatar" src="../../public/uploads/<%= user.Avatar %> ">
 									</a>
-											<strong style="font-size: 16px;" >User Id:  </strong> <a style="font-size: 16px;"><%= user.UserId %></a><br>
-											<strong style="font-size: 16px;" >User Name:  </strong> <a style="font-size: 16px;"><%= user.UserName %></a><br>
-											<strong style="font-size: 16px;" >Email:  </strong> <a style="font-size: 16px;"><%= user.EmailAddress %></a><br>
-											<strong style="font-size: 16px;" >Phone:  </strong> <a style="font-size: 16px;"><%= user.CellPhone %></a><br>
-											<strong style="font-size: 16px;" >Identity Number:  </strong> <a style="font-size: 16px;"><%= user.IdentityNumber %></a><br>
-											<strong style="font-size: 16px;" >Date of birth:  </strong> <a style="font-size: 16px;"><%= asia(user.DateOfBirth, '%m/%d/%Y', 'Asia/Hong_Kong') %></a><br>
-											<strong style="font-size: 16px;" >Address:  </strong> <a style="font-size: 16px;"><%= user.Address %></a><br>
-											<% if(user.UserStatusId == 1) {  %> 
-												<strong style="font-size: 16px;">Status:</strong> <span class="label label-warning">Chưa xác thực</span> 
-											<% } else if(user.UserStatusId == 2){ %> 
-												<strong style="font-size: 16px;">Status:</strong> <span class="label label-success">Đã xác thực</span> 
-											<% } else{ %> 
-												<strong style="font-size: 16px;">Status:</strong> <span class="label label-danger">Khóa</span> 
-											<% } %> 
+									<strong style="font-size: 16px;">User Id: </strong> <a
+										style="font-size: 16px;"><%= user.UserId %></a><br>
+									<strong style="font-size: 16px;">User Name: </strong> <a
+										style="font-size: 16px;"><%= user.UserName %></a><br>
+									<strong style="font-size: 16px;">Email: </strong> <a
+										style="font-size: 16px;"><%= user.EmailAddress %></a><br>
+									<strong style="font-size: 16px;">Phone: </strong> <a
+										style="font-size: 16px;"><%= user.CellPhone %></a><br>
+									<strong style="font-size: 16px;">Identity Number: </strong> <a
+										style="font-size: 16px;"><%= user.IdentityNumber %></a><br>
+									<strong style="font-size: 16px;">Date of birth: </strong> <a
+										style="font-size: 16px;"><%= asia(user.DateOfBirth, '%m/%d/%Y', 'Asia/Hong_Kong') %></a><br>
+									<strong style="font-size: 16px;">Address: </strong> <a
+										style="font-size: 16px;"><%= user.Address %></a><br>
+									<% if(user.UserStatusId == 1) {  %>
+									<strong style="font-size: 16px;">Status:</strong> <span
+										class="label label-warning">Chưa xác thực</span>
+									<% } else if(user.UserStatusId == 2){ %>
+									<strong style="font-size: 16px;">Status:</strong> <span
+										class="label label-success">Đã xác thực</span>
+									<% } else{ %>
+									<strong style="font-size: 16px;">Status:</strong> <span
+										class="label label-danger">Khóa</span>
+									<% } %>
 								</li>
+									<div class="tk">
+										<!-- Thanh toán -->
+										<h4><b>Tài Khoản Thanh Toán</b></h4>
+										<% if(payaccount) { %>
+										<h5>Số tài khoản: <%= payaccount.AccountId %> </h5>
+										<h5>Số dư: <%= formatMoney(payaccount.CurrentBalance,'VNĐ') %></h5>
+										<h5>Trạng thái:
+											<%= payaccount.AccountStatusTypeId == 2 ? 'Hoạt động' : (payaccount.AccountStatusTypeId == 1 ? 'Chưa xác thực' : 'Đã khóa') %>
+										</h5>
+										<% } else { %>
+										<p>Bạn chưa có tài khoản thanh toán</p>
+										<% } %>
+										<hr>
+										<!-- Tiết kiệm -->
+										<h4><b>Tài khoản tiết kiệm</b></h4>
+										<% if(savingaccount) { %>
+										<h5>Số tài khoản: <%= savingaccount.AccountId %> </h5>
+										<h5>Số dư: <%= formatMoney(savingaccount.CurrentBalance,'VNĐ') %></h5>
+										<h5>Trạng thái:
+											<%= savingaccount.AccountStatusTypeId == 2 ? 'Hoạt động' : (savingaccount.AccountStatusTypeId == 1 ? 'Chưa xác thực' : 'Đã khóa') %>
+										</h5>
+				
+										<% } else { %>
+										<p>Bạn chưa có tài khoản tiết kiệm</p>
+										<% } %>
+									</div>
 							</ul>
-						</div>
+						</div> 
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 	<div class="clearfix"></div>
 	<footer>

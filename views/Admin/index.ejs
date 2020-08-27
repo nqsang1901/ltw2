@@ -29,7 +29,7 @@
 						<li><a href="/admin/account"><i class="icon-align-justify"></i><span class="hidden-tablet">
 									Account</span></a></li>
 						<li><a href="/admin/recharge"><i class="icon-align-justify"></i><span class="hidden-tablet">
-									Recharge</span></a></li>
+									Recharge and Withdraw</span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -42,21 +42,31 @@
 					</li>
 					<li><a href="#">Tables</a></li>
 				</ul>
-				<form method="POST" action="/admin/account">
-					<label for="statusAccount">Tìm theo trạng thái</label>
-					<select name="statusAccount" id="statusAccount">
-						<option value="1">Tài khoản chưa xác thực</option>
-						<option value="2">Tài khoản đã xác thực</option>
-						<option value="3">Tài khoản đã khóa</option>
-						<option value="">Tất cả...</option>
-					</select>
-					<label for="typeAccount">Tìm theo loại tài khoản:</label>
-					<select name="typeAccount" id="typeAccount">
-						<option value="1">Tài khoản thanh toán</option>
-						<option value="2">Tài khoản tiết kiệm</option>
-						<option value="">Tất cả...</option>
-					</select>
-					<input type="submit" value="Tìm kiếm" />
+				<form method="POST" action="/admin/account" class="form-horizontal">
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label" for="selectError3">Tìm theo trạng thái:</label>
+							<div class="controls">
+								<select id="selectError3" name="statusAccount">
+									<option value="1">Tài khoản chưa xác thực</option>
+									<option value="2">Tài khoản đã xác thực</option>
+									<option value="3">Tài khoản đã khóa</option>
+									<option value="">Tất cả...</option>
+								</select>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="selectError3">Tìm theo loại tài khoản:</label>
+							<div class="controls">
+								<select id="selectError3" name="typeAccount">
+									<option value="1">Tài khoản thanh toán</option>
+									<option value="2">Tài khoản tiết kiệm</option>
+									<option value="">Tất cả...</option>
+								</select>
+								<input type="submit" value="Tìm kiếm" class="btn"/>
+							</div>
+						</div>
+					</fieldset>
 				</form>
 
 				<div class="row-fluid sortable">
@@ -110,8 +120,8 @@
 											<a class="btn btn-success" href="#">
 												<i class="halflings-icon white zoom-in"></i>
 											</a>
-											<a class="btn btn-danger" href="#">
-												<i class="halflings-icon white trash"></i>
+											<a class="btn btn-danger" href="lockaccount/<%= i.AccountId %>">
+												<i class="halflings-icon white lock"></i>
 											</a>
 											<% if(i.AccountStatusTypeId==1){ %>
 											<a class="btn btn-success" href="accountverification/<%= i.AccountId %>">

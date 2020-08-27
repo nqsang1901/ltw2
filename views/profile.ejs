@@ -131,7 +131,7 @@
                                             <% if(payaccount) { %>
                                             <h6>Số dư: <%= formatMoney(payaccount.CurrentBalance,'VNĐ') %></h6>
                                             <h6>Trạng thái: <%= payaccount.AccountStatusTypeId == 2 ? 'Hoạt động' : (payaccount.AccountStatusTypeId == 1 ? 'Chưa xác thực' : 'Đã khóa') %></h6>
-                                            <input type="button" class="btnPayment" value="Xem lịch sử giao dịch">
+                                            <input type="button" class="btnPayment btn btn-info" value="Xem lịch sử giao dịch">
                                                     <div class="tbPayment" style="display:none;">
                                                         <table
                                                             class="table table-striped table-bordered bootstrap-datatable datatable">
@@ -144,16 +144,16 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <% transactionLog.forEach(function(i) { %>
-                                                                <% if(i.TransactionTypeId == 1) { %>
+                                                                <% transactionLog.forEach(function(i, count) { %>
+                                                                <% if(i.TransactionStatusId == 1) { %>
                                                                     <tr>                                                                      
-                                                                        <td><%= i.TransactionId %></td>
+                                                                        <td><%= count + 1 %></td>
                                                                         <td class="center"><%= i.AccountId %></td>
                                                                         <td class="center">
                                                                             <%= (i.UserId == currentUser.UserId ? '- ' + i.money : '+ ' + i.money) %>
                                                                         </td>
                                                                         <td class="center">
-                                                                            <%= asia(i.TransactionDate, '%m/%d/%Y- %H:%M:%S', 'Asia/Hong_Kong') %>
+                                                                            <%= asia(i.TransactionDate, '%d/%m/%Y- %H:%M:%S', 'Asia/Hong_Kong') %>
                                                                         </td>
                                                                     </tr>
                                                                 <% }}) %>
@@ -169,7 +169,7 @@
                                             <% if(savingaccount) { %>
                                                 <h6>Số dư: <%= formatMoney(savingaccount.CurrentBalance,'VNĐ') %></h6>
                                                 <h6>Trạng thái: <%= savingaccount.AccountStatusTypeId == 2 ? 'Hoạt động' : (savingaccount.AccountStatusTypeId == 1 ? 'Chưa xác thực' : 'Đã khóa') %></h6>
-                                                <input type="button" class="btnSavings" value="Xem lịch sử giao dịch">
+                                                <input type="button" class="btnSavings btn btn-info" value="Xem lịch sử giao dịch">
                                                     <div class="tbSavings" style="display:none;">
                                                         <table
                                                             class="table table-striped table-bordered bootstrap-datatable datatable">
