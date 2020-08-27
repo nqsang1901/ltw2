@@ -9,7 +9,6 @@ var dateFormat = require('dateformat');
 const GetTime = require("../services/GetTime");
 const tz = require('timezone');
 const asia = tz(require('timezone/Asia'));
-const Email = require('../services/Email');
 
 function formatMoney(n, currency) {
     return n.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") + ' ' + currency;
@@ -173,12 +172,13 @@ router.post('/rechargeAccount/:AccountId', async function (req, res) {
     const account =await Account.findAccountByAcountId(AccountId);
     const UserId =account.UserId;
     const user = await User.findUserById(UserId);
+    console.log("123");
     if (recharge == true) {
         // var TransactionLogId;
         // TransactionLogId = await random.int(10000000, 99999999);
         // TransactionId, UserId, AccountId, TransactionStatusId, type, money, token, TransactionDate
         const accountget = await Account.findAccountByAcountId(AccountId);
-        await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 2, 3, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
+        await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 1, 3, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
         await TransactionDetail.add(await TransactionDetail.count() + 1, await TransactionLog.count(), 'NAP TIEN', 1);
         await Email.send(user.EmailAddress, 'Refundbank' , 'Tài khoản '+ account.AccountId +':+'+ String(money) + ' ,Số dư: ' + String(account.CurrentBalance+money));
     }
@@ -205,7 +205,7 @@ router.post('/withdrawAccount/:AccountId', async function (req, res) {
         // TransactionLogId = await random.int(10000000, 99999999);
         // TransactionId, UserId, AccountId, TransactionStatusId, type, money, token, TransactionDate
         const accountget = await Account.findAccountByAcountId(AccountId);
-        await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 2, 3, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
+        await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 1, 3, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
         await TransactionDetail.add(await TransactionDetail.count() + 1, await TransactionLog.count(), 'RUT TIEN', 1);
         await Email.send(user.EmailAddress, 'Refundbank' , 'Tài khoản '+ account.AccountId +':-'+ String(money) + ' ,Số dư: ' + String(account.CurrentBalance-money));
     }

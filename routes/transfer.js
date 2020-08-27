@@ -31,8 +31,6 @@ router.post('/confirmemail', async function (req, res, next) { // Xử lý xác 
     const user = await User.findUserById(UserId);
     const account =await Account.findAccountByUserId(UserId);
     const transaction = await TransactionLog.findTransactionLogByToken(token);
-    const user = await User.findUserById(UserId);
-    const account = await Account.findAccountByUserId(UserId);
     if (!transaction) {
         res.render('Transfer/confirmemail', { message: "Mã xác thực không đúng" });
     } else if (new Date(GetTime.getTheCurrentTime()) - new Date(transaction.TransactionDate) > 5 * 60000) {
@@ -50,7 +48,6 @@ router.post('/confirmemail', async function (req, res, next) { // Xử lý xác 
     transaction.TransactionStatusId = 1;
     transaction.save();
     await Email.send(user.EmailAddress, 'Refundbank' , 'Tài khoản '+ account.AccountId +':-'+ String( transaction.money) + ' ,Số dư: ' + String(account.CurrentBalance-transaction.money));
-    await Email.send(user.EmailAddress, 'Refundbank' , 'Tài khoản '+ account1.AccountId +':+'+ String( transaction.money) + ' ,Số dư: ' + String(account.CurrentBalance+transaction.money));
     res.redirect('/profile');
 });
 

@@ -145,7 +145,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 <% transactionLog.forEach(function(i, count) { %>
-                                                                <% if(i.TransactionTypeId == 1) { %>
+                                                                <% if(i.TransactionStatusId == 1) { %>
                                                                     <tr>                                                                      
                                                                         <td><%= count + 1 %></td>
                                                                         <td class="center"><%= i.AccountId %></td>
