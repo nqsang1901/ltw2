@@ -36,7 +36,7 @@ const mainFunCol2 = [
     },
     {
         name: "Tiền gửi trực tuyến",
-        path: "",
+        path: "Deposit",
         content: "IThis template is built on Bootstrap v4.3.1 framework. It is easy to adapt the columns and sections.",
         link: "Discover More",
         img: "/public/images/tietkiem.png",
