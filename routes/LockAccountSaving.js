@@ -11,11 +11,8 @@ function formatMoney(n, currency) {
 const router = new Router();
 
 router.get('/',async function (req, res, next) {
-    if (!req.currentUser.UserId) {
-        res.redirect('/login');
-    }
-    const {accountId}= req.params;
-    const accounts = await Account.findAccountByTypeAccount(req.currentUser.UserId,2);
+    const {userId}= req.params;
+    const accounts = await Account.findAccountByTypeAccount(userId,2);
     console.log(accounts);
     const CurrentBalance = accounts.CurrentBalance;
     const DueDate = accounts.DueDate;
@@ -35,7 +32,7 @@ router.get('/',async function (req, res, next) {
         BoolDue=2;
     }
     
-    res.render('LockAccountSaving',{accounts,formatMoney});
+    res.redirect('LockAccountSaving',{accounts,formatMoney});
 });
 
 module.exports = router;
