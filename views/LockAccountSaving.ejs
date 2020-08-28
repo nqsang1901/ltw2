@@ -1,0 +1,115 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+        rel="stylesheet">
+    <title>Thông tin tài khoản</title>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/templatemo-training-studio.css">
+</head>
+
+<body>
+    <header class="header-area header-sticky">
+        <div class="container">
+            <%- include('menu');  -%>
+        </div>
+    </header>
+    <section class="section" id="features">
+        <div class="container">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading">
+
+                </div>
+            </div>
+            <!-- <h1>Thông tin User</h1> -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="well well-sm">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                                <div class="container emp-profile">
+                                   <form method="POST" enctype="multipart/form-data"> 
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Số Tài Khoản :</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= accountId %></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Số Dư Hiện Tại:</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= formatMoney(CurrentBalance,'VNĐ') %></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Tiền Gữi Tiết Kiệm : </label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= formatMoney(SavingMoney,'VNĐ') %></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Tiền Lãi: </label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= formatMoney(MoneyInterest,'VNĐ') %></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Ngày Đến Hạn : </label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= DueDate %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p><%= BoolDue == 1 ? 'Đúng hạn ' : BoolDue == 2 ? 'Chưa Đến Hạn ' %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Số Dư Hiện Tại:</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= formatMoney(Money,'VNĐ') %></p>
+                                                    </div>
+                                                </div>
+                                                <input type="submit" class="btnPayment btn btn-info" value="Xác nhận">
+                                                <!-- <p class="proile-rating">RANKINGS : <span>8/10</span></p> -->
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                 </form> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- jQuery -->
+    <script src="../public/js/jquery-2.1.0.min.js"></script>
+    <script src="../public/js/scrollreveal.min.js"></script>
+    <script src="../public/js/custom.js"></script>
+</body>
+
+</html>

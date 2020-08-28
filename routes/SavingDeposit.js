@@ -1,49 +1,56 @@
 const { Router } = require('express');
+const  moment  = require('moment');
 const upload = require('../middlewares/upload');
 const asyncHandler = require('express-async-handler');
 const Account = require('../services/Account');
-const SYNC_INTERVALSENDMAIL = Number(process.env.SYNC_INTERVALSENDMAIL || 1440000);
+
 
 const router = new Router();
 
-router.get('/Deposit', function (req, res, next) {
+router.get('/', function (req, res, next) {
     if (!req.session.userId) {
         res.redirect('/login');
     }
     res.render('SavingDeposit');
 });
-router.post('/Deposit', async function (req, res, next) {
+router.post('/', async function (req, res, next) {
     const AccountId = req.body.AccountId;
     const money = req.body.money;
     const Maturity = req.body.Maturity;
+    const Duedate = req.body.Duedate;
     const UserId = req.session.userId; 
-    // const interest;
-    
-    
-    if(Maturity==1)
+    var interest = null;
+    var Duedates = null;
+    // const moneyMaturity;
+    if(Duedate==1)
     {
-        interest = 4;
+        interest = 4/100;
+        Duedates = moment().add(30, 'days').calendar();
     }
-    else if(Maturity==6)
+    else if(Duedate==6)
     {
-        interest= 5;
+        interest= 5/100;
+        Duedates = moment().add(183, 'days').calendar();
     }
-    else if(Maturity==12)
+    else if(Duedate==12)
     {
-        interest = 7;
+        interest = 7/100;
+        Duedates = moment().add(365, 'days').calendar();
     }
-    else if(Maturity==24)
+    else if(Duedate==24)
     {
-        interest = 7.5;
+        interest = 7.5/100;
+        Duedates = moment().add(730, 'days').calendar();
     }else 
     {
-        interest=8;
+        interest=8/100;
+        Duedates = moment().add(1095, 'days').calendar();
     }
-    const result = await Account.Deposit(UserId,AccountId ,money,interest);
-    const Int = await Account.Interest(UserId,AccountId,interest,money);
-    setInterval(Int, SYNC_INTERVALSENDMAIL);
+    const result = await Account.Deposit(UserId,AccountId ,money,interest,Duedates,Maturity);
 
-    if(result==true) {
+    setInterval (function(){Account.Interest(UserId,AccountId,interest,money)}, 1440000);
+    
+    if(result==true ) {
         res.redirect('/profile');
     }
 
