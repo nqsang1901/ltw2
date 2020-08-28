@@ -20,6 +20,7 @@ router.get('/LockAcc',async function getProfileAccount(req, res, next) {
     const DueDate = accounts.DueDate;
     const MoneyInterest = accounts.MoneyInterest;
     const SavingMoney = accounts.SavingMoney;
+    console.log(accounts);
     
     const Money = null;
     const BoolDue = null;

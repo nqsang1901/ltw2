@@ -36,6 +36,6 @@ router.post('/', upload.single('avatar'), asyncHandler(async function(req, res, 
     res.redirect('/profile');
 }));
 router.get('/LockAcc/:AccountId', async function (req, res) {
-    res.render('LockAccountSaving');
+    res.redirect('/LockAccountSaving');
 });
 module.exports = router;
