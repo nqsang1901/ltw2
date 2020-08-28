@@ -3,7 +3,8 @@ const  moment  = require('moment');
 const upload = require('../middlewares/upload');
 const asyncHandler = require('express-async-handler');
 const Account = require('../services/Account');
-
+const TransactionLog = require('../services/TransactionLog');
+const TransactionDetail = require('../services/TransactionDetail');
 
 const router = new Router();
 
@@ -47,11 +48,18 @@ router.post('/', async function (req, res, next) {
         Duedates = moment().add(1095, 'days').calendar();
     }
     const result = await Account.Deposit(UserId,AccountId ,money,interest,Duedates,Maturity);
-
+    const inforTransaction = req.body;
+    const token = null;
+    var userget= null;
+    var date =moment();
+    const numtransaction = await TransactionLog.count() + 1;
+    await TransactionLog.add(numtransaction, UserId, AccountId, 2, 2, inforTransaction.money, token,date ,userget );
+    TransactionDetail.add(await TransactionDetail.count() + 1, numtransaction, inforTransaction.content, 1);
     setInterval (function(){Account.Interest(UserId,AccountId,interest,money)}, 1440000);
     
     if(result==true ) {
         res.redirect('/profile');
+        
     }
 
     res.redirect('/');

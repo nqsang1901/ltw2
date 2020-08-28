@@ -98,6 +98,26 @@ class Account extends Model {
         } 
         return false;
     }
+    static async LockAccount(UserId, money,SavingMoney,interest,Duedate,maturity,MoneyInterest) {
+        const account = await Account.findOne({
+            where: {
+                UserId,
+                AccountTypeId : 2,
+                AccountStatusTypeId: 2,
+            },
+        });
+        if(account) {
+            account.CurrentBalance = money;
+            account.SavingMoney=  SavingMoney;
+            account.BankInterest= interest;
+            account.DueDate=Duedate;
+            account.MaturityId = maturity;
+            account.MoneyInterest= MoneyInterest;
+            account.save();
+            return true;
+        } 
+        return false;
+    }
     static async findAccountByTypeAccount(UserId, AccountTypeId) {
         return Account.findOne({
             where: { UserId, AccountTypeId },
@@ -126,19 +146,7 @@ class Account extends Model {
         account.save();
         return true;
     }
-    static async findAccount(UserId,AccountId) {
-        return Account.findAll({
-            where: {
-                UserId,
-                AccountId,
-                AccountTypeId : 2,
-                AccountStatusTypeId: 2
-                // CurrentBalance: {
-                //     [Sequelize.Op.gte]: money
-                // }
-            },
-        });
-    }
+    
     static add(AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId) {
         return Account.create({ AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId });
     }
