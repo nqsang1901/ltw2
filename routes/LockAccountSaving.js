@@ -10,7 +10,7 @@ function formatMoney(n, currency) {
 
 const router = new Router();
 
-router.get('/LockAcc',async function getProfileAccount(req, res, next) {
+router.get('/',async function getProfileAccount(req, res, next) {
     if (!req.session.userId) {
         res.redirect('/login');
     }
@@ -34,7 +34,7 @@ router.get('/LockAcc',async function getProfileAccount(req, res, next) {
         BoolDue=2;
     }
     
-    res.render('LockAccountSaving',{accountId, CurrentBalance, SavingMoney, MoneyInterest,DueDate, Money, BoolDue,formatMoney});
+    res.render('LockAccountSaving',{accounts,formatMoney});
 });
 
 module.exports = router;

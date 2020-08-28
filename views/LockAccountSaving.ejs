@@ -15,7 +15,7 @@
 <body>
     <header class="header-area header-sticky">
         <div class="container">
-            <%- include('menu');  -%>
+            <%- include('menu.ejs');-%>
         </div>
     </header>
     <section class="section" id="features">
@@ -44,51 +44,38 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <label>Số Dư Hiện Tại:</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <p><%= formatMoney(CurrentBalance,'VNĐ') %></p>
+                                                        <h6>Số dư: <%= formatMoney(accounts.CurrentBalance,'VNĐ') %></h6>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <label>Tiền Gữi Tiết Kiệm : </label>
+                                                        <h6>Tiền Gữi Tiết Kiệm : <%= formatMoney(accounts.SavingMoney,'VNĐ') %></h6>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <p><%= formatMoney(SavingMoney,'VNĐ') %></p>
-                                                    </div>
+                                                    
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <label>Tiền Lãi: </label>
+                                                        <h6>Tiền Lãi:<%= formatMoney(accounts.MoneyInterest,'VNĐ') %> </h6>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <p><%= formatMoney(MoneyInterest,'VNĐ') %></p>
-                                                    </div>
+                                                    
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <label>Ngày Đến Hạn : </label>
+                                                        <h6>Ngày Đến Hạn :<%= accounts.DueDate %> </h6>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <p><%= DueDate %>
-                                                        </p>
-                                                    </div>
+                                                    
                                                 </div>
-                                                <div class="row">
+                                                <!-- <div class="row">
                                                     <div class="col-md-6">
-                                                        <p><%= BoolDue == 1 ? 'Đúng hạn ' : BoolDue == 2 ? 'Chưa Đến Hạn ' %>
-                                                        </p>
+                                                        <h6><%= BoolDue == 1 ? 'Đúng hạn ' : BoolDue == 2 ? 'Chưa Đến Hạn ' %>
+                                                        </h6>
                                                     </div>
-                                                </div>
-                                                <div class="row">
+                                                </div> -->
+                                                <!-- <div class="row">
                                                     <div class="col-md-6">
-                                                        <label>Số Dư Hiện Tại:</label>
+                                                        <h6>Số Dư Hiện Tại:<%= formatMoney(Money,'VNĐ') %></h6>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <p><%= formatMoney(Money,'VNĐ') %></p>
-                                                    </div>
-                                                </div>
+                                                </div> -->
                                                 <input type="submit" class="btnPayment btn btn-info" value="Xác nhận">
                                                 <!-- <p class="proile-rating">RANKINGS : <span>8/10</span></p> -->
                                                 <hr>
