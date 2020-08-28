@@ -180,7 +180,7 @@ router.post('/rechargeAccount/:AccountId', async function (req, res) {
         const accountget = await Account.findAccountByAcountId(AccountId);
         await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 1, 3, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
         await TransactionDetail.add(await TransactionDetail.count() + 1, await TransactionLog.count(), 'NAP TIEN', 1);
-        await Email.send(user.EmailAddress, 'Refundbank' , 'Tài khoản '+ account.AccountId +':+'+ String(money) + ' ,Số dư: ' + String(account.CurrentBalance+money));
+        await Email.send(user.EmailAddress, 'Refundbank' ,asia(new Date(GetTime.getTheCurrentTime()) , '%d/%m/%Y- %H:%M:%S', 'Asia/Ho_Chi_Minh')+ ' Tài khoản '+ account.AccountId +':+'+ String(money) + ' ,Số dư: ' + String(account.CurrentBalance+money));
     }
     res.redirect('/admin/recharge');
 });
@@ -205,9 +205,9 @@ router.post('/withdrawAccount/:AccountId', async function (req, res) {
         // TransactionLogId = await random.int(10000000, 99999999);
         // TransactionId, UserId, AccountId, TransactionStatusId, type, money, token, TransactionDate
         const accountget = await Account.findAccountByAcountId(AccountId);
-        await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 1, 3, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
+        await TransactionLog.add(await TransactionLog.count() + 1, req.session.userId, AccountId, 1, 2, money, null, new Date(GetTime.getTheCurrentTime()), accountget.UserId);
         await TransactionDetail.add(await TransactionDetail.count() + 1, await TransactionLog.count(), 'RUT TIEN', 1);
-        await Email.send(user.EmailAddress, 'Refundbank' , 'Tài khoản '+ account.AccountId +':-'+ String(money) + ' ,Số dư: ' + String(account.CurrentBalance-money));
+        await Email.send(user.EmailAddress, 'Refundbank: ' ,asia(new Date(GetTime.getTheCurrentTime()) , '%d/%m/%Y- %H:%M:%S', 'Asia/Ho_Chi_Minh')+ ' Tài khoản '+ account.AccountId +':-'+ String(money) + ' ,Số dư: ' + String(account.CurrentBalance-money));
     }
     res.redirect('/admin/recharge');
 });

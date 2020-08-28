@@ -35,5 +35,10 @@ router.post('/', upload.single('avatar'), asyncHandler(async function(req, res, 
     }
     res.redirect('/profile');
 }));
-
+router.get('/locktk/:AccountId', async function (req, res) {
+    checkAdmin(req,res);
+    const { UserId } = req.params;
+    const user = await User.findUserById(UserId);
+    res.render('Admin/edituser',{user, asia});
+});
 module.exports = router;

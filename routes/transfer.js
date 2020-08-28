@@ -39,6 +39,7 @@ router.post('/confirmemail', async function (req, res, next) { // Xử lý xác 
 
     const result = await Account.transferIn(UserId, transaction.money, transaction.AccountId);
     const account1 = await Account.findAccountByAcountId(transaction.AccountId);
+    const user1= await User.findUserById(account1.UserId);
     transaction.token = null;
     if (result == false) {
         transaction.TransactionStatusId = 2;
@@ -47,7 +48,10 @@ router.post('/confirmemail', async function (req, res, next) { // Xử lý xác 
     }
     transaction.TransactionStatusId = 1;
     transaction.save();
-    await Email.send(user.EmailAddress, 'Refundbank' , 'Tài khoản '+ account.AccountId +':-'+ String( transaction.money) + ' ,Số dư: ' + String(account.CurrentBalance-transaction.money));
+    await Email.send(user.EmailAddress, 'Refundbank' ,asia(new Date(GetTime.getTheCurrentTime()) , '%d/%m/%Y- %H:%M:%S', 'Asia/Ho_Chi_Minh')+ 
+    ' Tài khoản '+ account.AccountId +':-'+ String( transaction.money) + ' ,Số dư: ' + String(account.CurrentBalance-transaction.money));
+    await Email.send(user1.EmailAddress, 'Refundbank' ,asia(new Date(GetTime.getTheCurrentTime()) , '%d/%m/%Y- %H:%M:%S', 'Asia/Ho_Chi_Minh')+ 
+    ' Tài khoản '+ account1.AccountId +':+'+ String( transaction.money) + ' ,Số dư: ' + String(account1.CurrentBalance+transaction.money));
     res.redirect('/profile');
 });
 

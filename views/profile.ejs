@@ -150,10 +150,12 @@
                                                                         <td><%= count + 1 %></td>
                                                                         <td class="center"><%= i.AccountId %></td>
                                                                         <td class="center">
-                                                                            <%= (i.UserId == currentUser.UserId ? '- ' + i.money : '+ ' + i.money) %>
+                                                                            <%  %> 
+                                                                            <%= (i.UserId == currentUser.UserId || i.TransactionTypeId ==2  ? '- ' + i.money : '+ ' + i.money) %>
+                                                                             
                                                                         </td>
                                                                         <td class="center">
-                                                                            <%= asia(i.TransactionDate, '%d/%m/%Y- %H:%M:%S', 'Asia/Hong_Kong') %>
+                                                                            <%= asia(i.TransactionDate, '%d/%m/%Y- %H:%M:%S', 'Asia/Ho_Chi_Minh') %>
                                                                         </td>
                                                                     </tr>
                                                                 <% }}) %>
@@ -191,7 +193,7 @@
                                                                             <%= (i.UserId == currentUser.UserId ? '- ' + i.money : '+ ' + i.money) %>
                                                                         </td>
                                                                         <td class="center">
-                                                                            <%= asia(i.TransactionDate, '%m/%d/%Y- %H:%M:%S', 'Asia/Hong_Kong') %>
+                                                                            <%= asia(i.TransactionDate, '%m/%d/%Y- %H:%M:%S', 'Asia/Ho_Chi_Minh') %>
                                                                         </td>
                                                                     </tr>
                                                                 <% }}) %>
