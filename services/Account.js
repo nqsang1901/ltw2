@@ -103,6 +103,27 @@ class Account extends Model {
         } 
         return false;
     }
+    static async LockAccount(UserId, money,SavingMoney,interest,Duedate,maturity,MoneyInterest,AccountStatusType) {
+        const account = await Account.findOne({
+            where: {
+                UserId,
+                AccountTypeId : 2,
+                AccountStatusTypeId: 2,
+            },
+        });
+        if(account) {
+            account.CurrentBalance = money;
+            account.SavingMoney=  SavingMoney;
+            account.BankInterest= interest;
+            account.DueDate=Duedate;
+            account.MaturityId = maturity;
+            account.MoneyInterest= MoneyInterest;
+            account.AccountStatusTypeId= AccountStatusType;
+            account.save();
+            return true;
+        } 
+        return false;
+    }
     static async findAccountByTypeAccount(UserId, AccountTypeId) {
         return Account.findOne({
             where: { UserId, AccountTypeId },

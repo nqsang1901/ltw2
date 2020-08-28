@@ -2,10 +2,12 @@ const { Router } = require('express');
 const upload = require('../middlewares/upload');
 const asyncHandler = require('express-async-handler');
 const User = require('../services/User');
+const  moment  = require('moment');
 const Account = require('../services/Account');
 var dateFormat = require('dateformat');
 const tz = require('timezone');
 const TransactionLog = require('../services/TransactionLog');
+const { duration } = require('moment');
 const asia = tz(require('timezone/Asia'));
 
 function formatMoney(n, currency) {
@@ -35,7 +37,63 @@ router.post('/', upload.single('avatar'), asyncHandler(async function(req, res, 
     }
     res.redirect('/profile');
 }));
-router.get('/LockAcc/:AccountId', async function (req, res) {
-    res.render('LockAccountSaving');
+router.get('/LockAcc/:UserId', async function (req, res) {
+    const {UserId}= req.params;
+    const accounts = await Account.findAccountByTypeAccount(UserId,2);
+    console.log(accounts);
+    const CurrentBalance = accounts.CurrentBalance;
+    const DueDate = accounts.DueDate;
+    const MoneyInterest = accounts.MoneyInterest;
+    const SavingMoney = accounts.SavingMoney;
+    
+    var Money = null;
+    var BoolDue = null;
+    if(moment()>=DueDate)
+    {
+        Money = CurrentBalance + SavingMoney+MoneyInterest;
+        BoolDue = 1;
+    }
+    else if(moment()<DueDate)
+    {
+        Money = CurrentBalance+SavingMoney;
+        BoolDue=2;
+    }
+    
+    res.render('LockAccountSaving',{accounts,BoolDue,Money,formatMoney});
+});
+router.post('/LockAcc/:UserId', async function (req, res) {
+    const {UserId}= req.params;
+    const accounts = await Account.findAccountByTypeAccount(UserId,2);
+    const CurrentBalance = accounts.CurrentBalance;
+    const DueDate = accounts.DueDate;
+    const MoneyInterest = accounts.MoneyInterest;
+    const SavingMoney = accounts.SavingMoney;
+    
+    var Money = null;
+    var BoolDue = null;
+    var savingmoney = null;
+    var interect=null;
+    var duedate=null;
+    var moneyinterect=null;
+    var macurity =null;
+    var status= 3;
+
+    if(moment()>=DueDate)
+    {
+        Money = CurrentBalance + SavingMoney+MoneyInterest;
+        BoolDue = 1;
+    }
+    else if(moment()<DueDate)
+    {
+        Money = CurrentBalance+SavingMoney;
+        BoolDue=2;
+    }
+    const result = await Account.LockAccount(UserId,Money,savingmoney,interect,duedate,macurity,moneyinterect,status);
+    
+    if(result==true ) {
+        res.redirect('/profile');
+    }
+
+    res.redirect('/');
 });
 module.exports = router;
