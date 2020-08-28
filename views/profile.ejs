@@ -191,7 +191,6 @@
                                                                 <% if(i.TransactionTypeId == 2) { %>
                                                                     <tr>                                                                 
                                                                         <td><%= count1++ %></td>
-                                                                        <td class="center"><%= i.AccountId %></td>
                                                                         <td class="center">
                                                                             <%= (i.UserId == currentUser.UserId ? '- ' + i.money : '+ ' + i.money) %>
                                                                         </td>

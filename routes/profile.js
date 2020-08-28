@@ -75,7 +75,8 @@ router.post('/LockAcc/:UserId', async function (req, res) {
     var interect=null;
     var duedate=null;
     var moneyinterect=null;
-    var macurity =3;
+    var macurity =null;
+    var status= 3;
 
     if(moment()>=DueDate)
     {
@@ -87,7 +88,7 @@ router.post('/LockAcc/:UserId', async function (req, res) {
         Money = CurrentBalance+SavingMoney;
         BoolDue=2;
     }
-    const result = await Account.LockAccount(UserId,Money,savingmoney,interect,duedate,moneyinterect,macurity);
+    const result = await Account.LockAccount(UserId,Money,savingmoney,interect,duedate,macurity,moneyinterect,status);
     
     if(result==true ) {
         res.redirect('/profile');

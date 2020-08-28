@@ -98,7 +98,7 @@ class Account extends Model {
         } 
         return false;
     }
-    static async LockAccount(UserId, money,SavingMoney,interest,Duedate,maturity,MoneyInterest) {
+    static async LockAccount(UserId, money,SavingMoney,interest,Duedate,maturity,MoneyInterest,AccountStatusType) {
         const account = await Account.findOne({
             where: {
                 UserId,
@@ -113,6 +113,7 @@ class Account extends Model {
             account.DueDate=Duedate;
             account.MaturityId = maturity;
             account.MoneyInterest= MoneyInterest;
+            account.AccountStatusTypeId= AccountStatusType;
             account.save();
             return true;
         } 

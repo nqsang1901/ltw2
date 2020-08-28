@@ -50,7 +50,7 @@ router.post('/', async function (req, res, next) {
     const result = await Account.Deposit(UserId,AccountId ,money,interest,Duedates,Maturity);
     const inforTransaction = req.body;
     const token = null;
-    var userget= null;
+    var userget= UserId;
     var date =moment();
     const numtransaction = await TransactionLog.count() + 1;
     await TransactionLog.add(numtransaction, UserId, AccountId, 2, 2, inforTransaction.money, token,date ,userget );
