@@ -170,13 +170,13 @@
                                                 <h6>Số dư: <%= formatMoney(savingaccount.CurrentBalance,'VNĐ') %></h6>
                                                 <h6>Trạng thái: <%= savingaccount.AccountStatusTypeId == 2 ? 'Hoạt động' : (savingaccount.AccountStatusTypeId == 1 ? 'Chưa xác thực' : 'Đã khóa') %></h6>
                                                 <input type="button" class="btnSavings btn btn-info" value="Xem lịch sử giao dịch">
+                                                <a href="/LockAcc"  >Khóa tài khoản</a>
                                                     <div class="tbSavings" style="display:none;">
                                                         <table
                                                             class="table table-striped table-bordered bootstrap-datatable datatable">
                                                             <thead>
                                                                 <tr>
                                                                     <th>STT</th>
-                                                                    <th>Tài khoản nhận</th>
                                                                     <th>Số tiền</th>
                                                                     <th>Ngày giao dịch</th>
                                                                 </tr>
@@ -186,7 +186,6 @@
                                                                 <% if(i.TransactionTypeId == 2) { %>
                                                                     <tr>                                                                 
                                                                         <td><%= i.TransactionId %></td>
-                                                                        <td class="center"><%= i.AccountId %></td>
                                                                         <td class="center">
                                                                             <%= (i.UserId == currentUser.UserId ? '- ' + i.money : '+ ' + i.money) %>
                                                                         </td>

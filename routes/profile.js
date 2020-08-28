@@ -36,4 +36,5 @@ router.post('/', upload.single('avatar'), asyncHandler(async function(req, res, 
     res.redirect('/profile');
 }));
 
+
 module.exports = router;

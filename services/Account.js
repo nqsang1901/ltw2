@@ -69,10 +69,10 @@ class Account extends Model {
         });
         if(account) {
             account.CurrentBalance = account.CurrentBalance - money;
-            account.SavingMoney= account.SavingMoney + money;
-            account.BankInterest= interest;
+            account.SavingMoney=  money;
+            account.BankInterest=account.BankInterest+ interest;
             account.DueDate=Duedate;
-            account.Maturity = maturity;
+            account.MaturityId = maturity;
             account.save();
             return true;
         } 
@@ -86,19 +86,23 @@ class Account extends Model {
                 AccountId,
                 AccountTypeId : 2,
                 AccountStatusTypeId: 2,
-                CurrentBalance: {
-                    [Sequelize.Op.gte]: money
-                }
+                // CurrentBalance: {
+                //     [Sequelize.Op.gte]: money
+                // }
             },
         });
         if(account) {
-            account.MoneyInterest =Savingmoney*interest/360;
+            account.MoneyInterest =account.MoneyInterest + Savingmoney*interest/360;
             account.save();
             return true;
         } 
         return false;
     }
-
+    static async findAccountByTypeAccount(UserId, AccountTypeId) {
+        return Account.findOne({
+            where: { UserId, AccountTypeId },
+        });
+    }
     static async findAccountStatusTypeId() {
         return Account.findAll({
             where: { AccountStatusTypeId: 1 },
@@ -122,21 +126,17 @@ class Account extends Model {
         account.save();
         return true;
     }
-    static async withdrawAccount(money, AccountId) {
-        if (money % 1000 != 0) {
-            return false;
-        }
-        const account = await Account.findOne({
+    static async findAccount(UserId) {
+        return Account.findOne({
             where: {
-                AccountId,
+                UserId,
+                AccountTypeId : 2,
+                AccountStatusTypeId: 2,
+                // CurrentBalance: {
+                //     [Sequelize.Op.gte]: money
+                // }
             },
         });
-        if(money > account.CurrentBalance){
-            return false;
-        }
-        account.CurrentBalance = account.CurrentBalance - money;
-        account.save();
-        return true;
     }
     static add(AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId) {
         return Account.create({ AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId });

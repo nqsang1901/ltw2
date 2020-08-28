@@ -1,8 +1,9 @@
 const { Router } = require('express');
+const  moment  = require('moment');
 const upload = require('../middlewares/upload');
 const asyncHandler = require('express-async-handler');
 const Account = require('../services/Account');
-const SYNC_INTERVALSENDMAIL = Number(process.env.SYNC_INTERVALSENDMAIL || 1440000);
+
 
 const router = new Router();
 
@@ -12,14 +13,14 @@ router.get('/', function (req, res, next) {
     }
     res.render('SavingDeposit');
 });
-router.post('/Deposit', async function (req, res, next) {
+router.post('/', async function (req, res, next) {
     const AccountId = req.body.AccountId;
     const money = req.body.money;
     const Maturity = req.body.Maturity;
     const Duedate = req.body.Duedate;
     const UserId = req.session.userId; 
-    const interest = 0;
-    const Duedates = null;
+    var interest = null;
+    var Duedates = null;
     // const moneyMaturity;
     if(Duedate==1)
     {
@@ -46,10 +47,10 @@ router.post('/Deposit', async function (req, res, next) {
         Duedates = moment().add(1095, 'days').calendar();
     }
     const result = await Account.Deposit(UserId,AccountId ,money,interest,Duedates,Maturity);
-    const Int = await Account.Interest(UserId,AccountId,interest,money);
-    setInterval(Int, SYNC_INTERVALSENDMAIL);
+
+    setInterval (function(){Account.Interest(UserId,AccountId,interest,money)}, 1440000);
     
-    if(result==true) {
+    if(result==true ) {
         res.redirect('/profile');
     }
 
