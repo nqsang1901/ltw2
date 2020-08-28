@@ -10,12 +10,13 @@ function formatMoney(n, currency) {
 
 const router = new Router();
 
-router.get('/',async function getProfileAccount(req, res, next) {
-    if (!req.session.userId) {
+router.get('/',async function (req, res, next) {
+    if (!req.currentUser.UserId) {
         res.redirect('/login');
     }
-    const accounts = await Account.findAccount(req.session.userId);
-    const accountId = accounts.AccountId;
+    const {accountId}= req.params;
+    const accounts = await Account.findAccountByTypeAccount(req.currentUser.UserId,2);
+    console.log(accounts);
     const CurrentBalance = accounts.CurrentBalance;
     const DueDate = accounts.DueDate;
     const MoneyInterest = accounts.MoneyInterest;

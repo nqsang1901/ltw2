@@ -126,12 +126,13 @@ class Account extends Model {
         account.save();
         return true;
     }
-    static async findAccount(UserId) {
-        return Account.findOne({
+    static async findAccount(UserId,AccountId) {
+        return Account.findAll({
             where: {
                 UserId,
+                AccountId,
                 AccountTypeId : 2,
-                AccountStatusTypeId: 2,
+                AccountStatusTypeId: 2
                 // CurrentBalance: {
                 //     [Sequelize.Op.gte]: money
                 // }
