@@ -10,12 +10,10 @@ function formatMoney(n, currency) {
 
 const router = new Router();
 
-router.get('/LockAcc',async function getProfileAccount(req, res, next) {
-    if (!req.session.userId) {
-        res.redirect('/login');
-    }
-    const accounts = await Account.findAccount(req.session.userId);
-    const accountId = accounts.AccountId;
+router.get('/',async function (req, res, next) {
+    const {userId}= req.params;
+    const accounts = await Account.findAccountByTypeAccount(userId,2);
+    console.log(accounts);
     const CurrentBalance = accounts.CurrentBalance;
     const DueDate = accounts.DueDate;
     const MoneyInterest = accounts.MoneyInterest;
@@ -35,7 +33,7 @@ router.get('/LockAcc',async function getProfileAccount(req, res, next) {
         BoolDue=2;
     }
     
-    res.render('LockAccountSaving',{accountId, CurrentBalance, SavingMoney, MoneyInterest,DueDate, Money, BoolDue,formatMoney});
+    res.redirect('LockAccountSaving',{accounts,formatMoney});
 });
 
 module.exports = router;
