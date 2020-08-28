@@ -129,6 +129,7 @@
                                             <!-- Thanh toán -->
                                             <h5><b>Tài Khoản Thanh Toán</b></h5>
                                             <% if(payaccount) { %>
+                                            <h6>Số tài khoản: <%= payaccount.AccountId %> </h6>
                                             <h6>Số dư: <%= formatMoney(payaccount.CurrentBalance,'VNĐ') %></h6>
                                             <h6>Trạng thái: <%= payaccount.AccountStatusTypeId == 2 ? 'Hoạt động' : (payaccount.AccountStatusTypeId == 1 ? 'Chưa xác thực' : 'Đã khóa') %></h6>
                                             <input type="button" class="btnPayment btn btn-info" value="Xem lịch sử giao dịch">
@@ -144,10 +145,17 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+<<<<<<< Updated upstream
                                                                 <% transactionLog.forEach(function(i, count) { %>
                                                                 <% if(i.TransactionStatusId == 1) { %>
+=======
+                                                                <% let count=1 %> 
+                                                                <% transactionLog.forEach(function(i) { %>
+                                                                    
+                                                                <% if(i.TransactionTypeId == 1) { %>
+>>>>>>> Stashed changes
                                                                     <tr>                                                                      
-                                                                        <td><%= count + 1 %></td>
+                                                                        <td><%= count++ %></td>
                                                                         <td class="center"><%= i.AccountId %></td>
                                                                         <td class="center">
                                                                             <%  %> 
@@ -169,6 +177,7 @@
                                             <!-- Tiết kiệm -->
                                             <h5><b>Tài khoản tiết kiệm</b></h5>
                                             <% if(savingaccount) { %>
+                                                <h6>Số tài khoản: <%= savingaccount.AccountId %> </h6>
                                                 <h6>Số dư: <%= formatMoney(savingaccount.CurrentBalance,'VNĐ') %></h6>
                                                 <h6>Trạng thái: <%= savingaccount.AccountStatusTypeId == 2 ? 'Hoạt động' : (savingaccount.AccountStatusTypeId == 1 ? 'Chưa xác thực' : 'Đã khóa') %></h6>
                                                 <input type="button" class="btnSavings btn btn-info" value="Xem lịch sử giao dịch">
@@ -184,10 +193,11 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                <% let count1=1 %> 
                                                                 <% transactionLog.forEach(function(i) { %>
                                                                 <% if(i.TransactionTypeId == 2) { %>
                                                                     <tr>                                                                 
-                                                                        <td><%= i.TransactionId %></td>
+                                                                        <td><%= count1++ %></td>
                                                                         <td class="center"><%= i.AccountId %></td>
                                                                         <td class="center">
                                                                             <%= (i.UserId == currentUser.UserId ? '- ' + i.money : '+ ' + i.money) %>
