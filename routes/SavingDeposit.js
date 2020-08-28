@@ -55,13 +55,12 @@ router.post('/', async function (req, res, next) {
     const numtransaction = await TransactionLog.count() + 1;
     await TransactionLog.add(numtransaction, UserId, AccountId, 2, 2, inforTransaction.money, token,date ,userget );
     TransactionDetail.add(await TransactionDetail.count() + 1, numtransaction, inforTransaction.content, 1);
-    setInterval (function(){Account.Interest(UserId,AccountId,interest,money)}, 1440000);
+    setInterval (function(){Account.Interest(UserId,AccountId,interest,money)}, 60000);
     
     if(result==true ) {
         res.redirect('/profile');
         
     }
-
     res.redirect('/');
 });
 module.exports = router;
