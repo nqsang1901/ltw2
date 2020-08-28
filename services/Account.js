@@ -23,15 +23,20 @@ class Account extends Model {
         });
     }
     static async findAccountByUserId(UserId) {
-        return Account.findAll({
+        return Account.findAll({ 
             where: { UserId },
+        });
+    }
+    static async findAccountByUserIdPay(UserId) {
+        return Account.findOne({ 
+            where: { UserId, AccountTypeId: 1 },
         });
     }
     static async transferIn(UserId, money, AccountId) {
         console.log(UserId, money, AccountId);
-        const accountSend = await Account.findOne({
+        const accountSend = await Account.findOne({ // de tesst lai thu
             where: {
-                UserId,
+                UserId, // user2 gui cho user1,
                 AccountTypeId: 1,
                 AccountStatusTypeId: 2,
                 CurrentBalance: {
@@ -126,17 +131,22 @@ class Account extends Model {
         account.save();
         return true;
     }
-    static async findAccount(UserId) {
-        return Account.findOne({
+    static async withdrawAccount(money, AccountId) {
+        if (money % 1000 != 0) {
+            return false;
+        }
+        const account = await Account.findOne({
             where: {
-                UserId,
-                AccountTypeId : 2,
-                AccountStatusTypeId: 2,
-                // CurrentBalance: {
-                //     [Sequelize.Op.gte]: money
-                // }
+                AccountId,
             },
+
         });
+        if(money>account.CurrentBalance){
+            return false;
+        }
+        account.CurrentBalance = account.CurrentBalance - money;
+        account.save();
+        return true;
     }
     static add(AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId) {
         return Account.create({ AccountId, UserId, CurrentBalance, ReleaseDate, AccountStatusTypeId, AccountTypeId });

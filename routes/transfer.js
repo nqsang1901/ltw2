@@ -8,6 +8,8 @@ const User = require('../services/User');
 const GetTime = require("../services/GetTime");
 const Email = require('../services/Email');
 const crypto = require('crypto');
+const tz = require('timezone');
+const asia = tz(require('timezone/Asia'));
 
 const router = new Router();
 
@@ -29,9 +31,8 @@ router.post('/confirmemail', async function (req, res, next) { // Xử lý xác 
     const token = req.body.confirmemail;
     const UserId = req.session.userId;
     const user = await User.findUserById(UserId);
-    const account =await Account.findAccountByUserId(UserId);
+    const account =await Account.findAccountByUserIdPay(UserId);
     const transaction = await TransactionLog.findTransactionLogByToken(token);
-    
     if (!transaction) {
         res.render('Transfer/confirmemail', { message: "Mã xác thực không đúng" });
     } else if (new Date(GetTime.getTheCurrentTime()) - new Date(transaction.TransactionDate) > 100000) {
@@ -42,17 +43,22 @@ router.post('/confirmemail', async function (req, res, next) { // Xử lý xác 
     const account1 = await Account.findAccountByAcountId(transaction.AccountId);
     const user1= await User.findUserById(account1.UserId);
     transaction.token = null;
+    console.log(result);
     if (result == false) {
         transaction.TransactionStatusId = 2;
         transaction.save();
         return res.redirect('/');
     }
-    transaction.TransactionStatusId = 1;
+    transaction.TransactionStatusId = 1; // cai account van in ra binh thuong a m 
     transaction.save();
-    await Email.send(user.EmailAddress, 'Refundbank' ,asia(new Date(GetTime.getTheCurrentTime()) , '%d/%m/%Y- %H:%M:%S', 'Asia/Ho_Chi_Minh')+ 
+    console.log(account.AccountId);
+    console.log(String(account.CurrentBalance-transaction.money));
+    console.log("toi day r");
+    await Email.send(user.EmailAddress, 'Refundbank' ,await asia(new Date(GetTime.getTheCurrentTime()) , '%d/%m/%Y- %H:%M:%S', 'Asia/Ho_Chi_Minh')+ 
     ' Tài khoản '+ account.AccountId +':-'+ String( transaction.money) + ' ,Số dư: ' + String(account.CurrentBalance-transaction.money));
-    await Email.send(user1.EmailAddress, 'Refundbank' ,asia(new Date(GetTime.getTheCurrentTime()) , '%d/%m/%Y- %H:%M:%S', 'Asia/Ho_Chi_Minh')+ 
+    await Email.send(user1.EmailAddress, 'Refundbank' ,await asia(new Date(GetTime.getTheCurrentTime()) , '%d/%m/%Y- %H:%M:%S', 'Asia/Ho_Chi_Minh')+ 
     ' Tài khoản '+ account1.AccountId +':+'+ String( transaction.money) + ' ,Số dư: ' + String(account1.CurrentBalance+transaction.money));
+    console.log("toi day 2");
     res.redirect('/profile');
 });
 
